@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Donadores Compulsivos'),
-    'subtitle' => 'Sistema de administración de donadores y citas para la organización Donadores Compulsivos',
+    'subtitle' => 'Donadores Compulsivos somos todos los que, sin importar nuestras circunstancias, sentimos el deseo incontrolable de ayudar y contribuir a una causa de beneficio social.',
 
     /*
     |--------------------------------------------------------------------------
