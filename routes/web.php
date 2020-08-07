@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register'=> true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('/donors', 'DonorController');

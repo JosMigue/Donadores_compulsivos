@@ -14,7 +14,8 @@ class DonorController extends Controller
      */
     public function index()
     {
-        //
+        $donors = Donor::orderBy('created_at', 'desc')->paginate(5);
+        return view('donor.index', compact('donors'));
     }
 
     /**
