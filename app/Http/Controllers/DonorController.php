@@ -38,12 +38,18 @@ class DonorController extends Controller
 
   public function edit(Donor $donor)
   {
-      //
+    $bloodTypes = Donor::getEnum('bloodtype');
+    $genderTypes = Donor::getEnum('gendertype');
+    return view('donor.edit', compact('donor', 'bloodTypes', 'genderTypes'));
   }
 
-  public function update(Request $request, Donor $donor)
+  public function update(SaveDonorRequest $request, Donor $donor)
   {
-      //
+    if($donor->update($request->validated())){
+      return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
+    }else{
+      return redirect()->route('donors.index')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 
   public function destroy(Donor $donor)

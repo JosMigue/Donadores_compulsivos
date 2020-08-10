@@ -63,8 +63,9 @@
     </nav>
     <main class="py-4">
       @yield('content')
-      @yield('scripts')
     </main>
   </div>
+  @yield('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </body>
 </html>

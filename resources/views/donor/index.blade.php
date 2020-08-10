@@ -5,10 +5,27 @@
 @section('stylesheets')
   <link rel="stylesheet" href="{{asset('css/elements/div.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
+  <link rel="stylesheet" href="{{asset('css/elements/icon.css')}}">
 @endsection
 
 @section('content')
   <div class="container">
+    @if (session('successMessage'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{session('successMessage')}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+    @if (session('errorMessage'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session('errorMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
     <div class="panel-heading">
       <h3>{{__('Donors')}}</h3>
       <a class="is-panel-button" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
@@ -19,7 +36,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
-            <th scope="col">{{__('Last name')}}</th>
+            <th scope="col">{{__('Last Name')}}</th>
             <th scope="col">{{__('Address')}}</th>
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
@@ -48,7 +65,10 @@
                 <td>{{$donor->weight}}</td>
                 <td>{{$donor->height}}</td>
                 <td>{{$donor->created_at}}</td>
-                <td></td>
+                <td class="d-flex flex-row justify-content-between">
+                  <a class="btn btn-warning mx-1" href="{{route('donors.edit', $donor->id)}}"><i class="fa fa-pencil is-icon"></i></a>
+                  <button class="btn btn-danger mx-1" ><i class="fa fa-trash is-icon"></i></button>
+                </td>
               </tr>
             @endforeach
           @else
