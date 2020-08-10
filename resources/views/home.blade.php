@@ -21,7 +21,7 @@
           {{ __('You are logged in!') }}
         </div>
         <div class="row d-flex align-content-center">
-          <div class="col-lg-3 col-md-4 col-12">
+          <div class="col-lg-4 col-sm-8 col-12">
             <a class="is-menu-button" href="{{route('donors.index')}}">{{__('Donors')}}</a>
           </div>
         </div>

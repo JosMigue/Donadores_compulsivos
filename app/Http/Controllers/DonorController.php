@@ -14,8 +14,8 @@ class DonorController extends Controller
      */
     public function index()
     {
-        $donors = Donor::orderBy('created_at', 'desc')->paginate(5);
-        return view('donor.index', compact('donors'));
+      $donors = Donor::latest()->paginate(5);
+      return view('donor.index', compact('donors'));
     }
 
     /**
@@ -25,7 +25,8 @@ class DonorController extends Controller
      */
     public function create()
     {
-        //
+      $bloodTypes = Donor::getEnum('bloodtype');
+      return view('donor.create', compact('bloodTypes'));
     }
 
     /**
