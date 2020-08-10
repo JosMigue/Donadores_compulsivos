@@ -4,6 +4,22 @@
 
 @section('content')
   <div class="container">
+    @if (session('successMessage'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session('successMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+    @if (session('errorMessage'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session('errorMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
     <div class="row d-flex justify-content-center">
       <div class="card">
         <div class="card-header">
@@ -70,22 +86,22 @@
             <div class="row my-1">
               <div class="col-6 col-md-4 pr-md-1">
                 <label>{{__('Weight')}}</label>
-                <input class="form-control" type="number" id="weight" name="weight" value="{{old('weight')}}">
+                <input class="form-control" type="number" id="weight" name="weight" step="any" value="{{old('weight')}}">
               </div>
               <div class="col-6 col-md-4 px-md-1">
                 <label>{{__('Height')}}</label>
-                <input class="form-control" type="number" id="height" name="height" value="{{old('height')}}">
+                <input class="form-control" type="number" id="height" name="height" step="any" value="{{old('height')}}">
               </div>
               <div class="col-6 col-md-1 px-md-1">
                 <label>{{__('Age')}}</label>
-                <input type="text" id="age" name="age" disabled class="form-control" placeholder="{{__('Age')}}" value="{{old('age')}}">
+                <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}">
               </div>
               <div class="col-6 col-md-3 pl-md-1">
                 <label>{{__('Gender')}}</label>
-                <select id="gener" name="gender" class="form-control">
+                <select id="gendertype" name="gendertype" class="form-control">
                   <option value="" disabled selected> {{__('Select...')}}</option>
                   @foreach ($genderTypes as $key => $genderType)
-                    <option @if (old('gender')==$key) selected @endif value="{{$key}}">{{$genderType}}</option>
+                    <option @if (old('gendertype')==$key) selected @endif value="{{$key}}">{{$genderType}}</option>
                   @endforeach
                 </select>
               </div>

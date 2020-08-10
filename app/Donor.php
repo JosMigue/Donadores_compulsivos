@@ -14,32 +14,32 @@ class Donor extends Model
         'postal_code',
         'city_id',
         'state_id',
-        'blood_type',
+        'bloodtype',
         'born_date',
         'email',
         'mobile',
         'weight',
         'height',
         'age',
-        'gender'
+        'gendertype'
     ];
 
     use Enums;
 
     protected $enumBloodtypes = [
-        '1' => 'A+',
-        '2' => 'B+',
-        '3' => 'O+',
-        '4' => 'AB+',
-        '5' => 'A-',
-        '6' => 'B-',
-        '7' => 'O-',
-        '8' => 'AB-',
+        'b1' => 'A+',
+        'b2' => 'B+',
+        'b3' => 'O+',
+        'b4' => 'AB+',
+        'b5' => 'A-',
+        'b6' => 'B-',
+        'b7' => 'O-',
+        'b8' => 'AB-',
     ];
 
     protected $enumGendertypes = [
-        '1' => 'Femenino',
-        '2' => 'Masculino',
-        '3' => 'Prefiero no responder'
+        'F' => 'Femenino',
+        'M' => 'Masculino',
+        'PNR' => 'Prefiero no responder'
     ];
 }

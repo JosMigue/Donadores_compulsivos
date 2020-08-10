@@ -8,82 +8,46 @@ use App\Http\Requests\SaveDonorRequest;
 
 class DonorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-      $donors = Donor::latest()->paginate(5);
-      return view('donor.index', compact('donors'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      $bloodTypes = Donor::getEnum('bloodtype');
-      $genderTypes = Donor::getEnum('gendertype');
-      return view('donor.create', compact('bloodTypes', 'genderTypes'));
-    }
+  public function index()
+  {
+    $donors = Donor::latest()->paginate(5);
+    return view('donor.index', compact('donors'));
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(SaveDonorRequest $request)
-    {
-        dd($request->validated());
-    }
+  public function create()
+  {
+    $bloodTypes = Donor::getEnum('bloodtype');
+    $genderTypes = Donor::getEnum('gendertype');
+    return view('donor.create', compact('bloodTypes', 'genderTypes'));
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Donor $donor)
-    {
-        //
+  public function store(SaveDonorRequest $request)
+  {
+    if(Donor::create($request->validated())){
+      return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
+    }else{
+      return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
     }
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Donor $donor)
-    {
-        //
-    }
+  public function show(Donor $donor)
+  {
+      //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Donor $donor)
-    {
-        //
-    }
+  public function edit(Donor $donor)
+  {
+      //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Donor  $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Donor $donor)
-    {
-        //
-    }
+  public function update(Request $request, Donor $donor)
+  {
+      //
+  }
+
+  public function destroy(Donor $donor)
+  {
+      //
+  }
 }

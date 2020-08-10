@@ -163,7 +163,7 @@ return [
         'email'                 => 'correo electrónico',
         'excerpt'               => 'extracto',
         'first_name'            => 'nombre',
-        'gender'                => 'género',
+        'gendertype'            => 'género',
         'height'                => 'altura',
         'hour'                  => 'hora',
         'last_name'             => 'apellido',

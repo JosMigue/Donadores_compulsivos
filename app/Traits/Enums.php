@@ -39,7 +39,7 @@ trait Enums
     {
         if ($this->hasEnumProperty($field)) {
             if (!$this->isValidEnum($field, $value)) {
-                throw new InvalidEnum("Invalid value for " . static::class . "::".$field);           
+                throw new InvalidEnum("Invalid value for " . static::class . "::".$field.' -- '.$value);           
             }
 
 /*             if ($this->isKeyedEnum($field, $value)) {

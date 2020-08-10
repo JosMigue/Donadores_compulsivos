@@ -18,14 +18,17 @@ class CreateDonorsTable extends Migration
             $table->string('name')->nullable(false);
             $table->string('last_name')->nullable(false);
             $table->string('address')->nullable(false);
+            $table->string('postal_code')->nullable(false);
             $table->integer('city_id')->nullable(false); 
             $table->integer('state_id')->nullable(false); 
             $table->string('bloodtype')->nullable(false);
+            $table->string('gendertype')->nullable(false);
             $table->date('born_date')->nullable(false);
             $table->integer('age')->nullable(false);
-            $table->integer('email')->nullable(false);
+            $table->string('email')->nullable(false);
             $table->double('weight')->nullable(false);
             $table->double('height')->nullable(false);
+            $table->string('mobile')->nullable(false);
             $table->timestamps();
         });
     }
