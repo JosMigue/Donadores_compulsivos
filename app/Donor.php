@@ -42,4 +42,12 @@ class Donor extends Model
         'M' => 'Masculino',
         'PNR' => 'Prefiero no responder'
     ];
+
+    public function city(){
+        return $this->belongsTo('App\City','city');
+    }
+
+    public function state(){
+        return $this->belongsTo('App\State', 'state');
+    }
 }

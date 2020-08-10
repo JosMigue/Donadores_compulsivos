@@ -21,4 +21,6 @@ Auth::routes(['verify' => true, 'register'=> true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/cities', 'CityController@index')->name('cities');
+
 Route::resource('/donors', 'DonorController');

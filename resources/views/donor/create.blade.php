@@ -57,12 +57,19 @@
             </div>
             <div class="row my-1">
               <div class="col-md-4 pr-md-1">
-                <label>{{__('City')}}</label>
-                <input type="text" id="city_id" name="city_id" class="form-control" placeholder="{{__('City')}}" >
+                <label>{{__('State')}}</label>
+                <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
+                  <option value="" selected disabled>{{__('Select...')}}</option>
+                  @foreach ($states as $state)
+                    <option value="{{$state->id}}">{{$state->name}}</option>
+                  @endforeach
+                </select>
               </div>
               <div class="col-md-4 px-md-1">
-                <label>{{__('State')}}</label>
-                <input type="text" id="state_id" name="state_id" class="form-control" placeholder="{{__('State')}}">
+                <label>{{__('City')}}</label>
+                <select id="city_id" name="city_id" class="form-control">
+                  <option value="">{{__('Select state first')}}</option>
+                </select>
               </div>
               <div class="col-md-4 pl-md-1">
                 <label>{{__('Postal Code')}}</label>
@@ -131,4 +138,5 @@
 
 @section('scripts')
   <script src="{{asset('js/donor.js')}}"></script>
+  <script src="{{asset('js/getDataOptions.js')}}"></script>
 @endsection

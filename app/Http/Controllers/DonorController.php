@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Donor;
+use App\City;
+use App\State;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
 
@@ -19,7 +21,9 @@ class DonorController extends Controller
   {
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
-    return view('donor.create', compact('bloodTypes', 'genderTypes'));
+    $states = State::all();
+    $cities = City::all();
+    return view('donor.create', compact('bloodTypes', 'genderTypes', 'states', 'cities'));
   }
 
   public function store(SaveDonorRequest $request)
