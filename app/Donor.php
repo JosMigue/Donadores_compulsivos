@@ -44,10 +44,10 @@ class Donor extends Model
     ];
 
     public function city(){
-        return $this->belongsTo('App\City','city');
+        return $this->belongsTo('App\City');
     }
 
     public function state(){
-        return $this->belongsTo('App\State', 'state');
+        return $this->belongsTo('App\State');
     }
 }

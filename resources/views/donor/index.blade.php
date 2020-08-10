@@ -57,8 +57,8 @@
                 <td>{{$donor->name}}</td>
                 <td>{{$donor->last_name}}</td>
                 <td>{{$donor->address}}</td>
-                <td>{{$donor->city_id}}</td>
-                <td>{{$donor->state_id}}</td>
+                <td>{{$donor->city->name}}</td>
+                <td>{{$donor->state->name}}</td>
                 <td>{{$donor->getEnum('bloodtypes')[$donor->bloodtype]}}</td>
                 <td>{{$donor->born_date}}</td>
                 <td>{{$donor->age}}</td>

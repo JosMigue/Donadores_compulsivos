@@ -13,7 +13,7 @@ class DonorController extends Controller
 
   public function index()
   {
-    $donors = Donor::latest()->paginate(5);
+    $donors = Donor::with(['city', 'state'])->latest()->paginate(5);
     return view('donor.index', compact('donors'));
   }
 
@@ -44,7 +44,9 @@ class DonorController extends Controller
   {
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
-    return view('donor.edit', compact('donor', 'bloodTypes', 'genderTypes'));
+    $states = State::all();
+    $cities = City::where('state_id', $donor->state_id)->get();
+    return view('donor.edit', compact('donor', 'bloodTypes', 'genderTypes', 'states', 'cities'));
   }
 
   public function update(SaveDonorRequest $request, Donor $donor)
