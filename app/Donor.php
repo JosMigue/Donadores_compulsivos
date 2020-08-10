@@ -11,14 +11,17 @@ class Donor extends Model
         'name',
         'last_name',
         'address',
+        'postal_code',
         'city_id',
         'state_id',
         'blood_type',
         'born_date',
-        'age',
         'email',
+        'mobile',
         'weight',
-        'height'
+        'height',
+        'age',
+        'gender'
     ];
 
     use Enums;
@@ -32,5 +35,11 @@ class Donor extends Model
         '6' => 'B-',
         '7' => 'O-',
         '8' => 'AB-',
+    ];
+
+    protected $enumGendertypes = [
+        '1' => 'Femenino',
+        '2' => 'Masculino',
+        '3' => 'Prefiero no responder'
     ];
 }

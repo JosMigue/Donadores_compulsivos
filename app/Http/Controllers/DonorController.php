@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Donor;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveDonorRequest;
 
 class DonorController extends Controller
 {
@@ -26,7 +27,8 @@ class DonorController extends Controller
     public function create()
     {
       $bloodTypes = Donor::getEnum('bloodtype');
-      return view('donor.create', compact('bloodTypes'));
+      $genderTypes = Donor::getEnum('gendertype');
+      return view('donor.create', compact('bloodTypes', 'genderTypes'));
     }
 
     /**
@@ -35,9 +37,9 @@ class DonorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveDonorRequest $request)
     {
-        //
+        dd($request->validated());
     }
 
     /**
