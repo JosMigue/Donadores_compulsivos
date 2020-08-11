@@ -1,5 +1,4 @@
 .is-menu-button{
-  background-color: #EC1C3C;
   border-radius: 10px;
   color: white;
   font-size: 15px;
@@ -13,8 +12,7 @@
 }
 
 .is-panel-button{
-  background-color: #EC1C3C;
-  border-radius: 10px;
+  border-radius: 1.5rem;
   color: white;
   font-size: 15px;
   font-weight: bold;
@@ -26,3 +24,12 @@
   text-decoration: none;
 }
 
+.is-btn-bg-red{
+  background-color: #EC1C3C;
+  border-color: #EC1C3C;
+}
+
+.is-btn-bg-dark{
+  background-color: #343a40;
+  border-color: #343a40;
+}

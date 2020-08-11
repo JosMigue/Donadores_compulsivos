@@ -37,7 +37,7 @@ class DonorController extends Controller
 
   public function show(Donor $donor)
   {
-      //
+    return view('donor.show', compact('donor'));
   }
 
   public function edit(Donor $donor)
