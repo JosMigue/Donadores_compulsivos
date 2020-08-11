@@ -60,6 +60,10 @@ class DonorController extends Controller
 
   public function destroy(Donor $donor)
   {
-      //
+    if($donor->delete()){
+      return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+    }else{
+      return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+    }
   }
 }

@@ -50,7 +50,7 @@
                 <label>{{__('City')}}</label>
                 <select type="text" id="city_id" name="city_id" class="form-control" placeholder="{{__('City')}}">
                   @foreach ($cities as $city)
-                    <option @if ($city->id == $donor->city_id) seleted @endif value="{{$city->id}}">{{$city->name}}</option>
+                    <option @if ($city->id == $donor->city_id) selected='selected' @endif value="{{$city->id}}">{{$city->name}}</option>
                   @endforeach
                 </select>
               </div>

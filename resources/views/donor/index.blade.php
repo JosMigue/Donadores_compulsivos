@@ -31,8 +31,8 @@
       <a class="is-panel-button" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover table-striped">
-        <thead class="thead-dark">
+      <table class="table table-hover table-striped table-sm">
+        <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
@@ -41,11 +41,8 @@
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Blood type')}}</th>
-            <th scope="col">{{__('Born date')}}</th>
-            <th scope="col">{{__('Age')}}</th>
-            <th scope="col">{{__('Weight')}}</th>
-            <th scope="col">{{__('Height')}}</th>
-            <th scope="col">{{__('Date register')}}</th>
+            <th scope="col">{{__('Mobile')}}</th>
+            <th scope="col">{{__('email')}}</th>
             <th scope="col">{{__('Actions')}}</th>
           </tr>
         </thead>
@@ -60,24 +57,39 @@
                 <td>{{$donor->city->name}}</td>
                 <td>{{$donor->state->name}}</td>
                 <td>{{$donor->getEnum('bloodtypes')[$donor->bloodtype]}}</td>
-                <td>{{$donor->born_date}}</td>
-                <td>{{$donor->age}}</td>
-                <td>{{$donor->weight}}</td>
-                <td>{{$donor->height}}</td>
-                <td>{{$donor->created_at}}</td>
-                <td class="d-flex flex-row justify-content-between">
-                  <a class="btn btn-warning mx-1" href="{{route('donors.edit', $donor->id)}}"><i class="fa fa-pencil is-icon"></i></a>
-                  <button class="btn btn-danger mx-1" ><i class="fa fa-trash is-icon"></i></button>
+                <td>{{$donor->mobile}}</td>
+                <td>{{$donor->email}}</td>
+                <td>
+                  <div class="btn-group dropleft">
+                    <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{__('Action')}} <i class="fa fa-cog mx-1" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="{{route('donors.show',$donor->id)}}"><i class="fa fa-eye mx-1" aria-hidden="true"></i>{{__('Show')}}</a>
+                      <a class="dropdown-item" href="{{route('donors.edit', $donor->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
+                      <button class="dropdown-item" onclick="deleteDonor(this)" value="{{$donor->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
+                    </div>
+                  </div>
+
                 </td>
               </tr>
             @endforeach
           @else
               <tr>
-                <th class="table-primary text-center" colspan="11">No se encontarron registros </th>
+                <td class="table-info" colspan="10">{{__('There is not nothing to show')}}</td>
               </tr>
           @endif
         </tbody>
       </table>    
     </div>
+    <div class="links-section">
+      <p>Mostrando {{$donors->count()}} de {{$donors->total()}} elementos</p>
+      {{$donors->links()}}
+    </div>
   </div>
+@endsection
+
+@section('scripts')
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
+  <script src="{{asset('js/donor.js')}}"></script>
 @endsection
