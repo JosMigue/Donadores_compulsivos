@@ -120,5 +120,6 @@
 @endsection
 
 @section('scripts')
+  <script src="{{asset('js/donor.js')}}"></script>
   <script src="{{asset('js/getDataOptions.js')}}"></script>
 @endsection
