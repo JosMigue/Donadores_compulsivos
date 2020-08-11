@@ -1,0 +1,35 @@
+.is-menu-button{
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 15px 30px;
+}
+
+.is-menu-button:hover{
+  color: white;
+  text-decoration: none;
+}
+
+.is-panel-button{
+  border-radius: 1.5rem;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+.is-panel-button:hover{
+  color: white;
+  text-decoration: none;
+}
+
+.is-btn-bg-red{
+  background-color: #EC1C3C;
+  border-color: #EC1C3C;
+}
+
+.is-btn-bg-dark{
+  background-color: #343a40;
+  border-color: #343a40;
+}

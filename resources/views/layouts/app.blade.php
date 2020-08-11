@@ -8,6 +8,7 @@
     <title>@yield('title') | {{ config('app.name') }}</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="icon" href="{{asset('img/donadores-compulsivos-icon.png')}}" sizes="56x56">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -62,8 +63,10 @@
     </nav>
     <main class="py-4">
       @yield('content')
-      @yield('scripts')
     </main>
   </div>
+  @yield('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>
