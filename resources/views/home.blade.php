@@ -22,7 +22,7 @@
         </div>
         <div class="row d-flex align-content-center">
           <div class="col-lg-4 col-sm-8 col-12">
-            <a class="is-menu-button" href="{{route('donors.index')}}">{{__('Donors')}}</a>
+            <a class="is-menu-button is-btn-bg-red" href="{{route('donors.index')}}">{{__('Donors')}}</a>
           </div>
         </div>
       </div>

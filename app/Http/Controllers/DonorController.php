@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Donor;
 use App\City;
 use App\State;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 
 class DonorController extends Controller
 {
-
+  
+  use RegistersUsers;
+  
   public function index()
   {
     $donors = Donor::with(['city', 'state'])->latest()->paginate(5);
@@ -28,11 +35,37 @@ class DonorController extends Controller
 
   public function store(SaveDonorRequest $request)
   {
-    if(Donor::create($request->validated())){
+    $user = $this->setUser($request);
+    $donor =  new Donor ($request->validated());
+    $donor->user_id = $user->id;
+    if($donor->save()){
       return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
     }else{
       return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
     }
+  }
+
+  private function setUser(Request $request){
+    $this->validator($request->all())->validate();
+    event(new Registered($user = $this->createUser($request->all())));
+    return $this->registered($request, $user) ? : $user;
+  }
+
+  private function createUser($data){
+    return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+          ]);
+  }
+
+  protected function validator(array $data)
+  {
+      return Validator::make($data, [
+          'name' => ['required', 'string', 'max:255'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ]);
   }
 
   public function show(Donor $donor)

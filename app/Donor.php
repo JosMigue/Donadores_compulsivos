@@ -4,9 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Enums;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Donor extends Model
+class Donor extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable; 
+
     protected $fillable = [
         'name',
         'last_name',
@@ -17,11 +22,16 @@ class Donor extends Model
         'bloodtype',
         'born_date',
         'email',
+        'password',
         'mobile',
         'weight',
         'height',
         'age',
         'gendertype'
+    ];
+
+    protected $hidden = [
+        'password'
     ];
 
     use Enums;
