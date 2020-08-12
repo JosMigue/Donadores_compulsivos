@@ -1,0 +1,70 @@
+@extends('layouts.app')
+
+@section('title',__('Admins'))
+
+@section('stylesheets')
+  <link rel="stylesheet" href="{{asset('css/elements/div.css')}}">
+  <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
+@endsection
+
+@section('content')
+  <div class="container">
+    <div class="panel-heading">
+      <h3>{{__('Donors')}}</h3>
+      <a class="is-panel-button is-btn-bg-red" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-md">
+        <thead class="thead-dark text-center">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{__('Name')}}</th>
+            <th scope="col">{{__('email')}}</th>
+            <th scope="col">{{__('Date register')}}</th>
+            <th scope="col">{{__('Actions')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if ($admins->count() > 0)
+            @foreach ($admins as $index => $admin)
+              <tr>
+                <th>{{$index+1}}</th>
+                <th>{{$admin->name}}</th>
+                <th>{{$admin->email}}</th>
+                <th>{{$admin->created_at}}</th>
+                <td>
+                  <div class="btn-group dropleft">
+                    @if (Auth::user()->is_super_admin == 1)
+                        <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{__('Action')}} <i class="fa fa-cog mx-1" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="{{route('donors.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
+                          @if ($admin->id != Auth::user()->id)
+                            <button class="dropdown-item" onclick="deleteDonor(this)" value="{{$admin->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
+                          @endif
+                        </div>
+                      @else
+                        @if ($admin->id == Auth::user()->id)
+                          <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{__('Action')}} <i class="fa fa-cog mx-1" aria-hidden="true"></i>
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{route('donors.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
+                          </div>
+                        @endif
+                      @endif
+                  </div>
+                </td>
+              </tr>
+            @endforeach
+          @else
+              <tr>
+                <td class="table-info" colspan="10">{{__('There is not nothing to show')}}</td>
+              </tr>
+          @endif
+        </tbody>
+      </table>    
+    </div>
+  </div>
+@endsection

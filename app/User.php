@@ -41,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $enumUserroles = [
         '0' => 'Donor',
-        '1' => 'Administrator'
+        '1' => 'Administrator',
+        '2' => 'Super Administrator',
     ];
 }

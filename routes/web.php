@@ -23,4 +23,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cities', 'CityController@index')->name('cities');
 
+Route::get('/admins', 'AdminController@index')->name('admins.index');
+
 Route::resource('/donors', 'DonorController');
