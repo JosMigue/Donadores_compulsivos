@@ -31,7 +31,7 @@
       <a class="is-panel-button is-btn-bg-red" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-sm">
+      <table class="table table-hover table-striped table-md">
         <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>

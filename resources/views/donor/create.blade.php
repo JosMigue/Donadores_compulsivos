@@ -50,13 +50,11 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-8 pr-md-1">
                 <label>{{__('Address')}}</label>
                 <input type="text" id="address" name="address" class="form-control" placeholder="{{__('Type your address here')}}" value="{{old('address')}}">
               </div>
-            </div>
-            <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-md-4 pl-md-1">
                 <label>{{__('State')}}</label>
                 <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
                   <option value="" selected disabled>{{__('Select...')}}</option>
@@ -65,27 +63,37 @@
                   @endforeach
                 </select>
               </div>
-              <div class="col-md-4 px-md-1">
+            </div>
+            <div class="row my-1">
+              <div class="col-md-4 pr-md-1">
                 <label>{{__('City')}}</label>
                 <select id="city_id" name="city_id" class="form-control">
                   <option value="">{{__('Select state first')}}</option>
                 </select>
               </div>
-              <div class="col-md-4 pl-md-1">
+              <div class="col-md-4 px-md-1">
                 <label>{{__('Postal Code')}}</label>
                 <input type="number" id="postal_code" name="postal_code" class="form-control" placeholder="{{__('Postal code')}}" value="{{old('postal_code')}}">
               </div>
-            </div>
-            <div class="row my-1">
               <div class="col-md-4 pr-md-1">
                 <label>{{__('Born date')}}</label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}">
               </div>
-              <div class="col-md-4 pl-md-1">
+            </div>
+            <div class="row my-1">
+              <div class="col-md-3 pr-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}">
               </div>
-              <div class="col-md-4 pl-md-1">
+              <div class="col-md-3 px-md-1">
+                <label>{{__('Password')}}</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}">
+              </div>
+              <div class="col-md-3 px-md-1">
+                <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" >
+              </div>
+              <div class="col-md-3 pl-md-1">
                 <label>{{__('Mobile')}}</label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}">
               </div>
