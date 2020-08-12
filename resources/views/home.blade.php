@@ -17,8 +17,8 @@
             <div class="alert alert-success" role="alert">
               {{ session('status') }}
             </div>
-          @endif
-          {{ __('You are logged in!') }}
+            @endif
+            {{ __('You are logged in!') }}
         </div>
         <div class="row d-flex align-content-center">
           <div class="col-lg-4 col-sm-8 col-12">

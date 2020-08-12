@@ -17,6 +17,12 @@ class DonorController extends Controller
 {
   
   use RegistersUsers;
+
+  public function __construct(){
+    $this->middleware('verified');
+    $this->middleware('auth');
+    $this->middleware('admin')->except('create','store');
+  }
   
   public function index()
   {
