@@ -17,12 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true, 'register'=> true]);
+Auth::routes(['verify' => true, 'register'=> false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cities', 'CityController@index')->name('cities');
 
 Route::get('/admins', 'AdminController@index')->name('admins.index');
+Route::get('/admins/create', 'AdminController@create')->name('admins.create');
+Route::post('/admins', 'AdminController@store')->name('admins.store');
+
 
 Route::resource('/donors', 'DonorController');

@@ -9,9 +9,14 @@
 
 @section('content')
   <div class="container">
+    @if (session('successMessage'))
+      <div class="alert alert-success" role="alert">
+        {{session('successMessage')}}
+      </div>
+    @endif
     <div class="panel-heading">
-      <h3>{{__('Donors')}}</h3>
-      <a class="is-panel-button is-btn-bg-red" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
+      <h3>{{__('Admins')}}</h3>
+      <a class="is-panel-button is-btn-bg-red" href="{{route('admins.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped table-md">
