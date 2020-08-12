@@ -122,7 +122,15 @@
               </div>
             </div>
             <div class="text-right my-2">
-              <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
+              @guest
+                <a class="btn btn-danger btn-fill" href="/">{{__('Cancel')}}</a>                
+              @else
+                @if (Auth::user()->is_admin == 1)
+                  <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
+                @else
+                  <a class="btn btn-danger btn-fill" href="{{route('home')}}">{{__('Cancel')}}</a>                
+                @endif
+              @endguest
               <button type="submit" class="btn btn-success btn-fill">{{__('Add')}}</button>
             </div>
           </form>
