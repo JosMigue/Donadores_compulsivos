@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\SaveAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 
 class AdminController extends Controller
@@ -26,22 +26,11 @@ class AdminController extends Controller
     return view('admin.index',compact('admins'));
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function create()
   {
     return view('admin.create');
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
   public function store(SaveAdminRequest $request)
   {
     $dataAdmin = [
@@ -54,46 +43,25 @@ class AdminController extends Controller
     return $this->registered($request, $user) ? : redirect()->route('admins.index')->with('successMessage', __('Admin has been added successfully') .' | '.__('We have sent a link to verify the email typed'));
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
   public function show($id)
   {
       //
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function edit($id)
+  public function edit(User $user)
   {
-      //
+    return view('admin.edit', compact('user'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
+  public function update(UpdateAdminRequest $request, User $user)
   {
-      //
+    if($user->update($request->validated())){
+      return redirect()->route('admins.index')->with('successMessage', __('Admin has been updated succesfully'));
+    }else{
+      return redirect()->route('admins.index')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
   public function destroy($id)
   {
       //

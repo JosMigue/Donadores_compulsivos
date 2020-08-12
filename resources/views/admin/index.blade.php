@@ -14,6 +14,11 @@
         {{session('successMessage')}}
       </div>
     @endif
+    @if (session('errorMessage'))
+      <div class="alert alert-success" role="alert">
+        {{session('errorMessage')}}
+      </div>
+    @endif
     <div class="panel-heading">
       <h3>{{__('Admins')}}</h3>
       <a class="is-panel-button is-btn-bg-red" href="{{route('admins.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
@@ -44,7 +49,7 @@
                           {{__('Action')}} <i class="fa fa-cog mx-1" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="{{route('donors.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
+                          <a class="dropdown-item" href="{{route('admins.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
                           @if ($admin->id != Auth::user()->id)
                             <button class="dropdown-item" onclick="deleteDonor(this)" value="{{$admin->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
                           @endif
@@ -55,7 +60,7 @@
                             {{__('Action')}} <i class="fa fa-cog mx-1" aria-hidden="true"></i>
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route('donors.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
+                            <a class="dropdown-item" href="{{route('admins.edit', $admin->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
                           </div>
                         @endif
                       @endif

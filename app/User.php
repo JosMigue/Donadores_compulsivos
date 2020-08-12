@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected $enumUserroles = [
+    protected $enumUsertypes = [
         '0' => 'Donor',
         '1' => 'Administrator',
         '2' => 'Super Administrator',
