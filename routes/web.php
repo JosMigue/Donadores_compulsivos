@@ -28,6 +28,7 @@ Route::get('/admins/create', 'AdminController@create')->name('admins.create');
 Route::post('/admins', 'AdminController@store')->name('admins.store');
 Route::get('/admins/{user}/edit', 'AdminController@edit')->name('admins.edit');
 Route::patch('/admins/{user}', 'AdminController@update')->name('admins.update');
+Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy');
 
 
 Route::resource('/donors', 'DonorController');

@@ -54,8 +54,8 @@
                 </div>
               </div>
               <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-4">
-                  <button type="submit" class="btn btn-primary">
+                <div class="col-md-6 offset-md-4 text-lg-right">
+                  <button type="submit" class="is-panel-button is-btn-bg-red">
                     {{ __('Register') }}
                   </button>
                 </div>

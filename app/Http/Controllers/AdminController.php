@@ -62,8 +62,12 @@ class AdminController extends Controller
     }
   }
 
-  public function destroy($id)
+  public function destroy(User $user)
   {
-      //
+    if($user->delete()){
+      return array('message' =>  __('Admin has been deleted succesfully'), 'code' => 200);
+    }else{
+      return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);
+    }
   }
 }
