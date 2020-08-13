@@ -23,7 +23,7 @@
       <a class="is-panel-button is-btn-bg-red" href="{{route('bloodbanks.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-sm">
+      <table class="table table-hover table-striped">
         <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>
@@ -59,6 +59,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="{{route('bloodbanks.edit', $bloodBank->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
                       <a class="dropdown-item" href="{{route('bloodbanks.destroy', $bloodBank->id)}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Delete')}}</a>
+                    </div>
                   </div>
                 </td>
               </tr>

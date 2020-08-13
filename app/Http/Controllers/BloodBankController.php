@@ -7,6 +7,7 @@ use App\City;
 use App\State;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveBloodBankRequest;
+use App\Http\Requests\UpdateBloodBankRequest;
 
 class BloodBankController extends Controller
 {
@@ -33,46 +34,27 @@ class BloodBankController extends Controller
     }
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\BloodBank  $bloodBank
-   * @return \Illuminate\Http\Response
-   */
   public function show(BloodBank $bloodBank)
   {
       //
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  \App\BloodBank  $bloodBank
-   * @return \Illuminate\Http\Response
-   */
-  public function edit(BloodBank $bloodBank)
+  public function edit(BloodBank $bloodbank)
   {
-      //
+    $cities = City::where('state_id',$bloodbank->state_id)->get();
+    $states =  State::all();
+    return view('bloodbank.edit', compact('bloodbank', 'cities', 'states'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\BloodBank  $bloodBank
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, BloodBank $bloodBank)
+  public function update(UpdateBloodBankRequest $request, BloodBank $bloodbank)
   {
-      //
+    if($bloodbank->update($request->validated())){
+      return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank updated successfully'));
+    }else{
+      return redirect()->route('bloodbanks.index')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\BloodBank  $bloodBank
-   * @return \Illuminate\Http\Response
-   */
   public function destroy(BloodBank $bloodBank)
   {
       //
