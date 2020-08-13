@@ -43,11 +43,6 @@ class AdminController extends Controller
     return $this->registered($request, $user) ? : redirect()->route('admins.index')->with('successMessage', __('Admin has been added successfully') .' | '.__('We have sent a link to verify the email typed'));
   }
 
-  public function show($id)
-  {
-      //
-  }
-
   public function edit(User $user)
   {
     return view('admin.edit', compact('user'));
