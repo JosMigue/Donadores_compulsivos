@@ -14,9 +14,9 @@ class adminSeeder extends Seeder
         DB::table('users')->insert([
             'name'=>'super admin',
             'email'=> 'admin@admin.com',
-            'email_verified_at'=>null,
+            'email_verified_at'=>'2020-08-13 12:07:39',
             'password'=>'$2y$10$MuXrHqIm6wzgGl32c8iq7eMW/aRgp.SZf1Yn8C0snEMVcNzEMJ7hq',
-            'is_admin'=>2,
+            'is_admin'=>1,
             'is_super_admin'=>1,
             'remember_token' => null,
             'created_at'=>'2020-04-03 16:41:21',

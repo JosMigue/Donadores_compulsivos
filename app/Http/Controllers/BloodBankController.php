@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\BloodBank;
+use App\City;
+use App\State;
 use Illuminate\Http\Request;
 
 class BloodBankController extends Controller
@@ -14,14 +16,11 @@ class BloodBankController extends Controller
     return view('bloodbank.index',compact('bloodBanks'));
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function create()
   {
-      //
+    $states = State::all();
+    $cities = City::all();
+    return view('bloodbank.create', compact('cities', 'states'));
   }
 
   /**

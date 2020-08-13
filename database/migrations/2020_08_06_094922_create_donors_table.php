@@ -29,7 +29,7 @@ class CreateDonorsTable extends Migration
             $table->double('weight')->nullable(false);
             $table->double('height')->nullable(false);
             $table->string('mobile')->nullable(false);
-            $tbañe->integer('user_id')->nullable(false);
+            $table->integer('user_id')->nullable(false);
             $table->timestamps();
         });
     }

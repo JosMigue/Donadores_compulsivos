@@ -64,6 +64,12 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'uploaded-images-bank' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/bankimages'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ]
 
     ],
 
