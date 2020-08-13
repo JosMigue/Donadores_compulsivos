@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_admin',
     ];
 
     /**
@@ -39,8 +39,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected $enumUserroles = [
+    protected $enumUsertypes = [
         '0' => 'Donor',
-        '1' => 'Administrator'
+        '1' => 'Administrator',
+        '2' => 'Super Administrator',
     ];
 }

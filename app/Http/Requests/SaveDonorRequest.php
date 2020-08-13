@@ -37,8 +37,7 @@ class SaveDonorRequest extends FormRequest
             'weight'        => 'required|numeric',
             'height'        => 'required|numeric',
             'age'           => 'required|numeric',
-            'gendertype'    => 'required',
-            'password'      => 'required'
+            'gendertype'    => 'required'
         ];
     }
 }

@@ -41,7 +41,7 @@ class DonorController extends Controller
 
   public function store(SaveDonorRequest $request)
   {
-    $user = $this->setUser($request);
+    $user = $this->setUser($request); 
     $donor =  new Donor ($request->validated());
     $donor->user_id = $user->id;
     if($donor->save()){

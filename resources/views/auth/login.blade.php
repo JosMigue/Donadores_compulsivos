@@ -4,6 +4,11 @@
 
 @section('content')
 <div class="container">
+  @if (session('loginMessage'))
+    <div class="alert alert-info" role="alert">
+      {{session('loginMessage')}}
+    </div>
+  @endif
   <div class="row justify-content-center">
     <div class="col-md-8 m-auto">
       <div class="card">
