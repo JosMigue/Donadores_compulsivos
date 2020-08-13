@@ -12,6 +12,11 @@ use App\Http\Requests\UpdateBloodBankRequest;
 class BloodBankController extends Controller
 {
 
+  public function __construct(){
+    $this->middleware('auth');
+    $this->middleware('admin');
+  }
+
   public function index()
   {
     $bloodBanks = BloodBank::with('city','state','user')->latest()->paginate(5);

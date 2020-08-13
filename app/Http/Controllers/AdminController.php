@@ -22,7 +22,7 @@ class AdminController extends Controller
 
   public function index()
   {
-    $admins = User::where('is_admin',1)->orWhere('is_admin',2)->latest()->get();
+    $admins = User::where('is_admin',1)->orWhere('is_admin',2)->latest()->paginate(5);
     return view('admin.index',compact('admins'));
   }
 

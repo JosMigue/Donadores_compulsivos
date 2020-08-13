@@ -22,7 +22,7 @@
       <h3>{{__('Blood banks')}}</h3>
       <a class="is-panel-button is-btn-bg-red" href="{{route('bloodbanks.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
-    <div class="table-responsive">
+     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead class="thead-dark text-center">
           <tr>
@@ -73,6 +73,9 @@
           @endif
         </tbody>
       </table>    
+      <div class="links-section">
+        {{$bloodBanks->links()}}
+      </div>
     </div>
   </div>
 @endsection

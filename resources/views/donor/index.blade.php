@@ -42,7 +42,7 @@
             <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Blood type')}}</th>
             <th scope="col">{{__('Mobile')}}</th>
-            <th scope="col">{{__('email')}}</th>
+            <th scope="col">{{__('E-Mail Address')}}</th>
             <th scope="col">{{__('Actions')}}</th>
           </tr>
         </thead>
@@ -83,7 +83,6 @@
       </table>    
     </div>
     <div class="links-section">
-      <p>Mostrando {{$donors->count()}} de {{$donors->total()}} elementos</p>
       {{$donors->links()}}
     </div>
   </div>

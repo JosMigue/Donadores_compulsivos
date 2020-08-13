@@ -34,7 +34,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
-            <th scope="col">{{__('email')}}</th>
+            <th scope="col">{{__('E-Mail Address')}}</th>
             <th scope="col">{{__('Date register')}}</th>
             <th scope="col">{{__('Actions')}}</th>
           </tr>
@@ -89,7 +89,10 @@
               </tr>
           @endif
         </tbody>
-      </table>    
+      </table>
+      <div class="links-section">
+        {{$admins->links()}}
+      </div>   
     </div>
   </div>
 @endsection
