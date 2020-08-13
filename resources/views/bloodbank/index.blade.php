@@ -58,7 +58,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="{{route('bloodbanks.edit', $bloodBank->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
-                      <a class="dropdown-item" href="{{route('bloodbanks.destroy', $bloodBank->id)}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Delete')}}</a>
+                      <button onclick="deleteBloodBank(this)" value="{{$bloodBank->id}}" class="dropdown-item" ><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Delete')}}</button>
                     </div>
                   </div>
                 </td>
@@ -75,5 +75,10 @@
       </table>    
     </div>
   </div>
+@endsection
+
+@section('scripts')
+  <script src="{{asset('js/bloodBank.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection
 

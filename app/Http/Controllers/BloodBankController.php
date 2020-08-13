@@ -55,8 +55,12 @@ class BloodBankController extends Controller
     }
   }
 
-  public function destroy(BloodBank $bloodBank)
+  public function destroy(BloodBank $bloodbank)
   {
-      //
+    if($bloodbank->delete()){
+      return array('message' =>  __('Blood bank has been deleted succesfully'), 'code' => 200);
+    }else{
+      return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);
+    }
   }
 }
