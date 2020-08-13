@@ -6,6 +6,7 @@ use App\BloodBank;
 use App\City;
 use App\State;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveBloodBankRequest;
 
 class BloodBankController extends Controller
 {
@@ -23,15 +24,13 @@ class BloodBankController extends Controller
     return view('bloodbank.create', compact('cities', 'states'));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function store(Request $request)
+  public function store(SaveBloodBankRequest $request)
   {
-      //
+    if(BloodBank::create($request->validated())){
+      return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank added successfully'));
+    }else{
+      return redirect()->route('bloodbanks.index')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 
   /**

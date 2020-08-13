@@ -19,7 +19,7 @@ class CreateBloodBanksTable extends Migration
             $table->string('address')->nullable(false);
             $table->string('phone')->nullable(false);
             $table->string('email')->nullable(false);
-            $table->string('image')->nullable(false);
+            $table->string('image')->nullable(true)->default(null);
             $table->string('postal_code')->nullable(false);
             $table->string('city_id')->nullable(false);
             $table->string('state_id')->nullable(false);
