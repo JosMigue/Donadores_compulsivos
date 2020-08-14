@@ -16,7 +16,7 @@ class CreateCampaignsTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable(false);
-            $table->integer('place')->nullable(false);
+            $table->string('place')->nullable(false);
             $table->string('description')->nullable(false);
             $table->integer('city_id')->nullable(false);
             $table->integer('state_id')->nullable(false);

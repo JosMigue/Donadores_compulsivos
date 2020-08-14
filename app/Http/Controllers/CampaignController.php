@@ -7,20 +7,21 @@ use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
+
+	public function __construct(){
+		$this->middleware('auth');
+		$this->middleware('admin');
+	}
+
   public function index()
   {
     $campaigns = Campaign::with('user', 'state', 'city')->latest()->paginate(5);
     return view('campaign.index', compact('campaigns'));
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
+	}
+	
   public function create()
   {
-      //
+    
   }
 
   /**
