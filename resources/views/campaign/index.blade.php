@@ -64,7 +64,7 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="{{route('campaigns.show',$campaign->id)}}"><i class="fa fa-eye mx-1" aria-hidden="true"></i>{{__('Show')}}</a>
                       <a class="dropdown-item" href="{{route('campaigns.edit', $campaign->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
-                      <button class="dropdown-item" onclick="deleteDonor(this)" value="{{$campaign->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
+                      <button class="dropdown-item" onclick="deleteCampaign(this)" value="{{$campaign->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
                     </div>
                   </div>
                 </td>
@@ -78,5 +78,13 @@
         </tbody>
       </table>
     </div>
+    <div class="links-section">
+      {{$campaigns->links()}}
+    </div>
   </div>
+@endsection
+
+@section('scripts')
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
+  <script src="{{asset('js/campaign.js')}}"></script>
 @endsection

@@ -7,6 +7,7 @@ use App\City;
 use App\State;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveCampaignRequest;
+use App\Http\Requests\UpdateCampaignRequest;
 use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
@@ -45,40 +46,31 @@ class CampaignController extends Controller
 
   public function show(Campaign $campaign)
   {
-      //
+    
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  \App\Campaign  $campaign
-   * @return \Illuminate\Http\Response
-   */
   public function edit(Campaign $campaign)
   {
-      //
+		$cities = City::where('state_id', $campaign->state_id)->get();
+		$states = State::all();
+		return view('campaign.edit', compact('cities', 'states', 'campaign'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Campaign  $campaign
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, Campaign $campaign)
+  public function update(UpdateCampaignRequest $request, Campaign $campaign)
   {
-      //
+    if($campaign->update($request->validated())){
+			return redirect()->route('campaigns.index')->with('successMessage',__('Campaign updated successfully'));
+		}else{
+			return redirect()->route('campaigns.index')->with('errorMessage',__('Something went wrong, try again later'));
+		}
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\Campaign  $campaign
-   * @return \Illuminate\Http\Response
-   */
   public function destroy(Campaign $campaign)
   {
-      //
+    if($campaign->delete()){
+			return array('message' =>  __('Campaign deleted successfully'), 'code' => 200);
+		}else{
+			return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);
+		}
   }
 }

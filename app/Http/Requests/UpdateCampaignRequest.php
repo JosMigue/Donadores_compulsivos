@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveCampaignRequest extends FormRequest
+class UpdateCampaignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,8 +33,7 @@ class SaveCampaignRequest extends FormRequest
             'time_start'=> 'required',
             'date_finish'=> 'required|date',
             'time_finish'=> 'required',
-            'description'=> 'required',
-            'user_id' =>    'required'
+            'description'=> 'required'
         ];
     }
 }
