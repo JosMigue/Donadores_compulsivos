@@ -33,3 +33,4 @@ Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy
 
 Route::resource('/donors', 'DonorController');
 Route::resource('/bloodbanks', 'BloodBankController');
+Route::resource('/campaigns', 'CampaignController');
