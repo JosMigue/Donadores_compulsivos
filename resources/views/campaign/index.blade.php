@@ -2,8 +2,33 @@
 
 @section('title', __('Campaigns'))
 
+@section('stylesheets')
+  <link rel="stylesheet" href="{{asset('css/elements/div.css')}}">
+  <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
+@endsection
+
 @section('content')
   <div class="container">
+    @if (session('successMessage'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{session('successMessage')}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+    @if (session('errorMessage'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{session('errorMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+    <div class="panel-heading">
+      <h3>{{__('Campaigns')}}</h3>
+      <a class="is-panel-button is-btn-bg-red" href="{{route('campaigns.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
+    </div>
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead class="thead-dark">
@@ -11,7 +36,6 @@
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
             <th scope="col">{{__('Place')}}</th>
-            <th scope="col">{{__('Description')}}</th>
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Date time start')}}</th>
@@ -27,7 +51,6 @@
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{$campaign->name}}</td>
                 <td>{{$campaign->place}}</td>
-                <td>{{$campaign->description}}</td>
                 <td>{{$campaign->city->name}}</td>
                 <td>{{$campaign->state->name}}</td>
                 <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>

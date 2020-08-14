@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Campaign;
+use App\City;
+use App\State;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveCampaignRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
 {
@@ -21,26 +25,24 @@ class CampaignController extends Controller
 	
   public function create()
   {
-    
+		$cities = City::all();
+		$states = State::all();
+    return view('campaign.create', compact('cities', 'states'));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function store(Request $request)
+  public function store(SaveCampaignRequest $request)
   {
-      //
+		if($request->validated()['user_id']== Auth::user()->id){
+			if(Campaign::create($request->validated())){
+				return redirect()->route('campaigns.index')->with('successMessage',__('Campaign added successfully'));
+			}else{
+				return redirect()->route('campaigns.index')->with('errorMessage',__('Something went wrong, try again later'));
+			}
+		}else{
+			return redirect()->route('campaigns.index')->with('errorMessage',__('I know what you do ;)'));
+		}
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Campaign  $campaign
-   * @return \Illuminate\Http\Response
-   */
   public function show(Campaign $campaign)
   {
       //

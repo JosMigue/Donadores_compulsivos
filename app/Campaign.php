@@ -15,6 +15,7 @@ class Campaign extends Model
         'time_start',
         'date_finish',
         'time_finish',
+        'description',
         'user_id'
     ];
 
