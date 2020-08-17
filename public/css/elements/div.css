@@ -11,3 +11,11 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+
+.emp-profile{
+  background: #fff;
+  border-radius: 0.5rem;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  padding: 3%;
+}

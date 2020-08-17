@@ -60,4 +60,8 @@ class Donor extends Authenticatable implements MustVerifyEmail
     public function state(){
         return $this->belongsTo('App\State');
     }
+
+    public function campaigns(){
+        return $this->belongsToMany('App\Campaign', 'campaign_donors');
+    }
 }

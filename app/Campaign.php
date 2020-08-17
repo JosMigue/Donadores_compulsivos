@@ -32,4 +32,8 @@ class Campaign extends Model
     public function state(){
         return $this->belongsTo('App\State');
     }
+
+    public function donors(){
+        return $this->belongsToMany('App\Donor', 'campaign_donors');
+    }
 }

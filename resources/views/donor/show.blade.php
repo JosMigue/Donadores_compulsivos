@@ -34,7 +34,7 @@
                 <a class="nav-link active is-red" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{__('Information')}}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link is-red" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{__('History')}}</a>
+                <a class="nav-link is-red" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{__('Campaigns history')}}</a>
               </li>
             </ul>
           </div>
@@ -118,6 +118,30 @@
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="row">
+                <table class="table table-hover table-striped table-sm">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">{{__('Name')}}</th>
+                      <th scope="col">{{__('Place')}}</th>
+                      <th scope="col">{{__('Description')}}</th>
+                      <th scope="col">{{__('Date time start')}}</th>
+                      <th scope="col">{{__('Date time finish')}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($campaigns as $index => $campaign)
+                      <tr>
+                        <th scope="row">{{$index+1}}</th>
+                        <td>{{$campaign->name}}</td>
+                        <td>{{$campaign->place}}</td>
+                        <td>{{$campaign->description}}</td>
+                        <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
+                        <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

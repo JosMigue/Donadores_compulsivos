@@ -26,8 +26,8 @@ class CampaignController extends Controller
 	
   public function create()
   {
-		$cities = City::all();
-		$states = State::all();
+    $cities = City::all();
+    $states = State::all();
     return view('campaign.create', compact('cities', 'states'));
   }
 
@@ -46,7 +46,9 @@ class CampaignController extends Controller
 
   public function show(Campaign $campaign)
   {
-    
+    $campaign = $campaign->where('id', $campaign->id)->with('city','state')->first();
+    $donors = $campaign->donors()->paginate(3);
+    return view('campaign.show', compact('campaign', 'donors'));
   }
 
   public function edit(Campaign $campaign)
