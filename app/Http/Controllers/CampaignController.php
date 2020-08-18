@@ -55,10 +55,6 @@ class CampaignController extends Controller
     }
   }
 
-  public function setDonorOnCampaign(Campaign $campaign, Donor $donor){
-    return view('campaigndonor.show', compact('campaign', 'donor'));
-  }
-
   public function show(Campaign $campaign)
   {
     $campaign = $campaign->where('id', $campaign->id)->with('city','state')->first();
