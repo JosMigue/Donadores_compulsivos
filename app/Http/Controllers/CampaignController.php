@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Campaign;
 use App\City;
 use App\State;
+use App\Donor;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
+use App\Notifications\CampaignNotify;
 use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
@@ -34,7 +36,9 @@ class CampaignController extends Controller
   public function store(SaveCampaignRequest $request)
   {
 		if($request->validated()['user_id']== Auth::user()->id){
-			if(Campaign::create($request->validated())){
+      $campaign =Campaign::create($request->validated());
+      $this->sendEmail($campaign);
+			if($campaign){
 				return redirect()->route('campaigns.index')->with('successMessage',__('Campaign added successfully'));
 			}else{
 				return redirect()->route('campaigns.index')->with('errorMessage',__('Something went wrong, try again later'));
@@ -42,6 +46,17 @@ class CampaignController extends Controller
 		}else{
 			return redirect()->route('campaigns.index')->with('errorMessage',__('I know what you do ;)'));
 		}
+  }
+
+  private function sendEmail($campaign){
+    $donors = Donor::all();
+    foreach ($donors as  $donor) {
+      $donor->notify(new CampaignNotify($campaign, $donor));
+    }
+  }
+
+  public function setDonorOnCampaign(Campaign $campaign, Donor $donor){
+    return view('campaigndonor.show', compact('campaign', 'donor'));
   }
 
   public function show(Campaign $campaign)

@@ -21,6 +21,9 @@ Auth::routes(['verify' => true, 'register'=> false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/campaigns/{campaign}/donors/{donor}', 'CampaignController@setDonorOnCampaign')->name('campaigns.setdonor');
+Route::post('/campaigns/donors', 'CampaignController@setDonorOnCampaign')->name('campaigns.setdonor');
+
 Route::get('/cities', 'CityController@index')->name('cities');
 
 Route::get('/admins', 'AdminController@index')->name('admins.index');
