@@ -66,7 +66,5 @@
     </main>
   </div>
   @yield('scripts')
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>

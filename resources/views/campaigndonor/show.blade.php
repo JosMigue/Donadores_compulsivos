@@ -8,7 +8,9 @@
 
 @section('content')
   <div class="container">
-    {{__('Hello!')}} {{$donor->name}} {{$donor->last_name}}
+    <h1>
+      {{__('Hello!')}} {{$donor->name}} {{$donor->last_name}}
+    </h1>
     <form action="{{route('campaigndonors.store')}}">
       <input type="hidden" name="donor" value="{{$donor->id}}">
       <input type="hidden" name="campaign" value="{{$campaign->id}}">

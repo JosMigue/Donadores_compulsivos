@@ -26,7 +26,7 @@ class DonorController extends Controller
   
   public function index()
   {
-    $donors = Donor::with(['city', 'state'])->latest()->paginate(5);
+    $donors = Donor::with(['city', 'state', 'user'])->latest()->paginate(5);
     return view('donor.index', compact('donors'));
   }
 
@@ -55,6 +55,10 @@ class DonorController extends Controller
     $this->validator($request->all())->validate();
     event(new Registered($user = $this->createUser($request->all())));
     return $this->registered($request, $user) ? : $user;
+  }
+
+  private function sendEMailHelping(Request $request){
+
   }
 
   private function createUser($data){
@@ -91,7 +95,9 @@ class DonorController extends Controller
 
   public function update(SaveDonorRequest $request, Donor $donor)
   {
+    
     if($donor->update($request->validated())){
+      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name'].' '.$request->validated()['last_name']]);
       return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
     }else{
       return redirect()->route('donors.index')->with('errorMessage', __('Something went wrong, try again later'));
@@ -100,7 +106,7 @@ class DonorController extends Controller
 
   public function destroy(Donor $donor)
   {
-    if($donor->delete()){
+    if($donor->delete() &  $donor->user()->delete()){
       return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
     }else{
       return array('message' => __('Something went wrong, try again later'), 'code' => 500);
