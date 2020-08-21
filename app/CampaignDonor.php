@@ -10,7 +10,7 @@ class CampaignDonor extends Model
         'campaign_id',
         'donor_id',
         'ip_address'
-    ]
+    ];
 
     protected $table = 'campaign_donors';
 }

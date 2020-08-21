@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDonorCampaignError;
+use App\Http\Requests\CampaignDonorRequest;
 use Carbon\Carbon;
 use App\CampaignDonor;
 use App\Campaign;
@@ -45,7 +46,14 @@ class CampaignDonorController extends Controller
     Auth::user()->notify(new NotifyDonorCampaignError());
   }
 
-  public function store(Request $request){
-    
+  public function store(CampaignDonorRequest $request){
+    $campaign = Campaign::findOrFail($request->validated()['campaign']);
+    $donor = Donor::findOrFail($request->validated()['donor']);
+    $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'ip_address' => $request->ip()]);
+    if($campaign->campaigndonors()->save($campaigDonor)){
+      return redirect()->route('home')->with('message', __('Thanks for get involved on this campaign'));
+    }else{
+      return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 }

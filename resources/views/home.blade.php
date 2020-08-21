@@ -16,6 +16,14 @@
       </button>
     </div>
   @endif
+  @if (session('message'))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>{{session('message')}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
@@ -43,6 +51,7 @@
           <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
             <a class="is-menu-button is-btn-bg-dark" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
           </div>
+          <input type="text" class="form-control" name="" id="" autocomplete="autocomplete" >
         </div>
       </div>
     </div>
