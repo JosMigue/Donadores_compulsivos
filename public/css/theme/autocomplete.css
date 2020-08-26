@@ -1,0 +1,28 @@
+.list-group{
+  position: absolute;
+  width: 100%;
+}
+
+.list-group-item.link{
+  padding: 1px 1px 1px 1px;
+}
+.list-group-item.link:hover{
+  background-color: rgb(78, 145, 245);
+}
+
+a.link-donor{
+  color: black;
+}
+a.link-donor:hover{
+  color: white;
+  text-decoration: none;
+}
+.media-left{
+  display: inline-block;
+}
+#fav{
+  font-size: 12px;
+  font-weight: 700;
+  color: #959595;
+  letter-spacing: 1px;
+}

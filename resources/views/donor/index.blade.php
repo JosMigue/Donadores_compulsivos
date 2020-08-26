@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{asset('css/elements/div.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/icon.css')}}">
+  <link rel="stylesheet" href="{{asset('css/theme/autocomplete.css')}}">
 @endsection
 
 @section('content')
@@ -30,6 +31,7 @@
       <h3>{{__('Donors')}}</h3>
       <a class="is-panel-button is-btn-bg-red" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
+      <autocomplete-component></autocomplete-component>
     <div class="table-responsive">
       <table class="table table-hover table-striped table-md">
         <thead class="thead-dark text-center">
