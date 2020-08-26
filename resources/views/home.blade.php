@@ -51,7 +51,6 @@
           <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
             <a class="is-menu-button is-btn-bg-dark" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
           </div>
-          <input type="text" class="form-control" name="" id="" autocomplete="autocomplete" >
         </div>
       </div>
     </div>

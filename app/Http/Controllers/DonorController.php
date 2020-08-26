@@ -20,7 +20,7 @@ class DonorController extends Controller
 
   public function __construct(){
     $this->middleware('verified');
-    $this->middleware('auth');
+    $this->middleware('auth')->except('create','store');
     $this->middleware('admin')->except('create','store');
   }
   
