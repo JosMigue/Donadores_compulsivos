@@ -8,6 +8,6 @@ use App\Donor;
 class SearchController extends Controller
 {
     public function donors($search){
-        return Donor::where('name', 'like', '%'.$search.'%')->get();
+        return Donor::where('name', 'like', '%'.$search.'%')->take(10)->get();
     }
 }

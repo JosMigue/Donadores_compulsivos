@@ -72,7 +72,6 @@
                       <button class="dropdown-item" onclick="deleteDonor(this)" value="{{$donor->id}}"><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
                     </div>
                   </div>
-
                 </td>
               </tr>
             @endforeach

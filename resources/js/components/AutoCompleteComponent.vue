@@ -3,22 +3,22 @@
     <div class="panel panel-default m-2">
       <div class="row">
         <div class="col-6">
-          <input class="form-control form-control-sm" type="search" placeholder="Buscar" v-model="search" v-on:keyup="searchDonor()">
+          <input class="form-control form-control-sm rounded" type="search" placeholder="Buscar donador..." v-model="search" v-on:keyup="searchDonor()">
         </div>
       </div>
       <div class="row">
         <div class="col-6">
-          <ul id="autolist" class="list-group" v-bind:class="{'d-block':isActive, 'd-none':isNotActive}">
+          <ul id="autolist" class="list-group" v-bind:class="{'d-block':visible, 'd-none':iSNotVisible}">
             <li id="fav" class="list-group-item" v-if="donors.length >= 1">
               <div class="row">
                 <div id="favorites" class="">
                   <div class="container">
-                    <span> </span><b>Resultados de la busqueda...</b>
+                    <b>Resultados de la busqueda...</b>
                   </div>
                 </div>
               </div>
             </li>
-            <li class="list-group-item link" v-for="donor in donors" v-if="donors.length >= 1">
+            <li class="list-group-item link" v-for="donor in donors" v-if="donors.length >= 1 && search != ''">
               <div class='row'>
                 <div class='col'>
                   <div id='center'>
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </li>
-            <li class="list-group-item" v-if="donors.length == 0">
+            <li class="list-group-item" v-if="donors.length == 0 || search == ''">
               <div class='row'>
                 <div class='col-md-12'>
                   <div id='center'>
@@ -49,25 +49,31 @@
         return {
           donors: [],
           search: '',
-          isActive: false,
-          isNotActive: true,
+          visible: false,
+          iSNotVisible: true,
         }   
       },
       methods: {
         searchDonor: function (){
           axios.get(`/search/donor/${this.search}`)
           .then(response => {
-            this.isActive = true;
-            this.isNotActive = false;
+            this.visible = true;
+            this.iSNotVisible = false;
             this.donors = response.data;
           }).catch(error =>{
 
           })
         },
         closeAllLists: function(){
-          this.isActive = false;
-          this.isNotActive = true;
+          this.visible = false;
+          this.iSNotVisible = true;
         }
-      }
+      },
+      created () {
+        document.addEventListener('click', this.closeAllLists)
+      },
+      destroyed () {
+        document.removeEventListener('click', this.closeAllLists)
+  }
     }
 </script>

@@ -1958,8 +1958,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       donors: [],
       search: '',
-      isActive: false,
-      isNotActive: true
+      visible: false,
+      iSNotVisible: true
     };
   },
   methods: {
@@ -1967,15 +1967,21 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/search/donor/".concat(this.search)).then(function (response) {
-        _this.isActive = true;
-        _this.isNotActive = false;
+        _this.visible = true;
+        _this.iSNotVisible = false;
         _this.donors = response.data;
       })["catch"](function (error) {});
     },
     closeAllLists: function closeAllLists() {
-      this.isActive = false;
-      this.isNotActive = true;
+      this.visible = false;
+      this.iSNotVisible = true;
     }
+  },
+  created: function created() {
+    document.addEventListener('click', this.closeAllLists);
+  },
+  destroyed: function destroyed() {
+    document.removeEventListener('click', this.closeAllLists);
   }
 });
 
@@ -40766,8 +40772,8 @@ var render = function() {
                 expression: "search"
               }
             ],
-            staticClass: "form-control form-control-sm",
-            attrs: { type: "search", placeholder: "Buscar" },
+            staticClass: "form-control form-control-sm rounded",
+            attrs: { type: "search", placeholder: "Buscar donador..." },
             domProps: { value: _vm.search },
             on: {
               keyup: function($event) {
@@ -40790,7 +40796,7 @@ var render = function() {
             "ul",
             {
               staticClass: "list-group",
-              class: { "d-block": _vm.isActive, "d-none": _vm.isNotActive },
+              class: { "d-block": _vm.visible, "d-none": _vm.iSNotVisible },
               attrs: { id: "autolist" }
             },
             [
@@ -40803,7 +40809,7 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _vm._l(_vm.donors, function(donor) {
-                return _vm.donors.length >= 1
+                return _vm.donors.length >= 1 && _vm.search != ""
                   ? _c("li", { staticClass: "list-group-item link" }, [
                       _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col" }, [
@@ -40833,7 +40839,7 @@ var render = function() {
                   : _vm._e()
               }),
               _vm._v(" "),
-              _vm.donors.length == 0
+              _vm.donors.length == 0 || _vm.search == ""
                 ? _c("li", { staticClass: "list-group-item" }, [_vm._m(1)])
                 : _vm._e()
             ],
@@ -40852,7 +40858,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { attrs: { id: "favorites" } }, [
         _c("div", { staticClass: "container" }, [
-          _c("span"),
           _c("b", [_vm._v("Resultados de la busqueda...")])
         ])
       ])
