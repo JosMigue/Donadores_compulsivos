@@ -44,17 +44,26 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($donors as $index => $donor)
-            <tr>
-              <th scope="row">{{$index + 1}}</th>
-              <td>{{__($donor->name)}}</td>
-              <td>{{__($donor->address)}}</td>
-              <td>{{__($donor->getEnum('bloodtypes')[$donor->bloodtype])}}</td>
-              <td>{{__($donor->getEnum('gendertypes')[$donor->gendertype])}}</td>
-              <td> <a class="d-lg-none d-block" href="tel:{{__($donor->mobile)}}">{{__($donor->mobile)}}</a> <div class="d-lg-block d-none">{{__($donor->mobile)}}</div></td>
-              <td>{{__($donor->email)}}</td>
-            </tr>
-          @endforeach
+          @if ($donors->count() > 0)
+            @foreach ($donors as $index => $donor)
+              <tr>
+                <th scope="row">{{$index + 1}}</th>
+                <td>{{__($donor->name)}}</td>
+                <td>{{__($donor->address)}}</td>
+                <td>{{__($donor->getEnum('bloodtypes')[$donor->bloodtype])}}</td>
+                <td>{{__($donor->getEnum('gendertypes')[$donor->gendertype])}}</td>
+                <td> <a class="d-lg-none d-block" href="tel:{{__($donor->mobile)}}">{{__($donor->mobile)}}</a> <div class="d-lg-block d-none">{{__($donor->mobile)}}</div></td>
+                <td>{{__($donor->email)}}</td>
+              </tr>
+            @endforeach
+          @else
+              <tr>
+                <th colspan="7">
+                  {{__('There is not nothing to show')}}
+                </th>
+              </tr>
+          @endif
+
         </tbody>
       </table>
     </div>

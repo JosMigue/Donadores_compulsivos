@@ -19,3 +19,15 @@
   margin-bottom: 3%;
   padding: 3%;
 }
+
+.toggleable-content {
+  display: none;
+}
+
+.toggleable-content.is-active {
+  display: block;
+	height: auto;
+  animation: fadeInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: .5s; /* don't forget to set a duration! */
+  
+}

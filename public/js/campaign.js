@@ -16,3 +16,27 @@ async function deleteCampaign(button){
     });
   }
 }
+
+function toggleFilters(){
+  const filterSection = document.getElementById('filter-section');
+  if(filterSection.classList.contains('is-active')){
+    filterSection.classList.remove('is-active');
+  }else{
+    filterSection.classList.add('is-active');
+  }
+}
+
+function showHelp(){
+  Swal.fire({
+    title: 'Ayuda',
+    icon: 'info',
+    text: 'Los filtros estás hechos con el fin de mandar el aviso de nueva campaña a un número en especifico de donadores, es decir si usted quire mandar solo a los donadores de un estado especifico o solo a donadores con "x" tipo de sangre. Los filtros no son obligatorios.',
+    confirmButtonText: 'Entendido',
+    showClass: {
+      popup: 'animate__animated animate__bounceIn'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__bounceOut'
+    }
+  })
+}

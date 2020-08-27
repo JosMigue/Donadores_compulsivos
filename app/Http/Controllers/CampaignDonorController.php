@@ -18,14 +18,9 @@ class CampaignDonorController extends Controller
     $this->middleware('auth');
   }
 
-  public function show(Campaign $campaign, Donor $donor){
+  public function show(Campaign $campaign){
     if($this->isCurrentCampaign($campaign)){
-      if($donor->user_id == Auth::user()->id){
-        return view('campaigndonor.show', compact('campaign', 'donor'));
-      }else{
-        $this->sendNotificationHelping();
-        return redirect()->route('home')->with('errorMessage',__('Something went wrong, try again later'));
-      }
+      return view('campaigndonor.show', compact('campaign'));
     }else{
       return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
     }
@@ -42,16 +37,16 @@ class CampaignDonorController extends Controller
     }
   }
 
-  private function sendNotificationHelping(){
-    Auth::user()->notify(new NotifyDonorCampaignError());
-  }
-
   public function store(CampaignDonorRequest $request){
-    $campaign = Campaign::findOrFail($request->validated()['campaign']);
-    $donor = Donor::findOrFail($request->validated()['donor']);
-    $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'ip_address' => $request->ip()]);
-    if($campaign->campaigndonors()->save($campaigDonor)){
-      return redirect()->route('home')->with('message', __('Thanks for get involved on this campaign'));
+    if($request->validated()['donor'] == Auth::user()->id){
+      $campaign = Campaign::findOrFail($request->validated()['campaign']);
+      $donor = Donor::where('user_id',$request->validated()['donor'])->first();
+      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'ip_address' => $request->ip()]);
+      if($campaign->campaigndonors()->save($campaigDonor)){
+        return redirect()->route('home')->with('message', __('Thanks for get involved on this campaign'));
+      }else{
+        return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+      }
     }else{
       return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
     }

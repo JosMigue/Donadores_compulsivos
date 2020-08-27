@@ -2,6 +2,10 @@
 
 @section('title', __('Add Campaign'))
 
+@section('stylesheets')
+  <link rel="stylesheet" href="{{asset('css/elements/div.css')}}">
+@endsection
+
 @section('content')
   <div class="container">
     <div class="row d-flex justify-content-center">
@@ -61,6 +65,44 @@
               <div class="col-12">
                 <label>{{__('Description')}}</label>
                 <textarea class="form-control"  id="description" name="description" rows="5" cols="100" placeholder="{{__('Type your description here')}}"></textarea>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-link" type="button" onclick="toggleFilters()">¿Desea agregar filtros? <i class="fa fa-filter mx-1" aria-hidden="true"></i></button>
+            </div>
+            <div id="filter-section" class="toggleable-content">
+              <div class="row" >
+                <div class="col-12">
+                  <label>{{__('By State')}}</label>
+                  <select id="state_id_filter" name="state_id_filter" class="form-control">
+                    <option value="" selected disabled>{{__('Select...')}}</option>
+                    @foreach ($states as $key => $state)
+                      <option value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>{{__('By Blood Type')}}</label>
+                </div>
+              </div>
+              <div class="row">
+                @foreach ($bloodTypes as $key => $bloodtype)
+                  <div class="col">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="{{$key}}" id="blood_type_filter" name="blood_type_filter[]">
+                      <label class="form-check-label" for="defaultCheck1">
+                        {{$bloodtype}}
+                      </label>
+                    </div>
+                  </div>
+                @endforeach
+              </div>
+              <div class="row ">
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-info btn-sm" type="button" onclick="showHelp()"> <i class="fa fa-question-circle" aria-hidden="true"></i></button>
+                </div>
               </div>
             </div>
             <div class="text-right my-2">

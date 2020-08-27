@@ -12,7 +12,7 @@
   <div class="container mt-md-5">
     <div class="shadow p-5 mb-5 bg-white rounded">
       <h1 class="text-center">
-        {{__('Hello!')}} {{$donor->name}} {{$donor->last_name}}
+        {{__('Hello!')}} {{Auth::user()->name}}
       </h1>
       <h2 class="text-center">{{__('Campaign information')}}</h2>
       <div class="row d-flex justify-content-center text-center">
@@ -44,7 +44,7 @@
       <p class="text-center">Al dar clic en el botón 'involucrarse' se registrará en la campaña aquí mostrada</p>
       <form method="POST" action="{{route('campaigndonors.store')}}">
         @csrf
-        <input type="hidden" name="donor" value="{{$donor->id}}">
+        <input type="hidden" name="donor" value="{{Auth::user()->id}}">
         <input type="hidden" name="campaign" value="{{$campaign->id}}">
         <div class="d-flex flex-row flex-wrap justify-content-center">
           <button class="is-panel-button is-btn-bg-red mx-2" type="submit">{{__('Get involved ❤️')}}</button>

@@ -19,10 +19,9 @@ class CampaignNotify extends Notification
      *
      * @return void
      */
-    public function __construct($campaign, $user)
+    public function __construct($campaign)
     {
         $this->campaign = $campaign;
-        $this->user = $user;
     }
 
     /**
@@ -48,7 +47,7 @@ class CampaignNotify extends Notification
             ->subject(__('Notification of New campaign of Blood Donation'))
             ->line(__('You have received this email because there is a new Blood donation campaign.'))
             ->line(__('If you want give some ❤️ then, give click on button below "Yes, I want to donate"'))
-            ->action(__('Yes, I want to donate'), url('/campaigns/'.$this->campaign->id.'/donors/'.$this->user->id))
+            ->action(__('Yes, I want to donate'), url('/campaigns/involve/'.$this->campaign->id))
             ->line(__('Push the button for know more information about the campaign.'))
             ->line(__('Thank you for using our application!'));
     }

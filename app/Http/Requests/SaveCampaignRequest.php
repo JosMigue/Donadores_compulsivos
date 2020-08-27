@@ -34,7 +34,7 @@ class SaveCampaignRequest extends FormRequest
             'date_finish'=> 'required|date',
             'time_finish'=> 'required',
             'description'=> 'required',
-            'user_id' =>    'required'
+            'user_id' =>    'required',
         ];
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Requests\SaveCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Notifications\CampaignNotify;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class CampaignController extends Controller
 {
@@ -28,16 +29,17 @@ class CampaignController extends Controller
 	
   public function create()
   {
+    $bloodTypes = Donor::getEnum('bloodtype');
     $cities = City::all();
     $states = State::all();
-    return view('campaign.create', compact('cities', 'states'));
+    return view('campaign.create', compact('cities', 'states', 'bloodTypes'));
   }
 
   public function store(SaveCampaignRequest $request)
   {
-		if($request->validated()['user_id']== Auth::user()->id){
-      $campaign =Campaign::create($request->validated());
-      $this->sendEmail($campaign);
+ 		if($request->validated()['user_id']== Auth::user()->id){
+      $campaign = Campaign::create($request->validated());
+      $this->sendEmail($campaign, $request);
 			if($campaign){
 				return redirect()->route('campaigns.index')->with('successMessage',__('Campaign added successfully'));
 			}else{
@@ -45,14 +47,24 @@ class CampaignController extends Controller
 			}
 		}else{
 			return redirect()->route('campaigns.index')->with('errorMessage',__('I know what you do ;)'));
-		}
+		} 
   }
 
-  private function sendEmail($campaign){
+  private function sendEmail($campaign, $request){
     $donors = Donor::all();
-    foreach ($donors as  $donor) {
-      $donor->notify(new CampaignNotify($campaign, $donor));
+    $hasFilter = false;
+    if($request->has('blood_type_filter')){
+      $bloodTypes = $request->blood_type_filter;
+      $donors  = Donor::whereIn('bloodtype', $bloodTypes);
+      $hasFilter = true;
     }
+    if($request->has('state_id_filter')){
+      $state = $request->state_id_filter;
+      $donors->where('state_id', $state);
+      $hasFilter = true;
+    }
+    $hasFilter ? $donors = $donors->get() : '';
+    Notification::send($donors, new CampaignNotify($campaign));
   }
 
   public function show(Campaign $campaign)
