@@ -23,7 +23,7 @@
               </div>
               <div class="col-md-8 pl-md-1">
                 <label>{{__('Place')}}</label>
-                <input type="text" id="place" name="place" class="form-control" placeholder="{{__('Place')}}" value="{{old('last_name')}}">
+                <input type="text" id="place" name="place" class="form-control" placeholder="{{__('Place')}}" value="{{old('place')}}">
               </div>
             </div>
             <div class="row">
@@ -32,7 +32,7 @@
                 <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($states as $key => $state)
-                    <option value="{{$state->id}}">{{$state->name}}</option>
+                    <option @if ($state->id == old('state_id')) selected  @endif value="{{$state->id}}">{{$state->name}}</option>
                   @endforeach
                 </select>
               </div>

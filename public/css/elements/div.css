@@ -27,7 +27,6 @@
 .toggleable-content.is-active {
   display: block;
 	height: auto;
-  animation: fadeInDown; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: .5s; /* don't forget to set a duration! */
-  
+  animation: fadeInDown; 
+  animation-duration: .5s; 
 }

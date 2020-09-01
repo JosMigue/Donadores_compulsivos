@@ -40828,7 +40828,9 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(donor.name) +
                                     " " +
-                                    _vm._s(donor.last_name)
+                                    _vm._s(donor.parental_surname) +
+                                    " " +
+                                    _vm._s(donor.maternal_surname)
                                 )
                               ]
                             )

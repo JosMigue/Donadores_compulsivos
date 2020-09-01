@@ -22,7 +22,7 @@
               <div class='row'>
                 <div class='col'>
                   <div id='center'>
-                  <a class="link-donor d-block" v-bind:href="'donors/'+donor.id"><i class="fa fa-user mx-1" aria-hidden="true"></i>{{donor.name}} {{donor.last_name}}</a>
+                  <a class="link-donor d-block" v-bind:href="'donors/'+donor.id"><i class="fa fa-user mx-1" aria-hidden="true"></i>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</a>
                   </div>
                 </div>
               </div>

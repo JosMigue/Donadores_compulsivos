@@ -16,9 +16,17 @@
       </button>
     </div>
   @endif
-  @if (session('message'))
+  @if (session('successMessage'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{session('successMessage')}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+  @if (session('information'))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-      <strong>{{session('message')}}</strong>
+      <strong>{{session('information')}}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
