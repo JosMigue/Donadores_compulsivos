@@ -174,6 +174,7 @@ return [
         'mobile'                => 'teléfono celular',
         'month'                 => 'mes',
         'name'                  => 'nombre',
+        'observations'          => 'observaciones',
         'password'              => 'contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
         'phone'                 => 'teléfono',

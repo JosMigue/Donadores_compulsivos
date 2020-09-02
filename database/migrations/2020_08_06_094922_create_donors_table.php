@@ -26,7 +26,7 @@ class CreateDonorsTable extends Migration
             $table->string('donortype')->nullable(false);
             $table->string('gendertype')->nullable(false);
             $table->date('born_date')->nullable(false);
-            $table->boolean('first_time_donating')->default(true)->nullable(false);
+            $table->boolean('first_time_donating')->default(false)->nullable(false);
             $table->integer('age')->nullable(false);
             $table->string('email')->nullable(true);
             $table->double('weight')->nullable(false);

@@ -4,7 +4,7 @@
 }
 
 .list-group-item.link{
-  padding: 1px 1px 1px 1px;
+  padding: 5px 1px;
 }
 .list-group-item.link:hover{
   background-color: rgb(78, 145, 245);

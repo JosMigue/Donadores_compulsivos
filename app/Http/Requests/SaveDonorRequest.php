@@ -25,19 +25,23 @@ class SaveDonorRequest extends FormRequest
     {
         return [
             'name'          => 'required',
-            'last_name'     => 'required',
-            'bloodtype'     => 'required',
+            'parental_surname' => 'required',
+            'matertal_surname' => 'required',
             'address'       => 'required',
+            'postal_code'   => 'required',
             'city_id'       => 'required',
             'state_id'      => 'required',
-            'postal_code'   => 'required',
+            'bloodtype'     => 'required',
+            'gendertype'    => 'required',
+            'donortype'    => 'required',
             'born_date'     => 'required',
-            'email'         => 'required|email',
-            'mobile'        => 'required|digits:10|max:10|min:10',
-            'weight'        => 'required|numeric',
-            'height'        => 'required|numeric',
+            'first_time_donating' => 'boolean',
+            'email'         => 'email|unique:donors',
+            'mobile'        => 'digits:10|max:10|min:10',
+            'weight'        => 'numeric',
+            'height'        => 'numeric',
             'age'           => 'required|numeric',
-            'gendertype'    => 'required'
+            'observations'  => 'max:255'
         ];
     }
 }

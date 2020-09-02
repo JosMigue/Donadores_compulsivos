@@ -33,16 +33,15 @@
     </div>
       <autocomplete-component></autocomplete-component>
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-md">
+      <table class="table table-hover table-striped table-sm">
         <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
-            <th scope="col">{{__('Last Name')}}</th>
-            <th scope="col">{{__('Address')}}</th>
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Blood type')}}</th>
+            <th scope="col">{{__('Donor type')}}</th>
             <th scope="col">{{__('Mobile')}}</th>
             <th scope="col">{{__('E-Mail Address')}}</th>
             <th scope="col">{{__('Actions')}}</th>
@@ -53,12 +52,11 @@
             @foreach ($donors as $index => $donor)
               <tr>
                 <th>{{$index+1}}</th>
-                <td>{{$donor->name}}</td>
-                <td>{{$donor->last_name}}</td>
-                <td>{{$donor->address}}</td>
+                <td>{{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}</td>
                 <td>{{$donor->city->name}}</td>
                 <td>{{$donor->state->name}}</td>
                 <td>{{$donor->getEnum('bloodtypes')[$donor->bloodtype]}}</td>
+                <td>{{$donor->getEnum('donortypes')[$donor->donortype]}}</td>
                 <td>{{$donor->mobile}}</td>
                 <td>{{$donor->email}}</td>
                 <td>
@@ -83,8 +81,8 @@
         </tbody>
       </table>    
     </div>
-    <div class="links-section">
-      {{$donors->links()}}
+    <div>
+      {{$donors->onEachSide(1)->links()}}
     </div>
   </div>
 @endsection

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+
 
 class DonorController extends Controller
 {
@@ -19,14 +21,13 @@ class DonorController extends Controller
   use RegistersUsers;
 
   public function __construct(){
-    $this->middleware('verified');
-    $this->middleware('auth')->except('create','store');
-    $this->middleware('admin')->except('create','store');
+    $this->middleware('auth')->except('store');
+    $this->middleware('admin')->except('store'); 
   }
   
   public function index()
   {
-    $donors = Donor::with(['city', 'state', 'user'])->latest()->paginate(5);
+    $donors = Donor::with(['city', 'state', 'user'])->latest()->paginate(15);
     return view('donor.index', compact('donors'));
   }
 
@@ -34,9 +35,10 @@ class DonorController extends Controller
   {
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
+    $donorTypes = Donor::getEnum('donortype');
     $states = State::all();
     $cities = City::all();
-    return view('donor.create', compact('bloodTypes', 'genderTypes', 'states', 'cities'));
+    return view('donor.create', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
 
   public function store(SaveDonorRequest $request)
@@ -44,8 +46,17 @@ class DonorController extends Controller
     $user = $this->setUser($request); 
     $donor =  new Donor ($request->validated());
     $donor->user_id = $user->id;
+    $credentials = $request->only('email', 'password');
     if($donor->save()){
-      return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
+      if (Auth::check()) {
+        return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
+      }else{
+        if (Auth::attempt($credentials)) {
+          return redirect()->intended('home');
+        }else{
+          return redirect()->route('login')->with('loginMessage', __('Something went wrong, try again later'));
+        }
+      }
     }else{
       return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
     }

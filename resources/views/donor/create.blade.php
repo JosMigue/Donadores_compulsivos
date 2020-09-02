@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', __('Add donor'))
+@auth
+  @section('title', __('Add donor'))
+@else
+  @section('title', __('Sign Up'))
+@endauth
 
 @section('content')
   <div class="container">
@@ -23,30 +27,47 @@
     <div class="row d-flex justify-content-center">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">{{__('Add donor')}}</h4>
+          @guest
+          <h4 class="card-title">{{__('Sign Up')}}</h4>
+          @else
+            <h4 class="card-title">{{__('Add donor')}}</h4>
+          @endguest
         </div>
         <div class="card-body">
           <form action="{{route('donors.store')}}" method="POST">
             @csrf
             <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}">
+                <input type="text" id="name" name="name" autofocus="true" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}">
               </div>
-              <div class="col-md-4 px-md-1">
-                <label>{{__('Last Name')}}</label>
-                <input type="text" id="last_name" name="last_name" class="form-control" placeholder="{{__('Last Name')}}" value="{{old('last_name')}}">
+              <div class="col-12 col-md-4 px-md-1">
+                <label>{{__('Parental Surname')}}</label>
+                <input type="text" id="parental_surname" name="parental_surname" class="form-control" placeholder="{{__('Parental Surname')}}" value="{{old('parental_surname')}}">
               </div>
-              <div class="col-md-4 pl-md-1">
-                <div class="form-group">
-                  <label>{{__('Blood type')}}</label>
-                  <select class="form-control" name="bloodtype" id="bloodtype">
-                    <option value="" selected disabled>{{__('Select...')}}</option>
-                    @foreach ($bloodTypes as $key => $bloodtype)
-                      <option @if (old('bloodtype')==$key) selected @endif value="{{$key}}">{{$bloodtype}}</option>
-                    @endforeach
-                  </select>
-                </div>
+              <div class="col-12 col-md-4 pl-md-1">
+                <label>{{__('Maternal Surname')}}</label>
+                <input type="text" id="matertal_surname" name="matertal_surname" class="form-control" placeholder="{{__('Maternal Surname')}}" value="{{old('matertal_surname')}}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 pr-md-1">
+                <label>{{__('Blood type')}}</label>
+                <select class="form-control" name="bloodtype" id="bloodtype">
+                  <option value="" selected disabled>{{__('Select...')}}</option>
+                  @foreach ($bloodTypes as $key => $bloodtype)
+                    <option @if (old('bloodtype')==$key) selected @endif value="{{$key}}">{{$bloodtype}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="col-12 col-md-6 pl-md-1">
+                <label>{{__('Donor type')}}</label>
+                <select class="form-control" name="donortype" id="donortype">
+                  <option value="" selected disabled>{{__('Select...')}}</option>
+                  @foreach ($donorTypes as $key => $donortype)
+                    <option @if (old('donortype')==$key) selected @endif value="{{$key}}">{{$donortype}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="row">
@@ -121,6 +142,29 @@
                 </select>
               </div>
             </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating" required>
+              <label class="form-check-label" for="first_time_donating">
+                {{__('I have already donated before')}}
+              </label>
+            </div>
+            <div class="form-check">              
+              <input class="form-check-input" type="checkbox" value="1" name="acept_terms_conditions" id="acept_terms_conditions" required>
+              <label class="form-check-label" for="acept_terms_conditions">
+                {{__('I accept the')}}
+              </label>
+              <a href="">{{__('terms and conditions')}}</a>
+            </div>
+            @auth
+              @if (Auth::user()->is_admin == 1)
+                <div class="row">
+                  <div class="col-12">
+                    <label for="observations">{{__('Observations')}}</label>
+                    <textarea class="form-control" name="observations" id="observations" cols="30" rows="5"></textarea>
+                  </div>
+                </div>
+              @endif
+            @endauth
             <div class="text-right my-2">
               @guest
                 <a class="btn btn-danger btn-fill" href="/">{{__('Cancel')}}</a>                

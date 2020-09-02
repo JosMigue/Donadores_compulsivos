@@ -14,20 +14,24 @@ class Donor extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name',
-        'last_name',
+        'parental_surname',
+        'matertal_surname',
         'address',
         'postal_code',
         'city_id',
         'state_id',
         'bloodtype',
+        'gendertype',
+        'donortype',
         'born_date',
+        'first_time_donating',
         'email',
         'password',
         'mobile',
         'weight',
         'height',
         'age',
-        'gendertype'
+        'observations'
     ];
 
     protected $hidden = [
@@ -51,6 +55,11 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'F' => 'Femenino',
         'M' => 'Masculino',
         'PNR' => 'Prefiero no responder'
+    ];
+
+    protected $enumDonortypes = [
+        'D1' => 'Sangre',
+        'D2' => 'Aféresis'
     ];
 
     public function city(){

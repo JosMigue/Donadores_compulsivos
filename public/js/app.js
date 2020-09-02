@@ -40761,8 +40761,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "panel panel-default m-2" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "row d-flex justify-content-center" }, [
+        _c("div", { staticClass: "col-12 col-lg-6" }, [
           _c("input", {
             directives: [
               {
@@ -40772,7 +40772,7 @@ var render = function() {
                 expression: "search"
               }
             ],
-            staticClass: "form-control form-control-sm rounded",
+            staticClass: "form-control form-control-md rounded",
             attrs: { type: "search", placeholder: "Buscar donador..." },
             domProps: { value: _vm.search },
             on: {
@@ -40790,12 +40790,12 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "row d-flex justify-content-center" }, [
+        _c("div", { staticClass: "col-12 col-lg-6" }, [
           _c(
             "ul",
             {
-              staticClass: "list-group",
+              staticClass: "list-group pr-4",
               class: { "d-block": _vm.visible, "d-none": _vm.iSNotVisible },
               attrs: { id: "autolist" }
             },
@@ -40812,7 +40812,7 @@ var render = function() {
                 return _vm.donors.length >= 1 && _vm.search != ""
                   ? _c("li", { staticClass: "list-group-item link" }, [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col" }, [
+                        _c("div", { staticClass: "col-12 col-lg-6" }, [
                           _c("div", { attrs: { id: "center" } }, [
                             _c(
                               "a",
@@ -40870,7 +40870,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "col-12 col-lg-6" }, [
         _c("div", { attrs: { id: "center" } }, [
           _vm._v(
             "\n                  No se cencontraron registros\n                "
