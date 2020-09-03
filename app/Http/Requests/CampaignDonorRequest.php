@@ -25,7 +25,7 @@ class CampaignDonorRequest extends FormRequest
     {
         return [
             'campaign'      => 'required|integer',
-            'donor'      => 'required|integer'
+            'donor'      => 'required|integer',
         ];
     }
 }

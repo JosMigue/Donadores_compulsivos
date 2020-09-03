@@ -50,7 +50,7 @@
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Time start')}}</label>
-                <input type="time" id="time_start" name="time_start" class="form-control" placeholder="{{__('Date finish')}}" value="{{old('time_start')}}">
+                <input type="time" id="time_start" name="time_start" class="form-control" placeholder="{{__('Time start')}}" value="{{old('time_start')}}">
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Date finish')}}</label>

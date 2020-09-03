@@ -34,7 +34,7 @@ class Campaign extends Model
     }
 
     public function donors(){
-        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['created_at']);
+        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['created_at', 'turn']);
     }
 
     public function campaigndonors(){

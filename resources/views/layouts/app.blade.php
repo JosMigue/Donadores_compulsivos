@@ -61,6 +61,9 @@
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                   </form>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">{{__('Report bug')}} <i class="fa fa-bug" aria-hidden="true"></i></a>
+                  <a class="dropdown-item" href="#">{{__('Help')}} <i class="fa fa-question" aria-hidden="true"></i></a>
                 </div>
               </li>
             @endguest

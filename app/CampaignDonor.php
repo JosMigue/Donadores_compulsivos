@@ -9,6 +9,7 @@ class CampaignDonor extends Model
     protected $fillable= [
         'campaign_id',
         'donor_id',
+        'turn',
         'ip_address'
     ];
 

@@ -22,7 +22,7 @@
       <div class="col-12 col-md-6">
         <div class="profile-head">
           <h5>
-            {{$donor->name}} {{$donor->last_name}}
+            {{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}
           </h5>
           <h6>
             {{__('Donor')}}
