@@ -32,12 +32,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
           </ul>
-          <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">
-            <!-- Authentication Links -->
             @guest
               <li class="nav-item">
                 <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -53,17 +50,17 @@
                   {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#"><i class="fa fa-bug mx-1" aria-hidden="true"></i>{{__('Report bug')}} </a>
+                  <a class="dropdown-item" href="#"><i class="fa fa-question mx-1" aria-hidden="true"></i>{{__('Help')}} </a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    <i class="fa fa-sign-out mx-1" aria-hidden="true"></i>{{ __('Logout') }}
                   </a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                   </form>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">{{__('Report bug')}} <i class="fa fa-bug" aria-hidden="true"></i></a>
-                  <a class="dropdown-item" href="#">{{__('Help')}} <i class="fa fa-question" aria-hidden="true"></i></a>
                 </div>
               </li>
             @endguest

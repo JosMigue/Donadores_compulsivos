@@ -15,7 +15,7 @@
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
           <div class="file btn btn-lg btn-primary">
             {{__('Change Photo')}}
-            <input type="file" name="file"/>
+            <input type="file" name="profile_picture"/>
           </div>
         </div>
       </div>
@@ -33,30 +33,33 @@
           </div>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active is-red" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{__('Information')}}</a>
+              <a class="nav-link active is-red" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-selected="true">{{__('Information')}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link is-red" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{__('Campaigns history')}}</a>
+              <a class="nav-link is-red" id="campaigns-tab" data-toggle="tab" href="#campaigns" role="tab" aria-controls="campaigns" aria-selected="false">{{__('Campaigns history')}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link is-red" id="donations-tab" data-toggle="tab" href="#donations" role="tab" aria-controls="donations" aria-selected="false">{{__('Donations history')}}</a>
             </li>
           </ul>
         </div>
       </div>
-      <div class="col-12 col-md-2 text-lg-right text-center">
+      <div class="col-12 col-md-2 my-4 text-center text-lg-right">
         <a class="is-panel-button is-btn-bg-red" href="{{route('donors.edit',$donor->id)}}">{{__('Edit')}}</a>
         <a class="is-panel-button is-btn-bg-dark" href="{{route('donors.index')}}" >{{__('Get back')}}</a>
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-md-4">
-        <div class="profile-work">
-          <p>{{__('Get in touch')}}</p>
+      <div class="col-12 col-md-4 mb-2">
+        <p class="text-center">{{__('Get in touch')}}</p>
+        <div class="profile-work d-flex justify-content-around">
           <a href="tel:{{$donor->mobile}}"><i class="fa fa-phone" aria-hidden="true"></i>{{$donor->mobile}}</a><br/>
           <a href="mailto:{{$donor->email}}"><i class="fa fa-envelope" aria-hidden="true"></i>{{$donor->email}}</a><br/>
         </div>
       </div>
       <div class="col-12 col-md-8">
         <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="tab-pane fade show active" id="information" role="tabpanel" aria-labelledby="information-tab">
             <div class="row">
               <div class="col-12 col-md-4">
                 <label>{{__('Full name')}}</label>
@@ -118,7 +121,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade" id="campaigns" role="tabpanel" aria-labelledby="campaigns-tab">
             <div class="table-responsive">
               <table class="table table-hover table-striped table-sm">
                 <thead class="thead-dark">
@@ -150,6 +153,11 @@
                   @endif
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="donations" role="tabpanel" aria-labelledby="donations-tab">
+            <div class="table-responsive">
+              
             </div>
           </div>
         </div>
