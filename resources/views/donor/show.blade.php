@@ -58,61 +58,61 @@
         <div class="tab-content profile-tab" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Full name')}}</label>
-                <p>{{$donor->name}} {{$donor->last_name}}</p>
+                <p>{{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('E-Mail Address')}}</label>
                 <p>{{$donor->email}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Mobile')}}</label>
                 <p>{{$donor->mobile}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Address')}}</label>
                 <p>{{$donor->address}} {{$donor->postal_code}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('City')}}</label>
                 <p>{{$donor->city->name}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('State')}}</label>
                 <p>{{$donor->state->name}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Born date')}}</label>
                 <p>{{$donor->born_date}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Age')}}</label>
                 <p>{{$donor->age}}</p>
               </div>
-              <div class="col-6 col-md-4">
+              <div class="col-12 col-md-4">
                 <label>{{__('Sing up date')}}</label>
                 <p>{{$donor->created_at}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-6 col-md-3">
+              <div class="col-12 col-md-3">
                 <label>{{__('Weight')}}</label>
                 <p>{{$donor->weight}}</p>
               </div>
-              <div class="col-6 col-md-3">
+              <div class="col-12 col-md-3">
                 <label>{{__('Height')}}</label>
                 <p>{{$donor->height}}</p>
               </div>
-              <div class="col-6 col-md-3">
+              <div class="col-12 col-md-3">
                 <label>{{__('Blood type')}}</label>
                 <p>{{$donor->getEnum('bloodtype')[$donor->bloodtype]}}</p>
               </div>
-              <div class="col-6 col-md-3">
+              <div class="col-12 col-md-3">
                 <label>{{__('Gender')}}</label>
                 <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
               </div>

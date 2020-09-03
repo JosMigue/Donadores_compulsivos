@@ -44,4 +44,8 @@ class User extends Authenticatable implements MustVerifyEmail
         '1' => 'Administrator',
         '2' => 'Super Administrator',
     ];
+
+    public function donor(){
+        return $this->hasOne('App\Donor');
+    }
 }

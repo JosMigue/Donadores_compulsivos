@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveDonorRequest extends FormRequest
+class UpdateDonorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,8 +35,7 @@ class SaveDonorRequest extends FormRequest
             'gendertype'    => 'required',
             'donortype'    => 'required',
             'born_date'     => 'required',
-            'first_time_donating' => 'boolean',
-            'email'         => 'email|unique:donors',
+            'email'         => 'email|unique:donors,email,'.$this->donor->id,
             'mobile'        => 'digits:10|max:10|min:10',
             'weight'        => 'numeric',
             'height'        => 'numeric',

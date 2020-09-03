@@ -8,6 +8,7 @@ use App\State;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
+use App\Http\Requests\UpdateDonorRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
@@ -21,8 +22,9 @@ class DonorController extends Controller
   use RegistersUsers;
 
   public function __construct(){
-    $this->middleware('auth')->except('store');
-    $this->middleware('admin')->except('store'); 
+    $this->middleware('auth')->except('store','showregistreview');
+    $this->middleware('admin')->except('store', 'showregistreview', 'edit', 'show', 'update');
+    $this->middleware('iscurrentdonor')->only('show');
   }
   
   public function index()
@@ -62,6 +64,15 @@ class DonorController extends Controller
     }
   }
 
+  public function showregistreview(){
+    $bloodTypes = Donor::getEnum('bloodtype');
+    $genderTypes = Donor::getEnum('gendertype');
+    $donorTypes = Donor::getEnum('donortype');
+    $states = State::all();
+    $cities = City::all();
+    return view('donor.register', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
+  }
+
   private function setUser(Request $request){
     $this->validator($request->all())->validate();
     event(new Registered($user = $this->createUser($request->all())));
@@ -99,17 +110,21 @@ class DonorController extends Controller
   {
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
+    $donorTypes = Donor::getEnum('donortype');
     $states = State::all();
     $cities = City::where('state_id', $donor->state_id)->get();
-    return view('donor.edit', compact('donor', 'bloodTypes', 'genderTypes', 'states', 'cities'));
+    return view('donor.edit', compact('donor', 'bloodTypes', 'donorTypes', 'genderTypes', 'states', 'cities'));
   }
 
-  public function update(SaveDonorRequest $request, Donor $donor)
+  public function update(UpdateDonorRequest $request, Donor $donor)
   {
-    
     if($donor->update($request->validated())){
-      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name'].' '.$request->validated()['last_name']]);
-      return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
+      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name'].' '.$request->validated()['parental_surname'].' '.$request->validated()['maternal_surname']]);
+      if(Auth::user()->is_admin){
+        return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
+      }else{
+        return redirect()->route('home')->with('successMessage', __('Donor has been updated successfully'));
+      }
     }else{
       return redirect()->route('donors.index')->with('errorMessage', __('Something went wrong, try again later'));
     }
