@@ -35,6 +35,8 @@ Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy
 
 
 Route::resource('/donors', 'DonorController');
+Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
+Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
 Route::get('/donor/register','DonorController@showregistreview')->name('donor.register');
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::resource('/campaigns', 'CampaignController');

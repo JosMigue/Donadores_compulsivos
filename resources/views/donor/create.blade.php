@@ -26,26 +26,26 @@
           <h4 class="card-title">{{__('Add donor')}}</h4>
         </div>
         <div class="card-body">
-          <form action="{{route('donors.store')}}" method="POST">
+          <form action="{{route('donors.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
-                <input type="text" id="name" name="name" autofocus="true" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}">
+                <input type="text" id="name" name="name" autofocus="true" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Parental Surname')}}</label>
-                <input type="text" id="parental_surname" name="parental_surname" class="form-control" placeholder="{{__('Parental Surname')}}" value="{{old('parental_surname')}}">
+                <input type="text" id="parental_surname" name="parental_surname" class="form-control" placeholder="{{__('Parental Surname')}}" value="{{old('parental_surname')}}" required>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
                 <label>{{__('Maternal Surname')}}</label>
-                <input type="text" id="maternal_surname" name="maternal_surname" class="form-control" placeholder="{{__('Maternal Surname')}}" value="{{old('matertal_surname')}}">
+                <input type="text" id="maternal_surname" name="maternal_surname" class="form-control" placeholder="{{__('Maternal Surname')}}" value="{{old('maternal_surname')}}" required>
               </div>
             </div>
             <div class="row">
               <div class="col-12 col-md-6 pr-md-1">
                 <label>{{__('Blood type')}}</label>
-                <select class="form-control" name="bloodtype" id="bloodtype">
+                <select class="form-control" name="bloodtype" id="bloodtype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($bloodTypes as $key => $bloodtype)
                     <option @if (old('bloodtype')==$key) selected @endif value="{{$key}}">{{$bloodtype}}</option>
@@ -54,7 +54,7 @@
               </div>
               <div class="col-12 col-md-6 pl-md-1">
                 <label>{{__('Donor type')}}</label>
-                <select class="form-control" name="donortype" id="donortype">
+                <select class="form-control" name="donortype" id="donortype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($donorTypes as $key => $donortype)
                     <option @if (old('donortype')==$key) selected @endif value="{{$key}}">{{$donortype}}</option>
@@ -65,11 +65,11 @@
             <div class="row">
               <div class="col-md-8 pr-md-1">
                 <label>{{__('Address')}}</label>
-                <input type="text" id="address" name="address" class="form-control" placeholder="{{__('Type your address here')}}" value="{{old('address')}}">
+                <input type="text" id="address" name="address" class="form-control" placeholder="{{__('Type your address here')}}" value="{{old('address')}}" required>
               </div>
               <div class="col-md-4 pl-md-1">
                 <label>{{__('State')}}</label>
-                <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
+                <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($states as $state)
                     <option value="{{$state->id}}">{{$state->name}}</option>
@@ -80,35 +80,35 @@
             <div class="row my-1">
               <div class="col-md-4 pr-md-1">
                 <label>{{__('City')}}</label>
-                <select id="city_id" name="city_id" class="form-control">
+                <select id="city_id" name="city_id" class="form-control" required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
               </div>
               <div class="col-md-4 px-md-1">
                 <label>{{__('Postal Code')}}</label>
-                <input type="number" id="postal_code" name="postal_code" class="form-control" placeholder="{{__('Postal code')}}" value="{{old('postal_code')}}">
+                <input type="number" id="postal_code" name="postal_code" class="form-control" placeholder="{{__('Postal code')}}" value="{{old('postal_code')}}" required>
               </div>
               <div class="col-md-4 pr-md-1">
                 <label>{{__('Born date')}}</label>
-                <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}">
+                <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}" required>
               </div>
             </div>
             <div class="row my-1">
               <div class="col-md-3 pr-md-1">
                 <label>{{__('E-Mail Address')}}</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}">
+                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Password')}}</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}">
+                <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}" required>
               </div>
               <div class="col-md-3 px-md-1">
                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" >
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
               </div>
               <div class="col-md-3 pl-md-1">
                 <label>{{__('Mobile')}}</label>
-                <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}">
+                <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}" >
               </div>
             </div>
             <div class="row my-1">
@@ -122,11 +122,11 @@
               </div>
               <div class="col-6 col-md-1 px-md-1">
                 <label>{{__('Age')}}</label>
-                <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}">
+                <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}" required>
               </div>
               <div class="col-6 col-md-3 pl-md-1">
                 <label>{{__('Gender')}}</label>
-                <select id="gendertype" name="gendertype" class="form-control">
+                <select id="gendertype" name="gendertype" class="form-control" required>
                   <option value="" disabled selected> {{__('Select...')}}</option>
                   @foreach ($genderTypes as $key => $genderType)
                     <option @if (old('gendertype')==$key) selected @endif value="{{$key}}">{{$genderType}}</option>
@@ -138,6 +138,12 @@
               <div class="col-12">
                 <label for="observations">{{__('Observations')}}</label>
                 <textarea class="form-control" name="observations" id="observations" cols="30" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="profile_picture">{{__('Profile picture')}}</label>
+                <input type="file" class="form-control" name="profile_picture" id="profile_picture">
               </div>
             </div>
             <div class="form-check">

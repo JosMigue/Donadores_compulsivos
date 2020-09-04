@@ -24,3 +24,12 @@ function calculateAge(birthdayDate) {
   const age = Math.abs(ageDate.getUTCFullYear() - 1970);
   document.getElementById('age').value = age;
 }
+
+function updateProfilePicture(){
+  const section = document.getElementById('toggleable-button');
+  if(section.classList.contains('is-active')){
+    section.classList.remove('is-active');
+  }else{
+    section.classList.add('is-active');
+  }
+}

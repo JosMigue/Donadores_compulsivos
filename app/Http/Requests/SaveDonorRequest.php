@@ -36,12 +36,13 @@ class SaveDonorRequest extends FormRequest
             'donortype'    => 'required',
             'born_date'     => 'required',
             'first_time_donating' => 'boolean',
-            'email'         => 'email|unique:donors',
+            'email'         => 'required|email|unique:donors',
             'mobile'        => 'digits:10|max:10|min:10',
             'weight'        => 'numeric',
             'height'        => 'numeric',
             'age'           => 'required|numeric',
-            'observations'  => 'max:255'
+            'observations'  => 'max:255',
+            'profile_picture'  => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

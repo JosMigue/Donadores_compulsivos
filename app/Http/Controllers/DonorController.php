@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class DonorController extends Controller
@@ -23,7 +24,7 @@ class DonorController extends Controller
 
   public function __construct(){
     $this->middleware('auth')->except('store','showregistreview');
-    $this->middleware('admin')->except('store', 'showregistreview', 'edit', 'show', 'update');
+    $this->middleware('admin')->except('store', 'showregistreview', 'edit', 'show', 'update', 'updateProfilePicture');
     $this->middleware('iscurrentdonor')->only('show');
   }
   
@@ -47,9 +48,11 @@ class DonorController extends Controller
   {
     $user = $this->setUser($request); 
     $donor =  new Donor ($request->validated());
+    $donor->profile_picture = '';
     $donor->user_id = $user->id;
     $credentials = $request->only('email', 'password');
     if($donor->save()){
+      $this->saveUploadedPicture($donor, $request);
       if (Auth::check()) {
         return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
       }else{
@@ -64,6 +67,17 @@ class DonorController extends Controller
     }
   }
 
+  public function updateProfilePicture(Donor $donor, Request $request){
+    if($request->has('profile_picture')){
+      $request->file('profile_picture')->storeAs('avatars', $donor->id.'pf.jpg','profile_pictures');
+      $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
+      $donor->save();
+      return redirect()->route('donors.show', $donor->id)->with('successMessage', __('Profile picture updated successfully'));
+    }else{
+      return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+    }
+  }
+
   public function showregistreview(){
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
@@ -73,14 +87,26 @@ class DonorController extends Controller
     return view('donor.register', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
 
+  private function saveUploadedPicture($donor, $request){
+    if($request->has('profile_picture')){
+      $request->validated()['profile_picture']->storeAs('avatars', $donor->id.'pf.jpg','profile_pictures');
+      $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
+    }else{
+      if($donor->gendertype=='M'){
+        $donor->profile_picture = 'img/default_avatar_man.jpg';
+      }else if($donor->gendertype=='F'){
+        $donor->profile_picture = 'img/default_avatar_woman.jpg';
+      }else{
+        $donor->profile_picture = 'img/default_avatar.jpg';
+      }
+    }
+    $donor->save();
+  }
+
   private function setUser(Request $request){
     $this->validator($request->all())->validate();
     event(new Registered($user = $this->createUser($request->all())));
     return $this->registered($request, $user) ? : $user;
-  }
-
-  private function sendEMailHelping(Request $request){
-
   }
 
   private function createUser($data){
@@ -119,7 +145,7 @@ class DonorController extends Controller
   public function update(UpdateDonorRequest $request, Donor $donor)
   {
     if($donor->update($request->validated())){
-      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name'].' '.$request->validated()['parental_surname'].' '.$request->validated()['maternal_surname']]);
+      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name']]);
       if(Auth::user()->is_admin){
         return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
       }else{
@@ -132,7 +158,9 @@ class DonorController extends Controller
 
   public function destroy(Donor $donor)
   {
+    $imageFile = $donor->id.'pf.jpg';
     if($donor->delete() &  $donor->user()->delete()){
+      Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
       return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
     }else{
       return array('message' => __('Something went wrong, try again later'), 'code' => 500);

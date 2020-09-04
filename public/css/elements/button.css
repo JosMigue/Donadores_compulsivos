@@ -33,3 +33,13 @@
   background-color: #343a40;
   border-color: #343a40;
 }
+
+.toggleable-button {
+  display: none;
+}
+.toggleable-button.is-active {
+  display: block;
+	height: auto;
+  animation: backInDown; 
+  animation-duration: .5s; 
+}

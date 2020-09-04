@@ -35,6 +35,7 @@ class CreateDonorsTable extends Migration
             $table->integer('user_id')->nullable(false);
             $table->string('last_donate_date')->nullable(true);
             $table->string('observations')->nullable(true);
+            $table->string('profile_picture')->nullable(true);
             $table->timestamps();
         });
     }

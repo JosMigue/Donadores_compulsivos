@@ -8,14 +8,30 @@
 @endsection
 
 @section('content')
-  <div class="container emp-profile">    
+  <div class="container emp-profile"> 
+    @if (session('successMessage'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{session('successMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif   
     <div class="row">
       <div class="col-12 col-md-4">
-        <div class="profile-img">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+        <div class="profile-img" id="profile-img">
+          <img src="{{asset($donor->profile_picture)}}" alt="Profile picture for donor"/>
           <div class="file btn btn-lg btn-primary">
             {{__('Change Photo')}}
-            <input type="file" name="profile_picture"/>
+            <form method="POST" action="{{route('donors.upload', $donor->id)}}" enctype="multipart/form-data">
+              @csrf
+              @method('PATCH')
+              <input type="file" name="profile_picture" onchange="updateProfilePicture()">
+              <div class="toggleable-button" id="toggleable-button">
+                <button class="btn btn-success " type="submit">{{__('Upload')}}</button>
+                <button class="btn btn-danger" onclick="updateProfilePicture()" type="button">{{__('Cancel')}}</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -164,4 +180,9 @@
       </div>
     </div>  
   </div>
+@endsection
+
+@section('scripts')
+    <script src="{{asset('js/donor.js')}}"></script>
+    <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

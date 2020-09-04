@@ -18,7 +18,7 @@
           <h4 class="card-title">{{__('Sign Up')}}</h4>
         </div>
         <div class="card-body">
-          <form action="{{route('donors.store')}}" method="POST">
+          <form action="{{route('donors.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
@@ -124,6 +124,12 @@
                     <option @if (old('gendertype')==$key) selected @endif value="{{$key}}">{{$genderType}}</option>
                   @endforeach
                 </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="profile_picture">{{__('Profile picture')}}</label>
+                <input type="file" class="form-control" name="profile_picture" id="profile_picture">
               </div>
             </div>
             <div class="form-check">
