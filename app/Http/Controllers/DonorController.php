@@ -128,8 +128,9 @@ class DonorController extends Controller
 
   public function show(Donor $donor)
   {
-    $campaigns = $donor->campaigns()->paginate(5);
-    return view('donor.show', compact('donor', 'campaigns'));
+    $campaigns = $donor->campaigns()->latest()->paginate(3);
+    $numberOfDonations = $donor->campaigndonors()->where('donor_donated', 1)->count();
+    return view('donor.show', compact('donor', 'campaigns', 'numberOfDonations'));
   }
 
   public function edit(Donor $donor)

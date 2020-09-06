@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", retrieveSelectedTab);
+
 async function deleteDonor(button){
   const donorId = button.value;
   const sweetAlerPromise = await questionNotification('¿Está seguro?', 'Esta acción no se puede corrergir', 'Sí, estoy seguro');
@@ -31,5 +33,21 @@ function updateProfilePicture(){
     section.classList.remove('is-active');
   }else{
     section.classList.add('is-active');
+  }
+}
+
+function saveTabSelect(navLink) {
+  localStorage.setItem("tagSelected", navLink.id);
+  return true;
+}
+
+function retrieveSelectedTab(){
+  const curTag = localStorage.getItem("tagSelected");
+  if(curTag){
+    document.getElementById(curTag).classList.add("active");
+    document.getElementById(`${curTag}-tab`).classList.add('active');
+  }else{
+    document.getElementById('information-tab').classList.add('active');
+    document.getElementById('information').classList.add('active');
   }
 }
