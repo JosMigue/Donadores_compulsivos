@@ -70,8 +70,10 @@ class CampaignController extends Controller
   public function show(Campaign $campaign)
   {
     $campaign = $campaign->where('id', $campaign->id)->with('city','state')->first();
-    $donors = $campaign->donors()->paginate(3);
-    return view('campaign.show', compact('campaign', 'donors'));
+    $donors = $campaign->donors()->paginate(5);
+    $bloodTypes = Donor::getEnum('bloodtype');
+    $genderTypes = Donor::getEnum('gendertype');
+    return view('campaign.show', compact('campaign', 'donors', 'bloodTypes', 'genderTypes'));
   }
 
   public function edit(Campaign $campaign)
