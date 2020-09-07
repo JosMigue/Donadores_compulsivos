@@ -8,6 +8,21 @@
 @endsection
 
 @section('content')
+  @if ($errors->any())
+  <div class="container">
+    <div class="alert alert-danger alert-dismissible fade show">
+    <h3>{{__('Whoops!')}}, {{__('We found some mistakes')}}: </h3>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  @endif
   <div class="container emp-profile"> 
     @if (session('successMessage'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -133,6 +148,14 @@
                 <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
               </div>
             </div>
+            @if (Auth::user()->is_admin)
+              <div class="row">
+                <div class="col-12">
+                  <label>{{__('Observations')}}</label>
+                  <p>{{$donor->observations}}</p>
+                </div>
+              </div>
+            @endif
           </div>
           <div class="tab-pane fade show" id="campaigns-tab" role="tabpanel" aria-labelledby="campaigns">
             <div class="row">
@@ -172,7 +195,11 @@
                             <i class="fa fa-times text-danger" aria-hidden="true"></i>
                           @endif
                         </td>
-                        <td>{{$campaign->pivot->donation_date}}</td>
+                        @if ($campaign->pivot->donor_donated) 
+                          <td>{{$campaign->pivot->donation_date}}</td>
+                        @else
+                        <td>/</td>
+                        @endif
                         <td>{{$campaign->pivot->created_at}}</td>
                       </tr>
                     @endforeach

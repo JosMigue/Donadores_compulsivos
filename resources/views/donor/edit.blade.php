@@ -116,6 +116,14 @@
                 </select>
               </div>
             </div>
+            @if (Auth::user()->is_admin)
+              <div class="row">
+                <div class="col-12">
+                  <label for="observations">{{__('Observations')}}</label>
+                  <textarea class="form-control" name="observations" id="observations" cols="30" rows="5">{{$donor->observations}}</textarea>
+                </div>
+              </div>
+            @endif
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
