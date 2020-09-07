@@ -14,13 +14,18 @@
     </div>
     <div class="row">
       <div class="col-12 col-lg-4 my-3 d-flex justify-content-center">
-        <button class="is-panel-button is-btn-bg-red is-btn-block">{{__('Donors')}} <i class="fa fa-users mx-1" aria-hidden="true"></i></button>
+        <button class="is-panel-button is-btn-bg-red is-btn-sm-block text-center">{{__('Donors')}} <i class="fa fa-users mx-1" aria-hidden="true"></i></button>
       </div>
       <div class="col-12 col-lg-4 my-3 d-flex justify-content-center">
-        <a class="is-panel-button is-btn-bg-dark is-btn-block" href="{{route('reports.bloodbanks')}}">{{__('Blood banks')}} <i class="fa fa-hospital-o mx-1" aria-hidden="true"></i></a>
+        <a class="is-panel-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('reports.bloodbanks')}}">{{__('Blood banks')}} <i class="fa fa-hospital-o mx-1" aria-hidden="true"></i></a>
       </div>
       <div class="col-12 col-lg-4 my-3 d-flex justify-content-center">
-        <button class="is-panel-button is-btn-bg-red is-btn-block">{{__('Donations')}} <i class="fa fa-tint mx-1" aria-hidden="true"></i></button>
+        <button class="is-panel-button is-btn-bg-red is-btn-sm-block text-center">{{__('Donations')}} <i class="fa fa-tint mx-1" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-4 my-3 d-flex justify-content-center">
+        <a class="is-panel-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('reports.campaigns')}}">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
