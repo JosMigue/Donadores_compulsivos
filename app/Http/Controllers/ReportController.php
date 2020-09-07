@@ -12,7 +12,7 @@ class ReportController extends Controller
   }
 
 
-  public function create(){
-    return view('report.create');
+  public function index(){
+    return view('report.index');
   }
 }

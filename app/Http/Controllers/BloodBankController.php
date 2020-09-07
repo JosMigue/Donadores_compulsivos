@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\BloodBank;
 use App\City;
 use App\State;
+use Excel;
+use App\Exports\BloodBanksExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveBloodBankRequest;
 use App\Http\Requests\UpdateBloodBankRequest;
@@ -39,9 +41,9 @@ class BloodBankController extends Controller
     }
   }
 
-  public function show(BloodBank $bloodBank)
+  public function export() 
   {
-      //
+    return Excel::download(new BloodBanksExport, 'bloodbanks.xlsx');
   }
 
   public function edit(BloodBank $bloodbank)
