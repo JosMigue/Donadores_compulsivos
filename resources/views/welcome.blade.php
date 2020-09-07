@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/elemerts/button.css') }}" rel="stylesheet">
         <style>
           html, body {
             background-color: #fff;
@@ -74,10 +75,10 @@
           </div>
           <div class="row">
             <div class="col-12 col-lg-6 d-flex justify-content-center">
-              <a class="is-panel-button is-btn-bg-dark txt-uppercase" href="{{ route('login') }}">{{__('Login')}}</a>
+              <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('login') }}">{{__('Login')}}</a>
             </div>
             <div class="col-12 col-lg-6 d-flex justify-content-center">
-              <a class="is-panel-button is-btn-bg-red txt-uppercase" href="{{ route('donor.register') }}">{{__('Sign Up')}}</a>
+              <a class="is-btn-lg is-btn-bg-red txt-uppercase" href="{{ route('donor.register') }}">{{__('Sign Up')}}</a>
             </div>
           </div>
         </div>

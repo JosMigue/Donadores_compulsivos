@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
 use App\Http\Requests\UpdateDonorRequest;
+use App\Http\Requests\UploadProfilePictureRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
@@ -67,7 +68,7 @@ class DonorController extends Controller
     }
   }
 
-  public function updateProfilePicture(Donor $donor, Request $request){
+  public function updateProfilePicture(Donor $donor, UploadProfilePictureRequest $request){
     if($request->has('profile_picture')){
       $request->file('profile_picture')->storeAs('avatars', $donor->id.'pf.jpg','profile_pictures');
       $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
@@ -128,8 +129,9 @@ class DonorController extends Controller
 
   public function show(Donor $donor)
   {
-    $campaigns = $donor->campaigns()->paginate(5);
-    return view('donor.show', compact('donor', 'campaigns'));
+    $campaigns = $donor->campaigns()->latest()->paginate(3);
+    $numberOfDonations = $donor->campaigndonors()->where('donor_donated', 1)->count();
+    return view('donor.show', compact('donor', 'campaigns', 'numberOfDonations'));
   }
 
   public function edit(Donor $donor)

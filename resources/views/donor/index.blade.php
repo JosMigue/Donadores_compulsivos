@@ -75,7 +75,7 @@
             @endforeach
           @else
               <tr>
-                <td class="table-info" colspan="10">{{__('There is not nothing to show')}}</td>
+                <td class="table-info text-center" colspan="10">{{__('There is not nothing to show')}}</td>
               </tr>
           @endif
         </tbody>

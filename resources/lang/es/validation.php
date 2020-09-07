@@ -182,6 +182,7 @@ return [
         'phone'                 => 'teléfono',
         'place'                 => 'lugar',
         'price'                 => 'precio',
+        'profile_picture'       => 'foto de perfil',
         'postal_code'           => 'código postal',
         'second'                => 'segundo',
         'sex'                   => 'sexo',

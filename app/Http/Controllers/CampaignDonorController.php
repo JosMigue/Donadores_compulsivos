@@ -20,11 +20,15 @@ class CampaignDonorController extends Controller
   }
 
   public function show(Campaign $campaign){
-    /* $campaign->camp */
-    if($this->isAvailableCampaign($campaign)){
-      return view('campaigndonor.show', compact('campaign'));
+    $donorAuth = Auth::user()->load('donor')->donor->id;
+    if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
+      if($this->isAvailableCampaign($campaign)){
+        return view('campaigndonor.show', compact('campaign'));
+      }else{
+        return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
+      } 
     }else{
-      return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
+      return redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
     }
   }
 

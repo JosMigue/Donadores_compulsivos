@@ -8,6 +8,21 @@
 @endsection
 
 @section('content')
+  @if ($errors->any())
+  <div class="container">
+    <div class="alert alert-danger alert-dismissible fade show">
+    <h3>{{__('Whoops!')}}, {{__('We found some mistakes')}}: </h3>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  @endif
   <div class="container emp-profile"> 
     @if (session('successMessage'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -44,18 +59,15 @@
             {{__('Donor')}}
           </h6>
           <div class="d-flex justify-content-around">
-            <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>#</span></p>
+            <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>
             <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->count()}}</span></p>
           </div>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active is-red" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-selected="true">{{__('Information')}}</a>
+              <a class="nav-link is-red" id="information" data-toggle="tab" href="#information-tab" role="tab" aria-controls="information" aria-selected="true"  onClick="saveTabSelect(this)">{{__('Information')}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link is-red" id="campaigns-tab" data-toggle="tab" href="#campaigns" role="tab" aria-controls="campaigns" aria-selected="false">{{__('Campaigns history')}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link is-red" id="donations-tab" data-toggle="tab" href="#donations" role="tab" aria-controls="donations" aria-selected="false">{{__('Donations history')}}</a>
+              <a class="nav-link is-red" id="campaigns" data-toggle="tab" href="#campaigns-tab" role="tab" aria-controls="campaigns" aria-selected="false" onClick="saveTabSelect(this)">{{__('Campaigns history')}}</a>
             </li>
           </ul>
         </div>
@@ -75,7 +87,7 @@
       </div>
       <div class="col-12 col-md-8">
         <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="information" role="tabpanel" aria-labelledby="information-tab">
+          <div class="tab-pane fade show" id="information-tab" role="tabpanel" aria-labelledby="information">
             <div class="row">
               <div class="col-12 col-md-4">
                 <label>{{__('Full name')}}</label>
@@ -136,8 +148,23 @@
                 <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
               </div>
             </div>
+            @if (Auth::user()->is_admin)
+              <div class="row">
+                <div class="col-12">
+                  <label>{{__('Observations')}}</label>
+                  <p>{{$donor->observations}}</p>
+                </div>
+              </div>
+            @endif
           </div>
-          <div class="tab-pane fade" id="campaigns" role="tabpanel" aria-labelledby="campaigns-tab">
+          <div class="tab-pane fade show" id="campaigns-tab" role="tabpanel" aria-labelledby="campaigns">
+            <div class="row">
+              <div class="col">
+                <i class="fa fa-check text-success"></i> <span>Asistió</span>
+                <br>
+                <i class="fa fa-times text-danger"></i> <span>No Asistió</span>
+              </div>
+            </div>
             <div class="table-responsive">
               <table class="table table-hover table-striped table-sm">
                 <thead class="thead-dark">
@@ -147,6 +174,8 @@
                     <th scope="col">{{__('Place')}}</th>
                     <th scope="col">{{__('Date time start')}}</th>
                     <th scope="col">{{__('Date time finish')}}</th>
+                    <th scope="col">{{__('Status')}}</th>
+                    <th scope="col">{{__('Donation date')}}</th>
                     <th scope="col">{{__('Registration date')}}</th>
                   </tr>
                 </thead>
@@ -159,6 +188,18 @@
                         <td>{{$campaign->place}}</td>
                         <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
                         <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
+                        <td>
+                          @if ($campaign->pivot->donor_donated)
+                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                          @else
+                            <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                          @endif
+                        </td>
+                        @if ($campaign->pivot->donor_donated) 
+                          <td>{{$campaign->pivot->donation_date}}</td>
+                        @else
+                        <td>/</td>
+                        @endif
                         <td>{{$campaign->pivot->created_at}}</td>
                       </tr>
                     @endforeach
@@ -170,11 +211,7 @@
                 </tbody>
               </table>
             </div>
-          </div>
-          <div class="tab-pane fade" id="donations" role="tabpanel" aria-labelledby="donations-tab">
-            <div class="table-responsive">
-              
-            </div>
+            {{$campaigns->links()}}
           </div>
         </div>
       </div>

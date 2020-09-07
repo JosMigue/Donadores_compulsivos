@@ -40,6 +40,7 @@ Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePictu
 Route::get('/donor/register','DonorController@showregistreview')->name('donor.register');
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::resource('/campaigns', 'CampaignController');
+Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');
 
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');

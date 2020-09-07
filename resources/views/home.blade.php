@@ -42,7 +42,13 @@
               {{ session('status') }}
             </div>
             @endif
-            {{ __('You are logged in!') }}
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center">
+                {{ __('You are logged in!') }}
+                <br>
+                {{__('Welcome')}} {{Auth::user()->name}}
+              </div>
+            </div>
         </div>
         @if (Auth::user()->is_admin)
           <div class="row">
@@ -63,14 +69,8 @@
           </div>
         @else
             <div class="row">
-              <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
+              <div class="col-12 my-3 d-flex justify-content-center">
                 <a class="is-menu-button is-btn-bg-red" href="{{route('donors.show',Auth::user()->load('donor')->donor->id)}}">{{__('See my profile')}}<i class="fa fa-eye mx-1" aria-hidden="true"></i></a>
-              </div>
-              <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-                <a class="is-menu-button is-btn-bg-dark" href="{{route('admins.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
-              </div>
-              <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-                <a class="is-menu-button is-btn-bg-red" href="{{route('bloodbanks.index')}}">{{__('Donations')}}<i class="fa fa-tint mx-1" aria-hidden="true"></i></a>
               </div>
             </div>
         @endif
