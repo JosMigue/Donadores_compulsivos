@@ -44,3 +44,6 @@ Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')
 
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');
+
+//Reports routes
+Route::get('/reports/create', 'ReportController@create')->name('reports.create');

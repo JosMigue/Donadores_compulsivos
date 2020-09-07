@@ -66,6 +66,9 @@
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
               <a class="is-menu-button is-btn-bg-dark" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
             </div>
+            <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
+              <a class="is-menu-button is-btn-bg-red" href="{{route('reports.create')}}">{{__('Log files')}}<i class="fa fa-file-excel-o mx-1" aria-hidden="true"></i></i></a>
+            </div>
           </div>
         @else
             <div class="row">
