@@ -20,7 +20,7 @@
         <a class="is-panel-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('reports.bloodbanks')}}">{{__('Blood banks')}} <i class="fa fa-hospital-o mx-1" aria-hidden="true"></i></a>
       </div>
       <div class="col-12 col-lg-4 my-3 d-flex justify-content-center">
-        <button class="is-panel-button is-btn-bg-red is-btn-sm-block text-center">{{__('Donations')}} <i class="fa fa-tint mx-1" aria-hidden="true"></i></button>
+        <a class="is-panel-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('reports.donations')}}">{{__('Donations')}} <i class="fa fa-tint mx-1" aria-hidden="true"></i></a>
       </div>
     </div>
     <div class="row">
