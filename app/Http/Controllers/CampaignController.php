@@ -101,7 +101,9 @@ class CampaignController extends Controller
 
   public function destroy(Campaign $campaign)
   {
+    $campaignDonor = $campaign->campaigndonors();
     if($campaign->delete()){
+      $campaignDonor->delete();
 			return array('message' =>  __('Campaign deleted successfully'), 'code' => 200);
 		}else{
 			return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);

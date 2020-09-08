@@ -6,6 +6,8 @@ use App\Donor;
 use App\City;
 use App\State;
 use App\User;
+use Excel;
+use App\Exports\DonorsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
 use App\Http\Requests\UpdateDonorRequest;
@@ -132,6 +134,11 @@ class DonorController extends Controller
     $campaigns = $donor->campaigns()->latest()->paginate(3);
     $numberOfDonations = $donor->campaigndonors()->where('donor_donated', 1)->count();
     return view('donor.show', compact('donor', 'campaigns', 'numberOfDonations'));
+  }
+
+  public function export() 
+  {
+    return Excel::download(new DonorsExport, 'donors.xlsx');
   }
 
   public function edit(Donor $donor)

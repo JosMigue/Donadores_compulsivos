@@ -1,3 +1,9 @@
+<tr> <th scope="col"> Cantidad de bancos de sangre registrados</th></tr>
+<tr>
+  <td>
+    {{$bloodBanks->count()}}
+  </td>
+</tr>
 <table class="table table-hover table-striped">
   <thead class="thead-dark text-center">
     <tr>

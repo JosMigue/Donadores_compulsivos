@@ -1,3 +1,13 @@
+<tr>
+  <th scope="col">
+    Cantidad de campañas registradas
+  </th>
+</tr>
+<tr>
+  <th>
+    {{$campaigns->count()}}
+  </th>
+</tr>
 <table class="table table-striped table-hover">
   <thead class="thead-dark">
     <tr>

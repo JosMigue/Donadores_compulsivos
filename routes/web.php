@@ -49,3 +49,4 @@ Route::get('/search/donor/{search}', 'SearchController@donors');
 Route::get('/reports', 'ReportController@index')->name('reports.index');
 Route::get('/reports/bloodbanks', 'BloodBankController@export')->name('reports.bloodbanks');
 Route::get('/reports/campiagns', 'CampaignController@export')->name('reports.campaigns');
+Route::get('/reports/donors', 'DonorController@export')->name('reports.donors');
