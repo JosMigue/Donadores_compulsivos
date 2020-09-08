@@ -4,6 +4,7 @@
 
 @section('stylesheets')
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
+  <link rel="stylesheet" href="{{asset('css/theme/info-box.css')}}">
 @endsection
 
 @section('content')
@@ -51,6 +52,20 @@
             </div>
         </div>
         @if (Auth::user()->is_admin)
+          <div class="row mbl info-box">
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="panel bg-danger">
+                <div class="panel-body">
+                  <p class="icon">
+                    <i class="icon fa fa-users"></i>
+                  </p>
+                  <h4 class="value">
+                    <span>812</span></h4>
+                  <p class="description">{{__('Donors')}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
               <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('donors.index')}}">{{__('Donors')}}<i class="fa fa-users mx-1" aria-hidden="true"></i></a>

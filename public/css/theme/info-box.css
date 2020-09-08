@@ -1,0 +1,29 @@
+.info-box .db:hover .icon {
+  color: white;
+  opacity: 1;
+}
+
+.info-box .icon {
+  color: #fff;
+  font-size: 55px;
+  float: right;
+  margin-bottom: 0px;
+  margin-top: 7px;
+  transition: 0.5s;
+}
+.icon:hover {
+  transform: rotateZ(10deg);
+  transition: 0.5s;
+}
+.panel{
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+.value > span, p{
+  color: white;
+}
+
+.panel.is-bg-gradient{
+  background: radial-gradient(circle, rgba(237,26,59,1) 24%, rgba(9,7,3,0.9724264705882353) 94%);
+  background: rgb(237,26,59);
+}

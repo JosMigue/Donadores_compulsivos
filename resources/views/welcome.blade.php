@@ -8,7 +8,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/elemerts/button.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/elements/button.css') }}" rel="stylesheet">
         <style>
           html, body {
             background-color: #fff;
@@ -33,21 +33,6 @@
             position: relative;
           }
 
-          .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-          }
-
-          .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-          }
           .txt-uppercase{
             text-transform: uppercase;
           }
@@ -55,18 +40,6 @@
     </head>
     <body>
       <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-          @auth
-          <a href="{{ url('/home') }}">{{__('Home')}}</a>
-          @else
-          <a href="{{ route('login') }}">{{__('Login')}}</a>
-          @if (Route::has('register'))
-          <a href="{{ route('register') }}">{{__('Register')}}</a>
-          @endif
-          @endauth
-        </div>
-        @endif
         <div class="container">
           <div class="row">
             <div class="col-12 d-flex justify-content-center">
@@ -75,7 +48,11 @@
           </div>
           <div class="row">
             <div class="col-12 col-lg-6 d-flex justify-content-center">
-              <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('login') }}">{{__('Login')}}</a>
+              @auth
+              <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('home') }}">{{__('Go Home')}}</a>
+              @else
+              <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('login') }}">{{__('Log in')}}</a>
+              @endauth
             </div>
             <div class="col-12 col-lg-6 d-flex justify-content-center">
               <a class="is-btn-lg is-btn-bg-red txt-uppercase" href="{{ route('donor.register') }}">{{__('Sign Up')}}</a>
