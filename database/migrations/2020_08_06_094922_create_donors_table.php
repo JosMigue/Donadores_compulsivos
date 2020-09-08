@@ -18,8 +18,8 @@ class CreateDonorsTable extends Migration
             $table->string('name')->nullable(false);
             $table->string('parental_surname')->nullable(false);
             $table->string('maternal_surname')->nullable(false);
-            $table->string('address')->nullable(false);
-            $table->string('postal_code')->nullable(false);
+            $table->string('address')->nullable(true)->default(null);
+            $table->string('postal_code')->nullable(true)->default(null);
             $table->integer('city_id')->nullable(false); 
             $table->integer('state_id')->nullable(false); 
             $table->string('bloodtype')->nullable(false);

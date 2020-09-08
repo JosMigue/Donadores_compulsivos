@@ -53,24 +53,27 @@
         @if (Auth::user()->is_admin)
           <div class="row">
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-red" href="{{route('donors.index')}}">{{__('Donors')}}<i class="fa fa-users mx-1" aria-hidden="true"></i></a>
+              <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('donors.index')}}">{{__('Donors')}}<i class="fa fa-users mx-1" aria-hidden="true"></i></a>
             </div>
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-dark" href="{{route('admins.index')}}">{{__('Admins')}}<i class="fa fa-lock mx-1" aria-hidden="true"></i></a>
+              <a class="is-menu-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('admins.index')}}">{{__('Admins')}}<i class="fa fa-lock mx-1" aria-hidden="true"></i></a>
             </div>
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-red" href="{{route('bloodbanks.index')}}">{{__('Blood banks')}}<i class="fa fa-hospital-o mx-1" aria-hidden="true"></i></a>
+              <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('bloodbanks.index')}}">{{__('Blood banks')}}<i class="fa fa-hospital-o mx-1" aria-hidden="true"></i></a>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-dark" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
+              <a class="is-menu-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
+              <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('reports.index')}}">{{__('Log files')}}<i class="fa fa-file-excel-o mx-1" aria-hidden="true"></i></i></a>
             </div>
           </div>
         @else
             <div class="row">
               <div class="col-12 my-3 d-flex justify-content-center">
-                <a class="is-menu-button is-btn-bg-red" href="{{route('donors.show',Auth::user()->load('donor')->donor->id)}}">{{__('See my profile')}}<i class="fa fa-eye mx-1" aria-hidden="true"></i></a>
+                <a class="is-menu-button is-btn-bg-red is-btn-sm-block" href="{{route('donors.show',Auth::user()->load('donor')->donor->id)}}">{{__('See my profile')}}<i class="fa fa-eye mx-1" aria-hidden="true"></i></a>
               </div>
             </div>
         @endif

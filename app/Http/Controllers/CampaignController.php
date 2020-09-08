@@ -6,6 +6,8 @@ use App\Campaign;
 use App\City;
 use App\State;
 use App\Donor;
+use Excel;
+use App\Exports\CampaignsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
@@ -48,6 +50,11 @@ class CampaignController extends Controller
 		}else{
 			return redirect()->route('campaigns.index')->with('errorMessage',__('I know what you do ;)'));
 		} 
+  }
+
+  public function export() 
+  {
+    return Excel::download(new CampaignsExport, 'campaigns.xlsx');
   }
 
   private function sendEmail($campaign, $request){
@@ -94,7 +101,9 @@ class CampaignController extends Controller
 
   public function destroy(Campaign $campaign)
   {
+    $campaignDonor = $campaign->campaigndonors();
     if($campaign->delete()){
+      $campaignDonor->delete();
 			return array('message' =>  __('Campaign deleted successfully'), 'code' => 200);
 		}else{
 			return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);

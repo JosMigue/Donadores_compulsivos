@@ -1,6 +1,13 @@
 button:hover, a:hover{
   opacity: .9;
 }
+@media (max-width: 575.98px) { 
+  .is-btn-sm-block{
+    width: 100%; 
+    display:block;
+  }  
+}
+
 
 .is-menu-button{
   border-radius: 10px;

@@ -44,3 +44,10 @@ Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')
 
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');
+
+//Reports routes
+Route::get('/reports', 'ReportController@index')->name('reports.index');
+Route::get('/reports/bloodbanks', 'BloodBankController@export')->name('reports.bloodbanks');
+Route::get('/reports/campiagns', 'CampaignController@export')->name('reports.campaigns');
+Route::get('/reports/donors', 'DonorController@export')->name('reports.donors');
+Route::get('/reports/donations', 'ReportController@create')->name('reports.donations');
