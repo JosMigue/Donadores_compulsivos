@@ -3,8 +3,8 @@ button:hover, a:hover{
 }
 @media (max-width: 575.98px) { 
   .is-btn-sm-block{
-    width: 100%; 
     display:block;
+    width: 100%; 
   }  
 }
 
@@ -48,28 +48,30 @@ button:hover, a:hover{
 .toggleable-button {
   display: none;
 }
+
 .toggleable-button.is-active {
-  display: block;
-	height: auto;
   animation: backInDown; 
   animation-duration: .5s; 
+  display: block;
+	height: auto;
 }
- .is-btn-lg{
-   border-radius: 10px;
-   color: #ffffff;
-   display: inline-block;
-   font-size: 22px;
-   font-weight: bold;
-   line-height: 45px;
-   margin: 8px 15px;
-   padding: 0 8px;
-   text-align: center;
-   text-transform: uppercase;
-   width: 258px;
- }
 
- .is-btn-lg:hover{
-   text-decoration: none;
-   color: #ffffff;
-   opacity: .9;
- }
+.is-btn-lg{
+  border-radius: 10px;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 45px;
+  margin: 8px 15px;
+  padding: 0 8px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 258px;
+}
+
+.is-btn-lg:hover{
+  text-decoration: none;
+  color: #ffffff;
+  opacity: .9;
+}
