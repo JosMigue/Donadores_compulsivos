@@ -15,12 +15,14 @@ use App\Notifications\CampaignNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
+
 class CampaignController extends Controller
 {
 
 	public function __construct(){
 		$this->middleware('auth');
-		$this->middleware('admin');
+    $this->middleware('admin');
+    $this->middleware('verified');
 	}
 
   public function index()
