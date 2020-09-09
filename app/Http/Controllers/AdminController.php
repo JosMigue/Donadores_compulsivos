@@ -18,6 +18,7 @@ class AdminController extends Controller
     $this->middleware('auth');
     $this->middleware('admin')->except('destroy');
     $this->middleware('superadmin')->only('destroy');
+    $this->middleware('verified');
   }
 
   public function index()

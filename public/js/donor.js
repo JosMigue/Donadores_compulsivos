@@ -1,3 +1,5 @@
+'use sctrict'
+
 document.addEventListener("DOMContentLoaded", retrieveSelectedTab);
 
 async function deleteDonor(button){
@@ -43,11 +45,16 @@ function saveTabSelect(navLink) {
 
 function retrieveSelectedTab(){
   const curTag = localStorage.getItem("tagSelected");
+  const tab = document.getElementById('information-tab')
   if(curTag){
-    document.getElementById(curTag).classList.add("active");
-    document.getElementById(`${curTag}-tab`).classList.add('active');
+    if(tab){
+      document.getElementById(curTag).classList.add("active");
+      document.getElementById(`${curTag}-tab`).classList.add('active');
+    }
   }else{
-    document.getElementById('information-tab').classList.add('active');
-    document.getElementById('information').classList.add('active');
+    if(tab){
+      tab.classList.add('active');
+      document.getElementById('information').classList.add('active');
+    }
   }
 }

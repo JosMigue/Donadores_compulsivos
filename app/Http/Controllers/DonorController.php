@@ -29,6 +29,7 @@ class DonorController extends Controller
     $this->middleware('auth')->except('store','showregistreview');
     $this->middleware('admin')->except('store', 'showregistreview', 'edit', 'show', 'update', 'updateProfilePicture');
     $this->middleware('iscurrentdonor')->only('show');
+    $this->middleware('verified')->only('index');
   }
   
   public function index()

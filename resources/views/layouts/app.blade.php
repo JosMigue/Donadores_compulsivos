@@ -34,6 +34,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            @auth
+            @if(!Request::is('home') && Auth::user()->is_admin)
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('donors.index')}}">{{__('Donors')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('admins.index')}}">{{__('Admins')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('campaigns.index')}}">{{__('Campaigns')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('bloodbanks.index')}}">{{__('Blood banks')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('reports.index')}}">{{__('Log files')}}</a>
+                </li>
+            @endif  
+            @endauth
           </ul>
           <ul class="navbar-nav ml-auto">
             @guest

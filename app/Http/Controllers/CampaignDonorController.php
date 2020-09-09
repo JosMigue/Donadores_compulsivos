@@ -17,18 +17,23 @@ class CampaignDonorController extends Controller
 
   public function __construct(){
     $this->middleware('auth');
+    $this->middleware('verified');
   }
 
   public function show(Campaign $campaign){
-    $donorAuth = Auth::user()->load('donor')->donor->id;
-    if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
-      if($this->isAvailableCampaign($campaign)){
-        return view('campaigndonor.show', compact('campaign'));
+    if(!Auth::user()->is_admin){
+      $donorAuth = Auth::user()->load('donor')->donor->id;
+      if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
+        if($this->isAvailableCampaign($campaign)){
+          return view('campaigndonor.show', compact('campaign'));
+        }else{
+          return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
+        } 
       }else{
-        return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
-      } 
+        return redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
+      }
     }else{
-      return redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
+      return redirect()->route('home')->with('errorMessage', __('An administrator cannot register for a campaign'));
     }
   }
 

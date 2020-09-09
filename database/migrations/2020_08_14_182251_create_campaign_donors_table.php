@@ -17,11 +17,11 @@ class CreateCampaignDonorsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('campaign_id')->nullable(false);
             $table->integer('donor_id')->nullable(false);
-            $table->boolean('donor_donated')->nullable(false);
-            $table->dateTime('donation_date')->nullable(false);
+            $table->boolean('donor_donated')->nullable(false)->default(0);
+            $table->string('donation_date')->nullable(false)->default('0000-00-00 00:00:00');
             $table->integer('turn')->nullable(false);
             $table->string('ip_address')->nullable(false);
-            $table->timestamps();;
+            $table->timestamps();
         });
     }
 
