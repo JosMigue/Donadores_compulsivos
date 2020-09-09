@@ -28,8 +28,6 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'mobile',
-        'weight',
-        'height',
         'age',
         'observations',
         'profile_picture'

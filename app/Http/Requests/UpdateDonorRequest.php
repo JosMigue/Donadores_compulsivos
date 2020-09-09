@@ -37,8 +37,6 @@ class UpdateDonorRequest extends FormRequest
             'born_date'     => 'required',
             'email'         => 'email|unique:donors,email,'.$this->donor->id,
             'mobile'        => 'digits:10|max:10|min:10',
-            'weight'        => 'numeric',
-            'height'        => 'numeric',
             'age'           => 'required|numeric',
             'observations'  => 'max:255'
         ];

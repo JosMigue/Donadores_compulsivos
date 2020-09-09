@@ -38,8 +38,6 @@ class SaveDonorRequest extends FormRequest
             'first_time_donating' => 'boolean',
             'email'         => 'required|email|unique:donors',
             'mobile'        => 'digits:10|max:10|min:10',
-            'weight'        => 'numeric',
-            'height'        => 'numeric',
             'age'           => 'required|numeric',
             'observations'  => 'max:255',
             'profile_picture'  => 'image|mimes:jpeg,png,jpg|max:2048',
