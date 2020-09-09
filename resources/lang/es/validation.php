@@ -154,6 +154,7 @@ return [
         'body'                  => 'contenido',
         'born_date'             => 'fecha de nacimiento',
         'bloodtype'             => 'tipo de sangre',
+        'blood bank id'         => 'banco de sangre',
         'city_id'               => 'ciudad',
         'content'               => 'contenido',
         'country'               => 'país',

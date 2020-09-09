@@ -50,7 +50,11 @@
               <tr>
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{$campaign->name}}</td>
-                <td>{{$campaign->place}}</td>
+                @if ($campaign->campaigntype=='c1')
+                  <td>{{$campaign->place}}</td>
+                @else 
+                  <td>{{$campaign->bloodbank->name}}</td>
+                @endif
                 <td>{{$campaign->city->name}}</td>
                 <td>{{$campaign->state->name}}</td>
                 <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>

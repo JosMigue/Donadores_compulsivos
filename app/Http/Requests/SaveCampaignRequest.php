@@ -25,7 +25,7 @@ class SaveCampaignRequest extends FormRequest
     {
         return [
             'name'      => 'required|max:255',
-            'place'     => 'required|max:255',
+            'place'     => 'exclude_if:campaigntype,c2|required|max:255',
             'description' => 'required|max:255',
             'city_id'  => 'required|numeric',
             'state_id'  => 'required|numeric',
@@ -33,6 +33,8 @@ class SaveCampaignRequest extends FormRequest
             'time_start'=> 'required',
             'date_finish'=> 'required|date',
             'time_finish'=> 'required',
+            'campaigntype'=> 'required|string',
+            'blood_bank_id'=> 'exclude_if:campaigntype,c1|required|integer',
             'description'=> 'required',
             'user_id' =>    'required',
         ];

@@ -6,6 +6,7 @@ use App\Campaign;
 use App\City;
 use App\State;
 use App\Donor;
+use App\BloodBank;
 use Excel;
 use App\Exports\CampaignsExport;
 use Illuminate\Http\Request;
@@ -27,16 +28,18 @@ class CampaignController extends Controller
 
   public function index()
   {
-    $campaigns = Campaign::with('user', 'state', 'city')->latest()->paginate(5);
+    $campaigns = Campaign::with('user', 'state', 'city', 'bloodbank')->latest()->paginate(5);
     return view('campaign.index', compact('campaigns'));
 	}
 	
   public function create()
   {
     $bloodTypes = Donor::getEnum('bloodtype');
+    $campaignTypes = Campaign::getEnum('campaigntype');
+    $bloodBanks = BloodBank::all();
     $cities = City::all();
     $states = State::all();
-    return view('campaign.create', compact('cities', 'states', 'bloodTypes'));
+    return view('campaign.create', compact('cities', 'states', 'bloodTypes', 'campaignTypes', 'bloodBanks'));
   }
 
   public function store(SaveCampaignRequest $request)
@@ -88,13 +91,17 @@ class CampaignController extends Controller
   public function edit(Campaign $campaign)
   {
 		$cities = City::where('state_id', $campaign->state_id)->get();
-		$states = State::all();
-		return view('campaign.edit', compact('cities', 'states', 'campaign'));
+    $states = State::all();
+    $campaignTypes = Campaign::getEnum('campaigntype');
+    $bloodBanks = BloodBank::all();
+		return view('campaign.edit', compact('cities', 'states', 'campaign', 'campaignTypes', 'bloodBanks'));
   }
 
   public function update(UpdateCampaignRequest $request, Campaign $campaign)
   {
     if($campaign->update($request->validated())){
+      $campaign->campaigntype == 'c1' ? $campaign->blood_bank_id = null : $campaign->place = null; 
+      $campaign->save();
 			return redirect()->route('campaigns.index')->with('successMessage',__('Campaign updated successfully'));
 		}else{
 			return redirect()->route('campaigns.index')->with('errorMessage',__('Something went wrong, try again later'));

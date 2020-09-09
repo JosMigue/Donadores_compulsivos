@@ -1,26 +1,50 @@
 @extends('layouts.app')
 
-@section('title', __('Add Campaign'))
+@section('title', __('Edit campaign'))
 
 @section('content')
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">{{__('Add Campaign')}}</h4>
+          <h4 class="card-title">{{__('Edit campaign')}}</h4>
         </div>
         <div class="card-body">
           <form action="{{route('campaigns.update',$campaign->id)}}" method="POST">
             @csrf
             @method('PATCH')
             <div class="row my-1">
+              <div class="col-12">
+                <label for="">{{__('Campaign type')}}</label>
+                <div class="d-flex flex-row">
+                  @foreach ($campaignTypes as $index => $campaignType)
+                    <div class="form-check mr-3">
+                      <input class="form-check-input" type="radio" name="campaigntype" onchange="toggleBloodbanksSection(this)"  id="campaigntype" value="{{$index}}" @if ($index == $campaign->campaigntype) checked  @endif>
+                      <label class="form-check-label" for="campaigntype">
+                        {{$campaignType}}
+                      </label>
+                    </div>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+            <div class="row my-1">
               <div class="col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{$campaign->name}}">
               </div>
-              <div class="col-md-8 pl-md-1">
+              <div class="col-md-8 pr-md-1 {{$campaign->campaigntype != 'c1' ?  'd-none' : 'd:block'}}" id="place_section">
                 <label>{{__('Place')}}</label>
                 <input type="text" id="place" name="place" class="form-control" placeholder="{{__('Place')}}" value="{{$campaign->place}}">
+              </div> 
+              <div class="col-md-8 {{$campaign->campaigntype != 'c2' ?  'd-none' : 'd:block'}}" id="blood_bank_section">
+                <label for="blood_bank_id">{{__('Blood bank')}}</label>
+                <select class="form-control" name="blood_bank_id" id="blood_bank_id">
+                  <option value="" selected disabled>{{__('Select blood bank')}}</option>
+                  @foreach ($bloodBanks as $bloodBank)
+                    <option value="{{$bloodBank->id}}" @if ($campaign->bloodbank && $bloodBank->id == $campaign->bloodbank->id) selected @endif>{{$bloodBank->name}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="row">

@@ -13,17 +13,41 @@
         <div class="card-header">
           <h4 class="card-title">{{__('Add Campaign')}}</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body" >
           <form action="{{route('campaigns.store')}}" method="POST">
             @csrf
             <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-12">
+                <label for="">{{__('Campaign type')}}</label>
+                <div class="d-flex flex-row">
+                  @foreach ($campaignTypes as $index => $campaignType)
+                    <div class="form-check mr-3">
+                      <input class="form-check-input" type="radio" name="campaigntype" onchange="toggleBloodbanksSection(this)"  id="campaigntype" value="{{$index}}" @if ($index == 'c1') checked  @endif>
+                      <label class="form-check-label" for="campaigntype">
+                        {{$campaignType}}
+                      </label>
+                    </div>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+            <div class="row my-1">
+              <div class="col-md-4 pr-md-1" >
                 <label>{{__('Name')}}</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}">
               </div>
-              <div class="col-md-8 pl-md-1">
+              <div class="col-md-8 pr-md-1" id="place_section">
                 <label>{{__('Place')}}</label>
                 <input type="text" id="place" name="place" class="form-control" placeholder="{{__('Place')}}" value="{{old('place')}}">
+              </div>
+              <div class="col-md-8 d-none" id="blood_bank_section">
+                <label for="blood_bank_id">{{__('Blood bank')}}</label>
+                <select class="form-control" name="blood_bank_id" id="blood_bank_id">
+                  <option value="" selected disabled>{{__('Select blood bank')}}</option>
+                  @foreach ($bloodBanks as $bloodBank)
+                    <option value="{{$bloodBank->id}}">{{$bloodBank->name}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
             <div class="row">
@@ -99,7 +123,7 @@
                   </div>
                 @endforeach
               </div>
-              <div class="row ">
+              <div class="row">
                 <div class="col-12 d-flex justify-content-end">
                   <button class="btn btn-info btn-sm" type="button" onclick="showHelp()"> <i class="fa fa-question-circle" aria-hidden="true"></i></button>
                 </div>
