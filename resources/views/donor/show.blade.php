@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', __('Show donor'))
+@if (Auth::user()->is_admin)
+  @section('title', __('Show donor'))  
+@else
+  @section('title', __('Profile'))
+@endif
 
 @section('stylesheets')
   <link rel="stylesheet" href="{{asset('css/theme/profile.css')}}">

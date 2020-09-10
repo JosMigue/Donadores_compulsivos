@@ -34,6 +34,8 @@
             <th scope="col">{{__('Postal Code')}}</th>
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
+            <th scope="col">{{__('Days of the week')}}</th>
+            <th scope="col">{{__('Bussiness hours')}}</th>
             <th scope="col">{{__('User')}}</th>
             <th scope="col">{{__('Actions')}}</th>
           </tr>
@@ -50,6 +52,8 @@
                 <td>{{$bloodBank->postal_code}}</td>
                 <td>{{$bloodBank->city->name}}</td>
                 <td>{{$bloodBank->state->name}}</td>
+                <td>{{__($bloodBank->getEnum('Dayofweektypes')[$bloodBank->dayofweektype])}}</td>
+                <td>{{$bloodBank->bussines_hours_start}} - {{$bloodBank->bussines_hours_end}}</td>
                 <td>{{$bloodBank->user->name}}</td>
                 <td>
                   <div class="btn-group dropleft">
@@ -58,7 +62,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="{{route('bloodbanks.edit', $bloodBank->id)}}"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>{{__('Edit')}}</a>
-                      <button onclick="deleteBloodBank(this)" value="{{$bloodBank->id}}" class="dropdown-item" ><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Delete')}}</button>
+                      <button onclick="deleteBloodBank(this)" value="{{$bloodBank->id}}" class="dropdown-item" ><i class="fa fa-trash mx-1" aria-hidden="true"></i>{{__('Destroy')}}</button>
                     </div>
                   </div>
                 </td>
@@ -66,7 +70,7 @@
             @endforeach
           @else
             <tr>
-              <td  class="text-center" colspan="11">
+              <td  class="text-center" colspan="12">
                 {{__('There is not nothing to show')}}
               </td>
             </tr>

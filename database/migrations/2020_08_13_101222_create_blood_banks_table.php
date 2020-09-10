@@ -24,6 +24,9 @@ class CreateBloodBanksTable extends Migration
             $table->string('city_id')->nullable(false);
             $table->string('state_id')->nullable(false);
             $table->integer('user_id')->nullable(false);
+            $table->string('dayofweektype')->nullable(false);
+            $table->string('bussines_hours_start')->nullable(false);
+            $table->string('bussines_hours_end')->nullable(false);
             $table->timestamps();
         });
     }
