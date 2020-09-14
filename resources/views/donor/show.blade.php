@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', __('Show donor'))
+@if (Auth::user()->is_admin)
+  @section('title', __('Show donor'))  
+@else
+  @section('title', __('Profile'))
+@endif
 
 @section('stylesheets')
   <link rel="stylesheet" href="{{asset('css/theme/profile.css')}}">
@@ -131,19 +135,11 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-3">
-                <label>{{__('Weight')}}</label>
-                <p>{{$donor->weight}}</p>
-              </div>
-              <div class="col-12 col-md-3">
-                <label>{{__('Height')}}</label>
-                <p>{{$donor->height}}</p>
-              </div>
-              <div class="col-12 col-md-3">
+              <div class="col-6 col-md-6">
                 <label>{{__('Blood type')}}</label>
                 <p>{{$donor->getEnum('bloodtype')[$donor->bloodtype]}}</p>
               </div>
-              <div class="col-12 col-md-3">
+              <div class="col-6 col-md-6">
                 <label>{{__('Gender')}}</label>
                 <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
               </div>
@@ -205,7 +201,7 @@
                     @endforeach
                   @else
                       <tr>
-                        <td class="text-center" colspan="6">{{__('There is not nothing to show')}}</td>
+                        <td class="text-center" colspan="8">{{__('There is not nothing to show')}}</td>
                       </tr>
                   @endif
                 </tbody>

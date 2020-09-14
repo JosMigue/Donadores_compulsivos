@@ -2037,6 +2037,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['campaigndonorsarray', 'campaignid', 'gendertypes', 'bloodtypes'],
   data: function data() {
@@ -40994,86 +40997,98 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.campaigndonors.data, function(campaigndonor, index) {
-              return _c("tr", { key: index }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _vm._v(_vm._s(index + 1))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(campaigndonor.name) +
-                      " " +
-                      _vm._s(campaigndonor.parental_surname) +
-                      " " +
-                      _vm._s(campaigndonor.maternal_surname)
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.bloods[campaigndonor.bloodtype]))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(_vm.genders[campaigndonor.gendertype]))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(campaigndonor.mobile))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(campaigndonor.email))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(campaigndonor.pivot.turn))]),
-                _vm._v(" "),
-                _c("td", [
-                  campaigndonor.pivot.donor_donated
-                    ? _c("i", {
-                        staticClass: "fa fa-check text-success",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    : _c("i", {
-                        staticClass: "fa fa-times text-danger",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  campaigndonor.pivot.donor_donated
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: {
-                            "data-toggle": "tooltip",
-                            "data-placement": "right",
-                            title: "Marcar como no asistió"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.changeStatusDonation(index, 0)
+            [
+              _vm._l(_vm.campaigndonors.data, function(campaigndonor, index) {
+                return _c("tr", { key: index }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(campaigndonor.name) +
+                        " " +
+                        _vm._s(campaigndonor.parental_surname) +
+                        " " +
+                        _vm._s(campaigndonor.maternal_surname)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(_vm.bloods[campaigndonor.bloodtype]))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(_vm.genders[campaigndonor.gendertype]))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(campaigndonor.mobile))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(campaigndonor.email))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(campaigndonor.pivot.turn))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    campaigndonor.pivot.donor_donated
+                      ? _c("i", {
+                          staticClass: "fa fa-check text-success",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      : _c("i", {
+                          staticClass: "fa fa-times text-danger",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    campaigndonor.pivot.donor_donated
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "Marcar como no asistió"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.changeStatusDonation(index, 0)
+                              }
                             }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-times" })]
-                      )
-                    : _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success btn-sm",
-                          attrs: {
-                            "data-toggle": "tooltip",
-                            "data-placement": "right",
-                            title: "Marcar como asistió"
                           },
-                          on: {
-                            click: function($event) {
-                              return _vm.changeStatusDonation(index, 1)
+                          [_c("i", { staticClass: "fa fa-times" })]
+                        )
+                      : _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success btn-sm",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "Marcar como asistió"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.changeStatusDonation(index, 1)
+                              }
                             }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-check" })]
-                      )
+                          },
+                          [_c("i", { staticClass: "fa fa-check" })]
+                        )
+                  ])
                 ])
-              ])
-            }),
-            0
+              }),
+              _vm._v(" "),
+              _vm.campaigndonors.data.length == 0
+                ? _c("tr", [
+                    _c("td", { attrs: { colspan: "9" } }, [
+                      _vm._v("No se encontraron registros")
+                    ])
+                  ])
+                : _vm._e()
+            ],
+            2
           )
         ]
       )

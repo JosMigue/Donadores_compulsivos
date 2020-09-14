@@ -26,6 +26,24 @@ function toggleFilters(){
   }
 }
 
+function toggleBloodbanksSection(ratioInput){
+  const section = document.getElementById('blood_bank_section');
+  const select = document.getElementById('blood_bank_id');
+  const field_place = document.getElementById('place_section');
+  if(ratioInput.value == 'c1'){
+    if(section.classList.contains('d-none')){
+    }else{
+      section.classList.add('d-none');
+      field_place.classList.remove('d-none')
+      select.value = '';
+    }
+  }else{
+    section.classList.remove('d-none')
+    field_place.classList.add('d-none');
+    field_place.value = 'banco de sangre';
+  }
+}
+
 function showHelp(){
   Swal.fire({
     title: 'Ayuda',

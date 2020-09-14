@@ -19,7 +19,11 @@
         </div>
         <div class="col-6 col-lg-4">
           <label>{{__('Place')}}</label>
-          <p>{{$campaign->place}}</p>
+          @if ($campaign->campaigntype == 'c1')
+            <p>{{$campaign->place}}</p>  
+          @else
+            <p>{{$campaign->bloodbank->name}}</p>  
+          @endif
         </div>
         <div class="col-12 col-lg-4">
           <label>{{__('Description')}}</label>

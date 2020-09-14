@@ -70,53 +70,45 @@
               </div>
             </div>
             <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('City')}}</label>
                 <select id="city_id" name="city_id" class="form-control" required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
               </div>
-              <div class="col-md-4 px-md-1">
+              <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Postal Code')}}</label>
                 <input type="number" id="postal_code" name="postal_code" class="form-control" placeholder="{{__('Postal code')}}" value="{{old('postal_code')}}" required>
               </div>
-              <div class="col-md-4 pr-md-1">
+              <div class="col-12 col-md-4 pl-md-1">
                 <label>{{__('Born date')}}</label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}" required>
               </div>
             </div>
             <div class="row my-1">
-              <div class="col-md-3 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
               </div>
-              <div class="col-md-3 px-md-1">
+              <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Password')}}</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}" required>
               </div>
-              <div class="col-md-3 px-md-1">
+              <div class="col-12 col-md-4 pl-md-1">
                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
               </div>
-              <div class="col-md-3 pl-md-1">
+            </div>
+            <div class="row my-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Mobile')}}</label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}">
               </div>
-            </div>
-            <div class="row my-1">
-              <div class="col-6 col-md-4 pr-md-1">
-                <label>{{__('Weight')}}</label>
-                <input class="form-control" type="number" id="weight" name="weight" step="any" value="{{old('weight')}}" required>
-              </div>
               <div class="col-6 col-md-4 px-md-1">
-                <label>{{__('Height')}}</label>
-                <input class="form-control" type="number" id="height" name="height" step="any" value="{{old('height')}}" required>
-              </div>
-              <div class="col-6 col-md-1 px-md-1">
                 <label>{{__('Age')}}</label>
                 <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}" required >
               </div>
-              <div class="col-6 col-md-3 pl-md-1">
+              <div class="col-6 col-md-4 pl-md-1">
                 <label>{{__('Gender')}}</label>
                 <select id="gendertype" name="gendertype" class="form-control">
                   <option value="" disabled selected> {{__('Select...')}}</option>

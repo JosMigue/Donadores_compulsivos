@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="{{config('app.subtitle')}}">
+        <title>{{ config('app.name')}}</title>
         <link rel="icon" href="{{asset('img/donadores-compulsivos-icon.png')}}" sizes="56x56">
         <title>{{env('APP_NAME')}}</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">

@@ -23,14 +23,16 @@ class BloodBankController extends Controller
   public function index()
   {
     $bloodBanks = BloodBank::with('city','state','user')->latest()->paginate(5);
-    return view('bloodbank.index',compact('bloodBanks'));
+    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
+    return view('bloodbank.index',compact('bloodBanks','daysOfWeek'));
   }
 
   public function create()
   {
     $states = State::all();
     $cities = City::all();
-    return view('bloodbank.create', compact('cities', 'states'));
+    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
+    return view('bloodbank.create', compact('cities', 'states', 'daysOfWeek'));
   }
 
   public function store(SaveBloodBankRequest $request)
@@ -51,7 +53,8 @@ class BloodBankController extends Controller
   {
     $cities = City::where('state_id',$bloodbank->state_id)->get();
     $states =  State::all();
-    return view('bloodbank.edit', compact('bloodbank', 'cities', 'states'));
+    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
+    return view('bloodbank.edit', compact('bloodbank', 'cities', 'states', 'daysOfWeek'));
   }
 
   public function update(UpdateBloodBankRequest $request, BloodBank $bloodbank)

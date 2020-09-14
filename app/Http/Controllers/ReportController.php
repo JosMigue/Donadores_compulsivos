@@ -22,6 +22,6 @@ class ReportController extends Controller
   }
 
   public function create(){
-    return Excel::download(new DonationsExport, 'campaigns.xlsx');
+    return Excel::download(new DonationsExport, 'donations.xlsx');
   } 
 }

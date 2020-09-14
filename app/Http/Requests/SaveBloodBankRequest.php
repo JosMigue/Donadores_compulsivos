@@ -31,7 +31,11 @@ class SaveBloodBankRequest extends FormRequest
             'postal_code' => 'required',
             'city_id'     => 'required',
             'state_id'    => 'required',
-            'user_id'     => 'required'
+            'user_id'     => 'required',
+            'dayofweektype' => 'required',
+            'bussines_hours_start' => 'required',
+            'bussines_hours_end' => 'required',
+
         ];
     }
 }

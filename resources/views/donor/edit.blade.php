@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@if (Auth::user()->is_admin)
+  @section('title',__('Update donor'))  
+@else
+  @section('title',__('Edit profile')) 
+@endif
+
 @section('content')
   <div class="container">
     <div class="row d-flex justify-content-center">
@@ -8,7 +14,7 @@
           @if (Auth::user()->is_admin)
             <h4 class="card-title">{{__('Update donor')}}</h4>
           @else
-          <h4 class="card-title">{{__('Edit profile')}}</h4>
+            <h4 class="card-title">{{__('Edit profile')}}</h4>
           @endif
         </div>
         <div class="card-body">
@@ -84,29 +90,21 @@
               </div>
             </div>
             <div class="row my-1">
-              <div class="col-12 col-md-4 pr-md-1">
+              <div class="col-12 col-md-6 pr-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{$donor->email}}">
               </div>
-              <div class="col-12 col-md-4 px-md-1">
+              <div class="col-12 col-md-6 pl-md-1">
                 <label>{{__('Mobile')}}</label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{$donor->mobile}}">
               </div>
-              <div class="col-12 col-md-4 pl-md-1">
-                <label>{{__('Weight')}}</label>
-                <input class="form-control" type="number" id="weight" name="weight" step="any" value="{{$donor->weight}}">
-              </div>
             </div>
             <div class="row my-1">
-              <div class="col-6 col-md-5 pr-md-1">
-                <label>{{__('Height')}}</label>
-                <input class="form-control" type="number" id="height" name="height" step="any" value="{{$donor->height}}">
-              </div>
-              <div class="col-6 col-md-2 px-md-1">
+              <div class="col-6 col-md-4 pr-md-1">
                 <label>{{__('Age')}}</label>
                 <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{$donor->age}}">
               </div>
-              <div class="col-6 col-md-5 pl-md-1">
+              <div class="col-6 col-md-8 pl-md-1">
                 <label>{{__('Gender')}}</label>
                 <select id="gendertype" name="gendertype" class="form-control">
                   <option value="" disabled selected> {{__('Select...')}}</option>
