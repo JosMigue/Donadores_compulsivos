@@ -55,6 +55,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'profile_pictures' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/profile'),
+            'url' => env('APP_URL').'/storage/uploads/profile',
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -64,6 +70,12 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'uploaded-images-bank' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/bankimages'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ]
 
     ],
 

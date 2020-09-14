@@ -1,0 +1,83 @@
+body {
+  background-color: #f6f6f6;
+  margin: 0;
+  padding: 0;
+} 
+  
+.notFoundContainer {
+  background: #f6f6f6;
+  height: 50vh;
+  margin: auto;
+  padding: 110px 40px;
+  position: relative;
+  width: 50%;
+}
+    
+.notfound {
+  background: #fff;
+  line-height: 1.4;
+  max-width: 767px;
+  padding: 110px 0px;
+  text-align: center;
+  width: 100%;
+}
+
+h1 {
+  color: #262626;
+  font-family: 'Roboto', sans-serif;
+  font-size: 165px;
+  font-weight: 700;
+  margin: 0px;
+  text-transform: uppercase;
+  top: 50%;
+}
+
+h1>span {
+  color: #ff0000;
+}
+
+.notfound h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #151515;
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+
+
+.button {
+  background: #ff0000;
+  color:white;
+  display: inline-block;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 25px;
+  transition: 0.2s all;
+  text-decoration: none;
+  text-transform: uppercase;
+  -webkit-transition: 0.2s all;
+}
+
+.button:hover{
+  color: #d66666;
+}
+
+@media only screen and (max-width: 767px) {
+h2 {
+  font-size: 18px;
+}
+}
+
+@media only screen and (max-width: 480px) {
+h1 {
+  font-size: 100px;
+    
+}
+
+.notFoundContainer {
+  width: 80%;
+}
+}

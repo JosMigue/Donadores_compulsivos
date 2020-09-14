@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\Enums;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+    use Enums;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_admin',
     ];
 
     /**
@@ -36,4 +38,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $enumUsertypes = [
+        '0' => 'Donor',
+        '1' => 'Administrator',
+        '2' => 'Super Administrator',
+    ];
+
+    public function donor(){
+        return $this->hasOne('App\Donor');
+    }
 }

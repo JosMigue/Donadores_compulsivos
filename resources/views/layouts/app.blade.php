@@ -3,95 +3,95 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{config('app.subtitle')}}">
-
-    <title>{{ config('app.name') }}</title>
-
-    <!-- Scripts -->
+    <title>@yield('title') | {{ config('app.name') }}</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
+    <link rel="stylesheet" href="{{asset('css/elements/nav.css')}}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
     <link rel="icon" href="{{asset('img/donadores-compulsivos-icon.png')}}" sizes="56x56">
-
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('stylesheets')
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="214" height="30" viewBox="0 0 214 30">
-                        <defs>
-                            <path id="a" d="M0 29.953h213.29V0H0z"/>
-                        </defs>
-                        <g fill="none" fill-rule="evenodd">
-                            <path fill="#FEFEFE" d="M3.008 7.059c1.39 0 2.325-.938 2.325-2.307V4.73c0-1.37-.935-2.33-2.325-2.33H1.697v4.658h1.311zM.001.867h3.007c2.425 0 4.1 1.666 4.1 3.84v.024c0 2.173-1.675 3.861-4.1 3.861H.001V.867zM27.72 4.752V4.73c0-1.325-.97-2.428-2.337-2.428-1.366 0-2.314 1.082-2.314 2.406v.022c0 1.324.968 2.427 2.336 2.427 1.367 0 2.315-1.081 2.315-2.405m-6.426 0V4.73c0-2.196 1.73-3.995 4.11-3.995 2.381 0 4.09 1.777 4.09 3.973v.022c0 2.196-1.73 3.995-4.111 3.995-2.38 0-4.089-1.777-4.089-3.973M44.022.867h1.564l3.616 4.756V.867h1.675v7.727h-1.442L45.697 3.68v4.913h-1.675zM90.478 7.059c1.39 0 2.325-.938 2.325-2.307V4.73c0-1.37-.935-2.33-2.325-2.33h-1.311v4.658h1.31zM87.47.867h3.008c2.424 0 4.1 1.666 4.1 3.84v.024c0 2.173-1.676 3.861-4.1 3.861H87.47V.867zM115.188 4.752V4.73c0-1.325-.969-2.428-2.336-2.428-1.365 0-2.316 1.082-2.316 2.406v.022c0 1.324.971 2.427 2.337 2.427 1.368 0 2.315-1.081 2.315-2.405m-6.425 0V4.73c0-2.196 1.73-3.995 4.11-3.995 2.382 0 4.09 1.777 4.09 3.973v.022c0 2.196-1.73 3.995-4.111 3.995-2.38 0-4.089-1.777-4.089-3.973M134.909 4.62c.825 0 1.299-.442 1.299-1.092v-.023c0-.728-.507-1.104-1.334-1.104h-1.685V4.62h1.72zM131.49.867h3.527c.98 0 1.74.276 2.249.784.429.43.66 1.037.66 1.765v.023c0 1.246-.672 2.03-1.653 2.395l1.885 2.759h-1.984l-1.652-2.472h-1.334v2.472h-1.698V.867zM152.476.867h5.818V2.38h-4.132v1.567h3.637v1.512h-3.637V7.08h4.188v1.514h-5.874zM172.347 7.466l1.003-1.202c.694.574 1.421.938 2.302.938.697 0 1.114-.276 1.114-.729v-.022c0-.43-.265-.651-1.553-.982-1.555-.398-2.557-.828-2.557-2.362v-.022c0-1.4 1.124-2.328 2.7-2.328 1.124 0 2.082.353 2.864.981l-.88 1.281c-.685-.475-1.355-.761-2.007-.761-.65 0-.991.297-.991.673v.022c0 .507.33.673 1.663 1.015 1.565.408 2.449.972 2.449 2.317v.023c0 1.534-1.17 2.395-2.832 2.395a4.91 4.91 0 0 1-3.275-1.237"/>
-                            <path fill="#ED1A3A" d="M69.263 8.133c-.305 0-.596-.036-.87-.103 1.725-.403 3.02-1.495 3.289-2.83.205.28.322.6.322.938 0 1.102-1.227 1.995-2.741 1.995M69.006 0s-3.773 4.577-3.773 6.095c0 1.517 1.689 2.748 3.773 2.748s3.772-1.23 3.772-2.748C72.778 4.577 69.006 0 69.006 0"/>
-                            <path fill="#FEFEFE" d="M0 25.173v-.021c0-2.196 1.654-3.995 4.024-3.995 1.454 0 2.325.485 3.04 1.19l-1.078 1.248c-.597-.54-1.203-.87-1.974-.87-1.3 0-2.238 1.08-2.238 2.404v.023c0 1.323.916 2.427 2.238 2.427.882 0 1.421-.354 2.028-.904l1.08 1.09c-.793.852-1.674 1.38-3.163 1.38C1.686 29.145 0 27.393 0 25.173M27.355 25.173v-.021c0-1.325-.97-2.427-2.336-2.427-1.367 0-2.315 1.08-2.315 2.404v.023c0 1.323.97 2.427 2.337 2.427 1.368 0 2.314-1.081 2.314-2.406m-6.425 0v-.021c0-2.196 1.731-3.995 4.11-3.995 2.382 0 4.089 1.775 4.089 3.972v.023c0 2.196-1.73 3.993-4.11 3.993-2.38 0-4.09-1.775-4.09-3.972M43.658 21.289h1.829l2.026 3.267 2.029-3.267h1.83v7.725h-1.687V23.97l-2.172 3.3h-.043l-2.148-3.266v5.01h-1.664zM69.282 25.184c.85 0 1.347-.508 1.347-1.17v-.02c0-.762-.53-1.17-1.38-1.17h-1.31v2.36h1.344zM66.24 21.29h3.153c1.841 0 2.955 1.093 2.955 2.67v.022c0 1.788-1.39 2.716-3.12 2.716h-1.29v2.317H66.24v-7.725zM86.5 25.703v-4.415h1.697v4.372c0 1.256.627 1.907 1.663 1.907s1.664-.628 1.664-1.853V21.29h1.697v4.358c0 2.34-1.311 3.487-3.382 3.487-2.073 0-3.34-1.156-3.34-3.43M107.97 21.289h1.695v6.18h3.847v1.545h-5.542zM127.278 27.889l1.003-1.204c.694.574 1.422.939 2.303.939.694 0 1.113-.275 1.113-.728v-.024c0-.43-.263-.65-1.554-.981-1.552-.398-2.556-.828-2.556-2.362v-.021c0-1.402 1.123-2.33 2.699-2.33 1.126 0 2.085.353 2.866.982l-.88 1.281c-.684-.475-1.358-.761-2.007-.761-.65 0-.993.298-.993.674v.02c0 .507.33.673 1.664 1.015 1.565.41 2.449.972 2.449 2.319v.022c0 1.534-1.17 2.394-2.833 2.394a4.913 4.913 0 0 1-3.274-1.235"/>
-                            <mask id="b" fill="#fff">
-                                <use xlink:href="#a"/>
-                            </mask>
-                            <path fill="#FEFEFE" d="M147.955 29.014h1.697V21.29h-1.697zM163.934 21.289h1.874l2.015 5.441 2.018-5.441h1.829l-3.118 7.78h-1.5zM207.182 27.889l1.003-1.204c.695.574 1.422.939 2.304.939.695 0 1.114-.275 1.114-.728v-.024c0-.43-.266-.65-1.554-.981-1.555-.398-2.559-.828-2.559-2.362v-.021c0-1.402 1.126-2.33 2.703-2.33 1.122 0 2.082.353 2.863.982l-.88 1.281c-.685-.475-1.356-.761-2.008-.761-.649 0-.99.298-.99.674v.02c0 .507.329.673 1.664 1.015 1.565.41 2.448.972 2.448 2.319v.022c0 1.534-1.17 2.394-2.833 2.394-1.17 0-2.348-.409-3.275-1.235" mask="url(#b)"/>
-                            <path fill="#ED1A3A" d="M188.607 28.623a3.087 3.087 0 0 1-3.08-3.085c0-1.699 1.383-3.084 3.08-3.084a3.087 3.087 0 0 1 3.08 3.084c0 1.701-1.382 3.085-3.08 3.085m3.576-5.657l.304-.303a.666.666 0 0 0-.94-.94l-.293.293a4.402 4.402 0 0 0-1.983-.838v-.487h.156a.665.665 0 1 0 0-1.332h-1.643a.665.665 0 0 0-.664.666c0 .368.297.666.664.666h.159v.487a4.419 4.419 0 0 0-3.746 4.36 4.416 4.416 0 0 0 4.41 4.415c2.43 0 4.41-1.979 4.41-4.415 0-.96-.313-1.847-.834-2.572" mask="url(#b)"/>
-                            <path fill="#ED1A3A" d="M190.312 25.556l-1.29-.337v-1.73a.531.531 0 1 0-1.062 0v2.14c0 .243.162.453.396.516l1.687.442a.535.535 0 0 0 .65-.38.534.534 0 0 0-.38-.651" mask="url(#b)"/>
-                        </g>
-                    </svg>  
+  <div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark  bg-black shadow-sm">
+      <div class="container">
+        @guest
+          <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="{{asset('img/donadores-logo.svg')}}" class="d-inline-block align-top" alt="">
+          </a>
+        @else
+          <a class="navbar-brand" href="{{ url('/home') }}">
+            <img src="{{asset('img/donadores-logo.svg')}}" class="d-inline-block align-top" alt="">
+          </a>
+        @endguest
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+          <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            @auth
+            @if(!Request::is('home') && Auth::user()->is_admin)
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('donors.index')}}">{{__('Donors')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('admins.index')}}">{{__('Admins')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('campaigns.index')}}">{{__('Campaigns')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('bloodbanks.index')}}">{{__('Blood banks')}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('reports.index')}}">{{__('Log files')}}</a>
+                </li>
+            @endif  
+            @endauth
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            @guest
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+              </li>
+              @if (Route::has('register'))
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+              @endif
+            @else
+              <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="mailto:soporte2@jlmarketing.com.mx?subject=Reporte de porblema de Donadores Compulsivos"><i class="fa fa-bug mx-1" aria-hidden="true"></i>{{__('Report bug')}} </a>
+                  <a class="dropdown-item" href="#"><i class="fa fa-question mx-1" aria-hidden="true"></i>{{__('Help')}} </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out mx-1" aria-hidden="true"></i>{{ __('Logout') }}
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                  </form>
                 </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+              </li>
+            @endguest
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="py-4">
+      @yield('content')
+    </main>
+  </div>
+  @yield('scripts')
 </body>
 </html>

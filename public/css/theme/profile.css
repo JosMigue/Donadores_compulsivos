@@ -1,0 +1,82 @@
+.emp-profile{
+  background: #fff;
+  border-radius: 0.5rem;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  padding: 3%;
+}
+.profile-img{
+  text-align: center;
+}
+.profile-img img{
+  width: 70%;
+  height: 100%;
+}
+.profile-img .file {
+  background: #212529b8;
+  border: none;
+  border-radius: 0;
+  font-size: 15px;
+  margin-top: -20%;
+  position: relative;
+  overflow: hidden;
+  width: 70%;
+}
+.profile-img .file input {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  top: 0;
+}
+.profile-head h5{
+  color: #333;
+}
+.profile-head h6{
+  color: #EC1C3C;
+}
+.proile-rating{
+  font-size: 12px;
+  color: #818182;
+  margin-top: 5%;
+}
+.proile-rating span{
+  color: #495057;
+  font-size: 15px;
+  font-weight: 600;
+}
+.profile-head .nav-tabs{
+  margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+  border: none;
+  font-weight:600;
+}
+.profile-head .nav-tabs .nav-link.active{
+  border: none;
+  border-bottom:2px solid #EC1C3C;
+}
+.profile-work p{
+  color: #818182;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10%;
+}
+.profile-work a{
+  color: #495057;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+.profile-work ul{
+  list-style: none;
+}
+.profile-tab label{
+  font-weight: 600;
+}
+.profile-tab p{
+  font-weight: 600;
+  color: #EC1C3C;
+}
+a.is-red{
+  color: #EC1C3C;
+}
