@@ -33,7 +33,7 @@
     </div>
       <autocomplete-component></autocomplete-component>
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-sm">
+      <table class="table table-hover table-striped">
         <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>

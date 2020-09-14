@@ -30,13 +30,13 @@
             <th scope="col">{{__('Name')}}</th>
             <th scope="col">{{__('E-Mail Address')}}</th>
             <th scope="col">{{__('Phone')}}</th>
+            <th scope="col">{{__('Contact person')}}</th>
             <th scope="col">{{__('Address')}}</th>
             <th scope="col">{{__('Postal Code')}}</th>
             <th scope="col">{{__('City')}}</th>
             <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Days of the week')}}</th>
             <th scope="col">{{__('Bussiness hours')}}</th>
-            <th scope="col">{{__('User')}}</th>
             <th scope="col">{{__('Actions')}}</th>
           </tr>
         </thead>
@@ -48,13 +48,13 @@
                 <td>{{$bloodBank->name}}</td>
                 <td>{{$bloodBank->email}}</td>
                 <td>{{$bloodBank->phone}}</td>
+                <td>{{$bloodBank->contact_person}}</td>
                 <td>{{$bloodBank->address}}</td>
                 <td>{{$bloodBank->postal_code}}</td>
                 <td>{{$bloodBank->city->name}}</td>
                 <td>{{$bloodBank->state->name}}</td>
                 <td>{{__($bloodBank->getEnum('Dayofweektypes')[$bloodBank->dayofweektype])}}</td>
                 <td>{{$bloodBank->bussines_hours_start}} - {{$bloodBank->bussines_hours_end}}</td>
-                <td>{{$bloodBank->user->name}}</td>
                 <td>
                   <div class="btn-group dropleft">
                     <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

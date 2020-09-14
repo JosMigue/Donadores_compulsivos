@@ -27,6 +27,7 @@ class SaveBloodBankRequest extends FormRequest
             'name'        => 'required|max:255',
             'email'       => 'required|email|unique:blood_banks',
             'phone'       => 'required|digits:10',
+            'contact_person' => 'required|string|max:255',
             'address'     => 'required',
             'postal_code' => 'required',
             'city_id'     => 'required',
