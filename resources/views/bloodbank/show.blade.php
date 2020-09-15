@@ -11,7 +11,14 @@
 @section('content')
   <div class="container">
     <div class="emp-profile">
-      <h1 class="text-center">{{__('Blood bank information')}}</h1>
+      @if ($bloodbank->hyperlink)
+        <div class="d-flex justify-content-between">
+          <h1 class="text-center">{{__('Blood bank information')}}</h1>
+          <a class="btn btn-link" target="_blank" href="http://{{$bloodbank->hyperlink}}">{{__('Visit site')}} <i class="fa fa-link mx-1"></i></a>
+        </div>
+      @else
+        <h1 class="text-center">{{__('Blood bank information')}}</h1>
+      @endif
       <div class="row text-center text-lg-left">
         <div class="col-6 col-lg-4">
           <label>{{__('Name')}}</label>
@@ -29,11 +36,11 @@
       <div class="row text-center text-lg-left">
         <div class="col-6 col-lg-3">
           <label>{{__('Phone')}}</label>
-          <p>{{$bloodbank->phone}}</p>
+          <p><a href="tel:{{$bloodbank->phone}}">{{$bloodbank->phone}}</a></p>
         </div>
         <div class="col-6 col-lg-3">
           <label>{{__('E-Mail Address')}}</label>
-          <p>{{$bloodbank->email}}</p>
+          <p><a href="mailto:{{$bloodbank->email}}">{{$bloodbank->email}}</a></p>
         </div>
         <div class="col-6 col-lg-3">
           <label>{{__('City')}}</label>
@@ -45,6 +52,7 @@
         </div>
       </div>
     </div> 
+    <h2>{{__('Bussiness hours')}}</h2>
     <div class="row">
       @foreach ($businessDays as $businessDay)
           @foreach ($businessDay as $day => $hours)

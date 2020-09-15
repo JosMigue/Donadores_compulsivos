@@ -40,7 +40,7 @@
               <tr>
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{$bloodBank->name}}</td>
-                <td>{{$bloodBank->email}}</td>
+                <td><a href="mailto:{{$bloodBank->email}}">{{$bloodBank->email}}</a></td>
                 <td>{{$bloodBank->phone}}</td>
                 <td>{{$bloodBank->contact_person}}</td>
                 <td>

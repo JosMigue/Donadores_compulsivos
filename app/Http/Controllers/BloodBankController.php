@@ -39,8 +39,8 @@ class BloodBankController extends Controller
     foreach($request->validated()['days'] as $index =>  $day){
       array_push($arrayOfDays, array($index => $day));
     }
-    $serializedArr = serialize($arrayOfDays);
-    $bloodBank = $this->buildBoodBank($request, $serializedArr);
+    $serializedArray = serialize($arrayOfDays);
+    $bloodBank = $this->buildBloodBank($request, $serializedArray);
     if(BloodBank::create($bloodBank)){
       return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank added successfully'));
     }else{
@@ -48,7 +48,7 @@ class BloodBankController extends Controller
     }
   }
 
-  private function buildBoodBank($request, $array){
+  private function buildBloodBank($request, $array){
     return [
       'name' => $request->validated()['name'],
       'email' => $request->validated()['email'],
@@ -59,7 +59,8 @@ class BloodBankController extends Controller
       'city_id' => $request->validated()['city_id'],
       'state_id' => $request->validated()['state_id'],
       'user_id' => $request->validated()['user_id'],
-      'days' => $array
+      'days' => $array,
+      'hyperlink' => $request->validated()['hyperlink'],
     ];
   }
 

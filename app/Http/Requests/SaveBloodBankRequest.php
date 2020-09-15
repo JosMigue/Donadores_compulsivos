@@ -34,6 +34,7 @@ class SaveBloodBankRequest extends FormRequest
             'state_id'    => 'required',
             'user_id'     => 'required',
             'days'   => 'required|array',
+            'hyperlink'   => 'nullable|string',
 
         ];
     }

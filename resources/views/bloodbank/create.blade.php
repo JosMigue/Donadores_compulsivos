@@ -75,6 +75,17 @@
                 </select>
               </div>
             </div>
+            <div class="row my-1">
+              <div class="col-12">
+                <label for="hyperlink">{{__('Hyperlink')}}</label>
+                <div class="input-group flex-nowrap">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa fa-link" aria-hidden="true"></i></span>
+                  </div>
+                  <input type="text" name="hyperlink" id="hyperlink" class="form-control" placeholder="{{__('Hyperlink')}}" aria-label="Username" aria-describedby="addon-wrapping">
+                </div>
+              </div>
+            </div>
             <dayofweek-component></dayofweek-component>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('bloodbanks.index')}}">{{__('Cancel')}}</a>                

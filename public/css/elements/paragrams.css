@@ -2,3 +2,14 @@ p{
   font-weight: 600;
   color: #EC1C3C;
 }
+
+p>a{
+  font-weight: 600;
+  color: #EC1C3C;
+}
+
+p>a:hover{
+  font-weight: 600;
+  color: #EC1C3C;
+  text-decoration: none;
+}
