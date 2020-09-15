@@ -75,25 +75,7 @@
                 </select>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-md-4 pr-md-1">
-                <label for="days_of_week">{{__('Bussiness hours')}}</label>
-                <select class="form-control" name="dayofweektype" id="dayofweektype" required>
-                  <option value="" selected disabled>{{__('Select days of the week')}}</option>
-                  @foreach ($daysOfWeek as $index => $dayOfWeek)
-                    <option value="{{$index}}" @if (old('dayofweektype') == $index) selected @endif>{{__($dayOfWeek)}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-6 col-md-4 px-md-1">
-                <label for="bussines_hours_start">{{__('Bussiness hours start')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_start" name="bussines_hours_start" value="{{old('bussines_hours_start')}}" required>
-              </div>
-              <div class="col-6 col-md-4 pl-md-1">
-                <label for="bussines_hours_end">{{__('Bussiness hours end')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_end" name="bussines_hours_end" value="{{old('bussines_hours_end')}}" required>
-              </div>
-            </div>
+            <dayofweek-component></dayofweek-component>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('bloodbanks.index')}}">{{__('Cancel')}}</a>                
               <button type="submit" class="btn btn-success btn-fill">{{__('Add')}}</button>

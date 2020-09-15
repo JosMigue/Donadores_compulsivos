@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Enums;
 
 class BloodBank extends Model
 {
@@ -17,17 +16,7 @@ class BloodBank extends Model
         'city_id',
         'state_id',
         'user_id',
-        'dayofweektype',
-        'bussines_hours_start',
-        'bussines_hours_end'
-    ];
-
-    use Enums;
-
-    protected $enumDayofweektypes = [
-        'dow1' => 'Monday - Fryday',
-        'dow2' => 'Monday - Saturday',
-        'dow3' => 'Monday - Sunday',
+        'days',
     ];
 
     protected $table = 'blood_banks';

@@ -23,25 +23,49 @@ class BloodBankController extends Controller
   public function index()
   {
     $bloodBanks = BloodBank::with('city','state','user')->latest()->paginate(5);
-    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
-    return view('bloodbank.index',compact('bloodBanks','daysOfWeek'));
+    return view('bloodbank.index',compact('bloodBanks'));
   }
 
   public function create()
   {
     $states = State::all();
     $cities = City::all();
-    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
-    return view('bloodbank.create', compact('cities', 'states', 'daysOfWeek'));
+    return view('bloodbank.create', compact('cities', 'states'));
   }
 
   public function store(SaveBloodBankRequest $request)
   {
-    if(BloodBank::create($request->validated())){
+    $arrayOfDays = array();
+    foreach($request->validated()['days'] as $index =>  $day){
+      array_push($arrayOfDays, array($index => $day));
+    }
+    $serializedArr = serialize($arrayOfDays);
+    $bloodBank = $this->buildBoodBank($request, $serializedArr);
+    if(BloodBank::create($bloodBank)){
       return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank added successfully'));
     }else{
       return redirect()->route('bloodbanks.index')->with('errorMessage', __('Something went wrong, try again later'));
     }
+  }
+
+  private function buildBoodBank($request, $array){
+    return [
+      'name' => $request->validated()['name'],
+      'email' => $request->validated()['email'],
+      'phone' => $request->validated()['phone'],
+      'contact_person' => $request->validated()['contact_person'],
+      'address' => $request->validated()['address'],
+      'postal_code' => $request->validated()['postal_code'],
+      'city_id' => $request->validated()['city_id'],
+      'state_id' => $request->validated()['state_id'],
+      'user_id' => $request->validated()['user_id'],
+      'days' => $array
+    ];
+  }
+
+  public function show(BloodBank $bloodbank){
+    $businessDays = unserialize($bloodbank->days);
+    return view('bloodbank.show', compact('bloodbank', 'businessDays'));
   }
 
   public function export() 
