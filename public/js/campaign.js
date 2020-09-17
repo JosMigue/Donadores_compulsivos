@@ -44,6 +44,17 @@ function toggleBloodbanksSection(ratioInput){
   }
 }
 
+function updateCampaignImage(){
+  const section = document.getElementById('toggleable-button');
+  const input = document.getElementById('campaign_image');
+  if(section.classList.contains('is-active')){
+    input.value='';
+    section.classList.remove('is-active');
+  }else{
+    section.classList.add('is-active');
+  }
+}
+
 function showHelp(){
   Swal.fire({
     title: 'Ayuda',

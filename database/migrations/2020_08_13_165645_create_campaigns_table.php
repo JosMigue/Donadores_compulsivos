@@ -27,6 +27,7 @@ class CreateCampaignsTable extends Migration
             $table->string('campaigntype')->nullable(false);
             $table->integer('blood_bank_id')->nullable(true)->default(null);
             $table->integer('user_id')->nullable(false);
+            $table->string('campaign_image')->nullable(false);
             $table->timestamps();
         });
     }

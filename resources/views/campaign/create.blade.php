@@ -14,7 +14,7 @@
           <h4 class="card-title">{{__('Add Campaign')}}</h4>
         </div>
         <div class="card-body" >
-          <form action="{{route('campaigns.store')}}" method="POST">
+          <form action="{{route('campaigns.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12">
@@ -56,7 +56,7 @@
                 <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($states as $key => $state)
-                    <option @if ($state->id == old('state_id')) selected  @endif value="{{$state->id}}">{{$state->name}}</option>
+                    <option value="{{$state->id}}">{{$state->name}}</option>
                   @endforeach
                 </select>
               </div>
@@ -89,6 +89,12 @@
               <div class="col-12">
                 <label>{{__('Description')}}</label>
                 <textarea class="form-control"  id="description" name="description" rows="5" cols="100" placeholder="{{__('Type your description here')}}"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="campaign_image">{{__('Campaign picture')}}</label>
+                <input class="form-control" type="file" name="campaign_image" id="campaign_image">
               </div>
             </div>
             <div class="d-flex justify-content-center">

@@ -42008,7 +42008,7 @@ var render = function() {
                 ])
               }),
               _vm._v(" "),
-              _vm.campaigndonors.data.length == 0
+              _vm.campaigndonors.data && _vm.campaigndonors.data.length == 0
                 ? _c("tr", [
                     _c("td", { attrs: { colspan: "9" } }, [
                       _vm._v("No se encontraron registros")
