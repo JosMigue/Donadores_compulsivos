@@ -19,12 +19,13 @@ class CreateBloodBanksTable extends Migration
             $table->string('address')->nullable(false);
             $table->string('phone')->nullable(false);
             $table->string('contact_person')->nullable(false);
+            $table->string('contact_person_mobile')->nullable(false);
             $table->string('email')->nullable(false);
             $table->string('postal_code')->nullable(false);
             $table->string('city_id')->nullable(false);
             $table->string('state_id')->nullable(false);
             $table->integer('user_id')->nullable(false);
-            $table->string('days')->nullable(false);
+            $table->string('days',2000)->nullable(false);
             $table->string('hyperlink')->nullable(true)->default(null);
             $table->timestamps();
         });

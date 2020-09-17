@@ -11,6 +11,7 @@ class BloodBank extends Model
         'email',
         'phone',
         'contact_person',
+        'contact_person_mobile',
         'address',
         'postal_code',
         'city_id',

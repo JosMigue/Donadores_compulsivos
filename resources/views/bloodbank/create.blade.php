@@ -29,23 +29,27 @@
           <form action="{{route('bloodbanks.store')}}" method="POST">
             @csrf
             <div class="row my-1">
-              <div class="col-12 col-md-6 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}" required>
               </div>
-              <div class="col-12 col-md-6 pl-md-1">
+              <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="text" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
+              </div>
+              <div class="col-12 col-md-4 pl-md-1">
+                <label>{{__('Phone')}}</label>
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
               </div>
             </div>
             <div class="row">
               <div class="col-12 col-md-6 pr-md-1">
-                <label>{{__('Phone')}}</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
-              </div>
-              <div class="col-12 col-md-6 pl-md-1">
                 <label>{{__('Contact person')}}</label>
                 <input type="text" id="contact_person" name="contact_person" class="form-control" placeholder="{{__('Name')}}" value="{{old('contact_person')}}" required>
+              </div>
+              <div class="col-12 col-md-6 pl-md-1">
+                <label>{{__('Contact person mobile')}}</label>
+                <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" placeholder="{{__('Phone')}}" value="{{old('contact_person_mobile')}}" required>
               </div>
             </div>
             <div class="row">

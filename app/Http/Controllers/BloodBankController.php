@@ -54,6 +54,7 @@ class BloodBankController extends Controller
       'email' => $request->validated()['email'],
       'phone' => $request->validated()['phone'],
       'contact_person' => $request->validated()['contact_person'],
+      'contact_person_mobile' => $request->validated()['contact_person_mobile'],
       'address' => $request->validated()['address'],
       'postal_code' => $request->validated()['postal_code'],
       'city_id' => $request->validated()['city_id'],
