@@ -66,9 +66,9 @@
           @endif
         </tbody>
       </table>    
-      <div class="links-section">
-        {{$bloodBanks->links()}}
-      </div>
+    </div>
+    <div >
+      {{$bloodBanks->links()}}
     </div>
   </div>
 @endsection
