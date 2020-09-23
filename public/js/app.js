@@ -2025,37 +2025,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var savedDays = [];
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['businessdays'],
   data: function data() {
     return {
       days: [{
-        index: 1,
         dayName: 'Lunes',
-        hours: []
+        hours: 0
       }, {
-        index: 2,
         dayName: 'Martes',
-        hours: []
+        hours: 0
       }, {
-        index: 3,
         dayName: 'Miércoles',
-        hours: []
+        hours: 0
       }, {
-        index: 4,
         dayName: 'Jueves',
-        hours: []
+        hours: 0
       }, {
-        index: 5,
         dayName: 'Viernes',
-        hours: []
+        hours: 0
       }, {
-        index: 6,
         dayName: 'Sábado',
-        hours: []
+        hours: 0
       }, {
-        index: 7,
         dayName: 'Domingo',
-        hours: []
+        hours: 0
       }],
       seletedDays: [],
       selected: ""
@@ -2063,27 +2076,45 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.seletedDays = [];
+
+    if (this.businessdays) {
+      this.buildOnEdit();
+    }
   },
   methods: {
     addDay: function addDay(day) {
-      if (!this.seletedDays.includes(day)) {
-        day.hours.push({
-          'hour': 1
-        });
-        this.seletedDays.push(day);
+      if (day.hours == 0) {
+        day.hours = 1;
       }
     },
     removeDay: function removeDay(day, index) {
-      if (this.seletedDays.includes(day)) {
-        day.hours = [];
-        this.seletedDays.splice(index, 1);
+      if (!this.seletedDays) {
+        if (this.days.includes(day)) {
+          day.hours = 0;
+        }
+      } else {
+        if (this.seletedDays.includes(day)) {
+          day.hours = [];
+          this.seletedDays.splice(index, 1);
+        }
       }
     },
     addHour: function addHour(day) {
-      day.hours.push(1);
+      day.hours += 1;
     },
-    removeHour: function removeHour(day, index) {
-      day.hours.splice(index, 1);
+    removeHour: function removeHour(day) {
+      day.hours -= 1;
+    },
+    buildOnEdit: function buildOnEdit() {
+      this.businessdays.forEach(function (days, index) {
+        $.each(days, function (key, hour) {
+          savedDays.push({
+            dayName: key,
+            hours: hour
+          });
+        });
+      });
+      this.seletedDays = savedDays;
     }
   },
   created: function created() {},
@@ -41740,73 +41771,194 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("label", { attrs: { for: "days_of_week" } }, [_vm._v("Horario")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selected,
-              expression: "selected"
-            }
-          ],
-          staticClass: "form-control",
-          on: {
-            change: [
-              function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
+      _vm.seletedDays.length == 0
+        ? _c(
+            "div",
+            [
+              _c("label", { attrs: { for: "days_of_week" } }, [
+                _vm._v("Horario")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selected,
+                      expression: "selected"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selected = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.addDay(_vm.selected)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    { attrs: { value: "", selected: "", disabled: "" } },
+                    [_vm._v("Seleccione un día")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.days, function(day) {
+                    return _c("option", { domProps: { value: day } }, [
+                      _vm._v(_vm._s(day.dayName))
+                    ])
                   })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.selected = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-              function($event) {
-                return _vm.addDay(_vm.selected)
-              }
-            ]
-          }
-        },
-        [
-          _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
-            _vm._v("Seleccione un día")
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.days, function(day) {
-            return _c("option", { domProps: { value: day } }, [
-              _vm._v(_vm._s(day.dayName))
-            ])
-          })
-        ],
-        2
-      ),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "transition-group",
+                { attrs: { name: "list", tag: "div" } },
+                _vm._l(_vm.days, function(day, indexday) {
+                  return day.hours > 0
+                    ? _c(
+                        "div",
+                        { key: day.dayName },
+                        [
+                          _c("h4", { staticClass: "text-center m-1" }, [
+                            _vm._v(_vm._s(day.dayName))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "row d-flex justify-content-center"
+                            },
+                            [
+                              _c("input", {
+                                attrs: {
+                                  type: "hidden",
+                                  name: "days[" + day.dayName + "]"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-link",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeDay(day, indexday)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v("Quitar día"),
+                                  _c("i", { staticClass: "fa fa-trash mx-1" })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-link",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addHour(day)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v("Agregar hora"),
+                                  _c("i", { staticClass: "fa fa-plus mx-1" })
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(day.hours, function(hour, index) {
+                            return _c(
+                              "div",
+                              { key: index, staticClass: "row my-1" },
+                              [
+                                _c("div", { staticClass: "col" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "time",
+                                      name: "days[" + day.dayName + "][]",
+                                      required: ""
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "time",
+                                      name: "days[" + day.dayName + "][]",
+                                      required: ""
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger btn-sm",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeHour(day)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-trash" })]
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e()
+                }),
+                0
+              )
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "transition-group",
-        { attrs: { name: "list", tag: "div" } },
-        _vm._l(_vm.seletedDays, function(selectedDay, indexday) {
+        _vm._l(_vm.seletedDays, function(day, index) {
           return _c(
             "div",
-            { key: selectedDay.dayName },
+            { key: day.dayName },
             [
               _c("h4", { staticClass: "text-center m-1" }, [
-                _vm._v(_vm._s(selectedDay.dayName))
+                _vm._v(_vm._s(day.dayName))
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row d-flex justify-content-center" }, [
                 _c("input", {
-                  attrs: {
-                    type: "hidden",
-                    name: "days[" + selectedDay.dayName + "]"
-                  }
+                  attrs: { type: "hidden", name: "days[" + day.dayName + "]" }
                 }),
                 _vm._v(" "),
                 _c(
@@ -41816,7 +41968,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.removeDay(selectedDay, indexday)
+                        return _vm.removeDay(day, index)
                       }
                     }
                   },
@@ -41833,7 +41985,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.addHour(selectedDay)
+                        return _vm.addHour(day)
                       }
                     }
                   },
@@ -41844,43 +41996,23 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._l(selectedDay.hours, function(hour, index) {
+              _c("input", {
+                attrs: { type: "hidden", name: "days[" + day.dayName + "]" }
+              }),
+              _vm._v(" "),
+              _vm._l(day.hours, function(hour, index) {
                 return _c("div", { key: index, staticClass: "row my-1" }, [
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
                       staticClass: "form-control",
                       attrs: {
                         type: "time",
-                        name: "days[" + selectedDay.dayName + "][]",
+                        name: "days[" + day.dayName + "][]",
                         required: ""
-                      }
+                      },
+                      domProps: { value: hour }
                     })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "time",
-                        name: "days[" + selectedDay.dayName + "][]",
-                        required: ""
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.removeHour(selectedDay, index)
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-trash" })]
-                  )
+                  ])
                 ])
               })
             ],

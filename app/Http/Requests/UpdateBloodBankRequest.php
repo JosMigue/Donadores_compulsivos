@@ -33,9 +33,8 @@ class UpdateBloodBankRequest extends FormRequest
             'postal_code' => 'required',
             'city_id'     => 'required',
             'state_id'    => 'required',
-            'dayofweektype' => 'required',
-            'bussines_hours_start' => 'required',
-            'bussines_hours_end' => 'required',
+            'days' => 'required|array',
+            'hyperlink'   => 'nullable|string',
         ];
     }
 }
