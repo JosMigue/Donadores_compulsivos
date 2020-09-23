@@ -29,6 +29,16 @@
             </div>
             <div class="row">
               <div class="col-md-8 pr-md-1">
+                <label>{{__('Contact person')}}</label>
+                <input type="text" id="contact_person" name="contact_person" class="form-control" value="{{$bloodbank->contact_person}}">
+              </div>
+              <div class="col-md-4 pl-md-1">
+                <label>{{__('Contact person mobile')}}</label>
+                <input type="string" id="contact_person_mobile" name="contact_person_mobile" class="form-control" placeholder="{{__('Postal code')}}" value="{{$bloodbank->contact_person_mobile}}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 pr-md-1">
                 <label>{{__('Address')}}</label>
                 <input type="text" id="address" name="address" class="form-control" placeholder="{{__('Type your address here')}}" value="{{$bloodbank->address}}">
               </div>
@@ -56,24 +66,17 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-4 pr-md-1">
-                <label for="days_of_week">{{__('Bussiness hours')}}</label>
-                <select class="form-control" name="dayofweektype" id="dayofweektype">
-                  <option value="" selected disabled>{{__('Select days of the week')}}</option>
-                  @foreach ($daysOfWeek as $index => $dayOfWeek)
-                    <option value="{{$index}}" @if ($bloodbank->dayofweektype == $index) selected @endif>{{__($dayOfWeek)}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-6 col-md-4 px-md-1">
-                <label for="bussines_hours_start">{{__('Bussiness hours start')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_start" name="bussines_hours_start" value="{{$bloodbank->bussines_hours_start}}">
-              </div>
-              <div class="col-6 col-md-4 pl-md-1">
-                <label for="bussines_hours_end">{{__('Bussiness hours end')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_end" name="bussines_hours_end" value="{{$bloodbank->bussines_hours_end}}">
+              <div class="col-12">
+                <label for="hyperlink">{{__('Hyperlink')}}</label>
+                <input class="form-control" type="text" name="hyperlink" id="hyperlink" value="{{ old('hyperlink') ? old('hyperlink'):$bloodbank->hyperlink}}">
               </div>
             </div>
+            <div class="row">
+              <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-info btn-sm" type="button" onclick="showInfoMessage()"> <i class="fa fa-question-circle" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <dayofweek-component v-bind:businessdays="{{  json_encode($days) }}"></dayofweek-component>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('bloodbanks.index')}}">{{__('Cancel')}}</a>                
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
@@ -99,4 +102,5 @@
 
 @section('scripts')
   <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/bloodBank.js')}}"></script>
 @endsection

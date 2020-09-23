@@ -33,7 +33,7 @@
                 <button  v-else class="btn btn-success btn-sm" v-on:click="changeStatusDonation(index, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i></button>
               </td>
             </tr>
-            <tr v-if="campaigndonors.data.length == 0">
+            <tr v-if="campaigndonors.data && campaigndonors.data.length == 0">
               <td colspan="9">No se encontraron registros</td>
             </tr>
           </tbody>

@@ -19,8 +19,10 @@ Auth::routes(['verify' => true, 'register'=> false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/campaigns', 'CampaignController');
 Route::get('/campaigns/involve/{campaign}', 'CampaignDonorController@show')->name('campaigndonors.show');
 Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaigndonors.store');
+Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 
 Route::get('/cities', 'CityController@index')->name('cities');
 
@@ -37,7 +39,6 @@ Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePic
 Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
 Route::get('/donor/register','DonorController@showregistreview')->name('donor.register');
 Route::resource('/bloodbanks', 'BloodBankController');
-Route::resource('/campaigns', 'CampaignController');
 Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');
 
 //Search routes

@@ -29,17 +29,27 @@
           <form action="{{route('bloodbanks.store')}}" method="POST">
             @csrf
             <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}" required>
               </div>
-              <div class="col-md-4 px-md-1">
+              <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="text" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
               </div>
-              <div class="col-md-4 pl-md-1">
+              <div class="col-12 col-md-4 pl-md-1">
                 <label>{{__('Phone')}}</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
+                <input type="text" id="phone" name="phone" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 pr-md-1">
+                <label>{{__('Contact person')}}</label>
+                <input type="text" id="contact_person" name="contact_person" class="form-control" placeholder="{{__('Name')}}" value="{{old('contact_person')}}" required>
+              </div>
+              <div class="col-12 col-md-6 pl-md-1">
+                <label>{{__('Contact person mobile')}}</label>
+                <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{old('contact_person_mobile')}}" required>
               </div>
             </div>
             <div class="row">
@@ -69,25 +79,18 @@
                 </select>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-md-4 pr-md-1">
-                <label for="days_of_week">{{__('Bussiness hours')}}</label>
-                <select class="form-control" name="dayofweektype" id="dayofweektype" required>
-                  <option value="" selected disabled>{{__('Select days of the week')}}</option>
-                  @foreach ($daysOfWeek as $index => $dayOfWeek)
-                    <option value="{{$index}}" @if (old('dayofweektype') == $index) selected @endif>{{__($dayOfWeek)}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-6 col-md-4 px-md-1">
-                <label for="bussines_hours_start">{{__('Bussiness hours start')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_start" name="bussines_hours_start" value="{{old('bussines_hours_start')}}" required>
-              </div>
-              <div class="col-6 col-md-4 pl-md-1">
-                <label for="bussines_hours_end">{{__('Bussiness hours end')}}</label>
-                <input class="form-control" type="time" id="bussines_hours_end" name="bussines_hours_end" value="{{old('bussines_hours_end')}}" required>
+            <div class="row my-1">
+              <div class="col-12">
+                <label for="hyperlink">{{__('Hyperlink')}}</label>
+                <div class="input-group flex-nowrap">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">http://</i></span>
+                  </div>
+                  <input type="text" name="hyperlink" id="hyperlink" class="form-control" placeholder="{{__('Hyperlink')}}" aria-label="Username" aria-describedby="addon-wrapping">
+                </div>
               </div>
             </div>
+          <dayofweek-component></dayofweek-component>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('bloodbanks.index')}}">{{__('Cancel')}}</a>                
               <button type="submit" class="btn btn-success btn-fill">{{__('Add')}}</button>

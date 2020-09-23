@@ -12,6 +12,7 @@ use App\Exports\CampaignsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
+use App\Http\Requests\UploadCampaignImageRequest;
 use App\Notifications\CampaignNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -45,9 +46,11 @@ class CampaignController extends Controller
   public function store(SaveCampaignRequest $request)
   {
  		if($request->validated()['user_id']== Auth::user()->id){
-      $campaign = Campaign::create($request->validated());
-      $this->sendEmail($campaign, $request);
-			if($campaign){
+      $campaign = new Campaign ($request->validated());
+      $campaign->campaign_image = '';
+			if($campaign->save()){
+        $this->saveUploadedPicture($campaign, $request);
+        $this->sendEmail($campaign, $request);
 				return redirect()->route('campaigns.index')->with('successMessage',__('Campaign added successfully'));
 			}else{
 				return redirect()->route('campaigns.index')->with('errorMessage',__('Something went wrong, try again later'));
@@ -57,6 +60,15 @@ class CampaignController extends Controller
 		} 
   }
 
+  
+  private function saveUploadedPicture($campaign, $request){
+    if($request->has('campaign_image')){
+      $request->validated()['campaign_image']->storeAs('images', $campaign->id.'cp.jpg','campaign_images');
+      $campaign->campaign_image = 'storage/campaigns/images/'.$campaign->id.'cp.jpg';
+      $campaign->save();
+    }
+  }
+  
   public function export() 
   {
     return Excel::download(new CampaignsExport, 'campaigns.xlsx');
@@ -108,14 +120,30 @@ class CampaignController extends Controller
 		}
   }
 
+  private function UpdateUploadedPicture($campaign, $request){
+    if($request->has('campaign_image')){
+      $request->campaign_image->storeAs('images', $campaign->id.'cp.jpg','campaign_images');
+    }
+  }
+
   public function destroy(Campaign $campaign)
   {
     $campaignDonor = $campaign->campaigndonors();
+    $imageFile = $campaign->id.'pf.jpg';
     if($campaign->delete()){
       $campaignDonor->delete();
 			return array('message' =>  __('Campaign deleted successfully'), 'code' => 200);
 		}else{
 			return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);
 		}
+  }
+
+  public function updateCampaignImage(Campaign $campaign, UploadCampaignImageRequest $request){
+    if($request->has('campaign_image')){
+      $request->validated()['campaign_image']->storeAs('images', $campaign->id.'cp.jpg','campaign_images');
+      return redirect()->route('campaigns.show', $campaign->id)->with('successMessage', __('Image updated successfully'));
+    }else{
+      return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 }

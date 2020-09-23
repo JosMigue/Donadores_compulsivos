@@ -70,7 +70,7 @@
                   {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="mailto:soporte2@jlmarketing.com.mx?subject=Reporte de porblema de Donadores Compulsivos"><i class="fa fa-bug mx-1" aria-hidden="true"></i>{{__('Report bug')}} </a>
+                  <a class="dropdown-item" href="mailto:soporte2@jlmarketing.com.mx?subject=Reporte de problema de Donadores Compulsivos"><i class="fa fa-bug mx-1" aria-hidden="true"></i>{{__('Report bug')}} </a>
                   <a class="dropdown-item" href="#"><i class="fa fa-question mx-1" aria-hidden="true"></i>{{__('Help')}} </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('logout') }}"

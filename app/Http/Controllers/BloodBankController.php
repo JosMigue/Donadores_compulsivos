@@ -10,6 +10,7 @@ use App\Exports\BloodBanksExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveBloodBankRequest;
 use App\Http\Requests\UpdateBloodBankRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BloodBankController extends Controller
 {
@@ -23,25 +24,60 @@ class BloodBankController extends Controller
   public function index()
   {
     $bloodBanks = BloodBank::with('city','state','user')->latest()->paginate(5);
-    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
-    return view('bloodbank.index',compact('bloodBanks','daysOfWeek'));
+    return view('bloodbank.index',compact('bloodBanks'));
   }
 
   public function create()
   {
     $states = State::all();
     $cities = City::all();
-    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
-    return view('bloodbank.create', compact('cities', 'states', 'daysOfWeek'));
+    return view('bloodbank.create', compact('cities', 'states'));
   }
 
   public function store(SaveBloodBankRequest $request)
   {
-    if(BloodBank::create($request->validated())){
+    $arrayOfDays = [];
+    foreach($request->validated()['days'] as $index =>  $day){
+      array_push($arrayOfDays, [$index => $day]);
+    }
+    $serializedArray = serialize($arrayOfDays);
+    $bloodBank = $this->buildBloodBank($request, $serializedArray);
+    if(BloodBank::create($bloodBank)){
       return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank added successfully'));
     }else{
       return redirect()->route('bloodbanks.index')->with('errorMessage', __('Something went wrong, try again later'));
     }
+  }
+
+  private function buildBloodBank($request, $array){
+    return [
+      'name' => $request->validated()['name'],
+      'email' => $request->validated()['email'],
+      'phone' => $request->validated()['phone'],
+      'contact_person' => $request->validated()['contact_person'],
+      'contact_person_mobile' => $request->validated()['contact_person_mobile'],
+      'address' => $request->validated()['address'],
+      'postal_code' => $request->validated()['postal_code'],
+      'city_id' => $request->validated()['city_id'],
+      'state_id' => $request->validated()['state_id'],
+      'user_id' => Auth::user()->id,
+      'days' => $array,
+      'hyperlink' => $this->purifyHiperlink($request->validated()['hyperlink']),
+    ];
+  }
+
+  private function purifyHiperlink($hyperlink){
+    if (strpos($hyperlink, 'https://')!== false) {
+      return str_replace('https://','', $hyperlink);
+    }else if(strpos($hyperlink, 'http://')!== false){
+      return str_replace('http://','', $hyperlink);
+    }
+    return $hyperlink;
+  }
+
+  public function show(BloodBank $bloodbank){
+    $businessDays = unserialize($bloodbank->days);
+    return view('bloodbank.show', compact('bloodbank', 'businessDays'));
   }
 
   public function export() 
@@ -53,13 +89,19 @@ class BloodBankController extends Controller
   {
     $cities = City::where('state_id',$bloodbank->state_id)->get();
     $states =  State::all();
-    $daysOfWeek = BloodBank::getEnum('Dayofweektypes');
-    return view('bloodbank.edit', compact('bloodbank', 'cities', 'states', 'daysOfWeek'));
+    $days = unserialize($bloodbank->days);
+    return view('bloodbank.edit', compact('bloodbank', 'cities', 'states', 'days'));
   }
 
   public function update(UpdateBloodBankRequest $request, BloodBank $bloodbank)
   {
-    if($bloodbank->update($request->validated())){
+    $arrayOfDays = [];
+    foreach($request->validated()['days'] as $index =>  $day){
+      array_push($arrayOfDays, [$index => $day]);
+    }
+    $serializedArray = serialize($arrayOfDays);
+    $bloodBankUpdated = $this->buildBloodBank($request, $serializedArray);
+    if($bloodbank->update($bloodBankUpdated)){
       return redirect()->route('bloodbanks.index')->with('successMessage', __('Blood bank updated successfully'));
     }else{
       return redirect()->route('bloodbanks.index')->with('errorMessage', __('Something went wrong, try again later'));
