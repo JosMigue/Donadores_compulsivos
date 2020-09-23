@@ -2088,7 +2088,7 @@ var savedDays = [];
       }
     },
     removeDay: function removeDay(day, index) {
-      if (!this.seletedDays) {
+      if (this.seletedDays.length == 0) {
         if (this.days.includes(day)) {
           day.hours = 0;
         }
@@ -41945,8 +41945,11 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
+      _c("label", [_vm._v("Horario")]),
+      _vm._v(" "),
       _c(
         "transition-group",
+        { attrs: { name: "list", tag: "div" } },
         _vm._l(_vm.seletedDays, function(day, index) {
           return _c(
             "div",
@@ -41975,23 +41978,6 @@ var render = function() {
                   [
                     _vm._v("Quitar día"),
                     _c("i", { staticClass: "fa fa-trash mx-1" })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-link",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.addHour(day)
-                      }
-                    }
-                  },
-                  [
-                    _vm._v("Agregar hora"),
-                    _c("i", { staticClass: "fa fa-plus mx-1" })
                   ]
                 )
               ]),

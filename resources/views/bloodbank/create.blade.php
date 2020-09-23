@@ -39,7 +39,7 @@
               </div>
               <div class="col-12 col-md-4 pl-md-1">
                 <label>{{__('Phone')}}</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
+                <input type="text" id="phone" name="phone" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
               </div>
             </div>
             <div class="row">
@@ -49,7 +49,7 @@
               </div>
               <div class="col-12 col-md-6 pl-md-1">
                 <label>{{__('Contact person mobile')}}</label>
-                <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" placeholder="{{__('Phone')}}" value="{{old('contact_person_mobile')}}" required>
+                <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{old('contact_person_mobile')}}" required>
               </div>
             </div>
             <div class="row">

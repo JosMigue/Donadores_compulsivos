@@ -71,6 +71,11 @@
                 <input class="form-control" type="text" name="hyperlink" id="hyperlink" value="{{ old('hyperlink') ? old('hyperlink'):$bloodbank->hyperlink}}">
               </div>
             </div>
+            <div class="row">
+              <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-info btn-sm" type="button" onclick="showInfoMessage()"> <i class="fa fa-question-circle" aria-hidden="true"></i></button>
+              </div>
+            </div>
             <dayofweek-component v-bind:businessdays="{{  json_encode($days) }}"></dayofweek-component>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('bloodbanks.index')}}">{{__('Cancel')}}</a>                
@@ -97,4 +102,5 @@
 
 @section('scripts')
   <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/bloodBank.js')}}"></script>
 @endsection

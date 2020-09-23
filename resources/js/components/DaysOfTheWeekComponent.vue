@@ -26,13 +26,13 @@
         </div>
       </transition-group>
     </div>
-    <transition-group>
+    <label>Horario</label>
+    <transition-group name="list" tag="div">
       <div v-for="(day, index) in seletedDays" :key="day.dayName">
         <h4 class="text-center m-1">{{day.dayName}}</h4>
         <div class="row d-flex justify-content-center">
           <input type="hidden" v-bind:name="'days['+day.dayName+']'">
           <button class="btn btn-link" type="button" v-on:click="removeDay(day, index)">Quitar día<i class="fa fa-trash mx-1"></i></button>
-          <button class="btn btn-link" type="button" v-on:click="addHour(day)">Agregar hora<i class="fa fa-plus mx-1"></i></button>
         </div> 
         <input type="hidden" v-bind:name="'days['+day.dayName+']'">
         <div class="row my-1" v-for="(hour, index) in day.hours" :key="index">
@@ -69,7 +69,7 @@
           }
         },
         removeDay(day, index){
-          if(!this.seletedDays){
+          if(this.seletedDays.length == 0){
             if(this.days.includes(day)){
               day.hours = 0;
             }
