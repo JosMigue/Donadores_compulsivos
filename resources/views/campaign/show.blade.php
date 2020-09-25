@@ -84,4 +84,5 @@
 
 @section('scripts')
   <script src="{{asset('js/campaign.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

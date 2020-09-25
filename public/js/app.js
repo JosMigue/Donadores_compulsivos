@@ -2049,19 +2049,7 @@ var savedDays = [];
   data: function data() {
     return {
       days: [{
-        dayName: 'Lunes',
-        hours: 0
-      }, {
-        dayName: 'Martes',
-        hours: 0
-      }, {
-        dayName: 'Miércoles',
-        hours: 0
-      }, {
-        dayName: 'Jueves',
-        hours: 0
-      }, {
-        dayName: 'Viernes',
+        dayName: 'Lunes - viernes',
         hours: 0
       }, {
         dayName: 'Sábado',
@@ -2200,8 +2188,15 @@ __webpack_require__.r(__webpack_exports__);
         donor_id: this.campaigndonors.data[index].id,
         status: value
       }).then(function (response) {
-        console.log(response.data);
         _this.campaigndonors.data[index].pivot.donor_donated = value;
+
+        if (value == 1) {
+          console.log(value);
+          toastNotification('success', 'Asistencia del donador marcada correctamente');
+        } else {
+          console.log(value);
+          toastNotification('success', 'Falta del donador marcada correctamente');
+        }
       })["catch"](function (error) {});
     }
   }
@@ -41945,7 +41940,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("label", [_vm._v("Horario")]),
+      _vm.seletedDays.length > 0 ? _c("label", [_vm._v("Horario")]) : _vm._e(),
       _vm._v(" "),
       _c(
         "transition-group",
@@ -42103,7 +42098,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_c("i", { staticClass: "fa fa-times" })]
+                          [_vm._v("Marcar como no asistió")]
                         )
                       : _c(
                           "button",
@@ -42120,7 +42115,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_c("i", { staticClass: "fa fa-check" })]
+                          [_vm._v("Marcar como asistió")]
                         )
                   ])
                 ])
@@ -42162,7 +42157,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Turno")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Asistió")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
       ])

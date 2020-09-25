@@ -52,8 +52,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
 
     protected $enumGendertypes = [
         'F' => 'Femenino',
-        'M' => 'Masculino',
-        'PNR' => 'Prefiero no responder'
+        'M' => 'Masculino'
     ];
 
     protected $enumDonortypes = [

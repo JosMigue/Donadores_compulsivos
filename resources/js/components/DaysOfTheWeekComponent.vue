@@ -26,7 +26,7 @@
         </div>
       </transition-group>
     </div>
-    <label>Horario</label>
+    <label v-if="seletedDays.length > 0">Horario</label>
     <transition-group name="list" tag="div">
       <div v-for="(day, index) in seletedDays" :key="day.dayName">
         <h4 class="text-center m-1">{{day.dayName}}</h4>
@@ -51,7 +51,7 @@
       props:['businessdays'],
       data(){
         return {
-          days: [{dayName: 'Lunes', hours: 0},{dayName: 'Martes', hours: 0}, {dayName: 'Miércoles', hours: 0}, {dayName: 'Jueves', hours: 0}, {dayName: 'Viernes', hours: 0}, {dayName: 'Sábado', hours: 0}, {dayName: 'Domingo', hours: 0}],
+          days: [{dayName: 'Lunes - viernes', hours: 0}, {dayName: 'Sábado', hours: 0}, {dayName: 'Domingo', hours: 0}],
           seletedDays: [],
           selected: "",
         }   
