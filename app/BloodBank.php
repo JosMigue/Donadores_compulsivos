@@ -34,4 +34,8 @@ class BloodBank extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+    public function campaigns(){
+        return $this->hasMany('App\Campaign', 'blood_bank_id');
+    }
 }
