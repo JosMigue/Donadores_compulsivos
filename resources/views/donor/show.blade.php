@@ -60,7 +60,11 @@
             {{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}
           </h5>
           <h6>
-            {{__('Donor')}}
+            @if ($donor->first_time_donating)
+              {{__('First time being donor')}}  
+            @else
+              {{__('Donor')}}  
+            @endif
           </h6>
           <div class="d-flex justify-content-around">
             <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>

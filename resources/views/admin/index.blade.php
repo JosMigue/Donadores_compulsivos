@@ -90,7 +90,7 @@
           @endif
         </tbody>
       </table>
-      <div class="links-section">
+      <div>
         {{$admins->links()}}
       </div>   
     </div>

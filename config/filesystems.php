@@ -61,6 +61,12 @@ return [
             'url' => env('APP_URL').'/storage/uploads/profile',
             'visibility' => 'public',
         ],
+        'campaign_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/campaigns'),
+            'url' => env('APP_URL').'/storage/uploads/campaigns',
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -70,6 +76,7 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+
         'uploaded-images-bank' => [
             'driver' => 'local',
             'root' => storage_path('app/public/bankimages'),

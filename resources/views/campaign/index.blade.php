@@ -82,7 +82,7 @@
         </tbody>
       </table>
     </div>
-    <div class="links-section">
+    <div>
       {{$campaigns->links()}}
     </div>
   </div>

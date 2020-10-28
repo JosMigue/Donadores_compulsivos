@@ -23,8 +23,8 @@
           <td>{{$campaign->state->name}}</td>
           <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
           <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
-          <td>{{$donor->campaigndonors->count()}}</td>
-          <td>{{$donor->campaigndonors->where('donor_donated',1)->count()}}</td>
+          <td>{{$campaign->campaigndonors->count()}}</td>
+          <td>{{$campaign->campaigndonors->where('donor_donated',1)->count()}}</td>
         </tr>
       @endforeach
     @else

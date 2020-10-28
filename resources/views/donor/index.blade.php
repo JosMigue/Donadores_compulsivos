@@ -33,7 +33,7 @@
     </div>
       <autocomplete-component></autocomplete-component>
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-sm">
+      <table class="table table-hover table-striped">
         <thead class="thead-dark text-center">
           <tr>
             <th scope="col">#</th>
@@ -51,7 +51,7 @@
           @if ($donors->count() > 0)
             @foreach ($donors as $index => $donor)
               <tr>
-                <th>{{$index+1}}</th>
+                <th>{{$donor->id}}</th>
                 <td>{{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}</td>
                 <td>{{$donor->city->name}}</td>
                 <td>{{$donor->state->name}}</td>
@@ -81,7 +81,7 @@
         </tbody>
       </table>    
     </div>
-    <div>
+    <div class="">
       {{$donors->onEachSide(1)->links()}}
     </div>
   </div>

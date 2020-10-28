@@ -37,6 +37,7 @@ class SaveCampaignRequest extends FormRequest
             'blood_bank_id'=> 'exclude_if:campaigntype,c1|required|integer',
             'description'=> 'required',
             'user_id' =>    'required',
+            'campaign_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

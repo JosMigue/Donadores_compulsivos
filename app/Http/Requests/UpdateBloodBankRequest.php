@@ -27,13 +27,14 @@ class UpdateBloodBankRequest extends FormRequest
             'name'        => 'required|max:255',
             'email'       => 'required|email',
             'phone'       => 'required|digits:10',
+            'contact_person' => 'required|string|max:255',
+            'contact_person_mobile' => 'required|digits:10',
             'address'     => 'required',
             'postal_code' => 'required',
             'city_id'     => 'required',
             'state_id'    => 'required',
-            'dayofweektype' => 'required',
-            'bussines_hours_start' => 'required',
-            'bussines_hours_end' => 'required',
+            'days' => 'required|array',
+            'hyperlink'   => 'nullable|string',
         ];
     }
 }

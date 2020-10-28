@@ -164,6 +164,7 @@ return [
         'date_finish'           => 'fecha de terminación',
         'date_start'            => 'fecha de inicio',
         'day'                   => 'día',
+        'days'                  => 'horario',
         'dayofweektype'         => 'horario',
         'description'           => 'descripción',
         'donortype'             => 'tipo de donador',

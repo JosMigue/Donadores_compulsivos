@@ -15,4 +15,20 @@ async function deleteBloodBank(button){
         errorNotification(`Algo salió mal, intente más tarde ${error}`);
       });
     }
-  }
+}
+
+function showInfoMessage(){
+  Swal.fire({
+    title: 'Información',
+    icon: 'info',
+    html: '<p style="text-align: justify; text-justify: inter-word;">Lo sentimos, en este sentido de edición de horario del banco de sangre el sistema está limitado, debido a tiempos de realización. En un futuro esto se mejorará, por el momento se matendrá así. De verdad lo sentimos 💔</p>',
+    confirmButtonColor: '#ed1a3b',
+    confirmButtonText: 'Entendido',
+    showClass: {
+      popup: 'animate__animated animate__bounceIn'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__bounceOut'
+    }
+  })
+}

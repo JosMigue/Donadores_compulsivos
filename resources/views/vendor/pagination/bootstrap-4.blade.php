@@ -1,4 +1,23 @@
 @if ($paginator->hasPages())
+    <div>
+        <p class="text-secondary lead text-center">
+            <small>
+                {!! __('Showing') !!}
+            </small>
+            <span class="font-medium"><small>{{ $paginator->firstItem() }}</small></span>
+            <small>
+                {!! __('to') !!}
+            </small>
+            <span class="font-medium"><small>{{ $paginator->lastItem() }}</small></span>
+            <small>
+                {!! __('of') !!}
+            </small>
+            <span class="font-medium"><small>{{ $paginator->total() }}</small></span>
+            <small>
+                {!! __('results') !!}
+            </small>
+        </p>
+    </div>
     <nav>
         <ul class="pagination pagination-sm justify-content-center">
             {{-- Previous Page Link --}}

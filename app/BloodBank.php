@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Enums;
 
 class BloodBank extends Model
 {
@@ -11,22 +10,15 @@ class BloodBank extends Model
         'name',
         'email',
         'phone',
+        'contact_person',
+        'contact_person_mobile',
         'address',
         'postal_code',
         'city_id',
         'state_id',
         'user_id',
-        'dayofweektype',
-        'bussines_hours_start',
-        'bussines_hours_end'
-    ];
-
-    use Enums;
-
-    protected $enumDayofweektypes = [
-        'dow1' => 'Monday - Fryday',
-        'dow2' => 'Monday - Saturday',
-        'dow3' => 'Monday - Sunday',
+        'days',
+        'hyperlink',
     ];
 
     protected $table = 'blood_banks';
@@ -41,5 +33,9 @@ class BloodBank extends Model
 
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    public function campaigns(){
+        return $this->hasMany('App\Campaign', 'blood_bank_id');
     }
 }

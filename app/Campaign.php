@@ -21,7 +21,8 @@ class Campaign extends Model
         'campaigntype',
         'blood_bank_id',
         'description',
-        'user_id'
+        'user_id',
+        'campaign_image'
     ];
 
     use Enums;
