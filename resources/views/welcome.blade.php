@@ -17,14 +17,14 @@
       <div class="flex-center position-ref full-height">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-lg-3 mb-50 d-flex justify-content-center">
+            <div class="col-12 col-lg-4 mb-50 d-flex justify-content-center align-items-start">
               @auth
               <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('home') }}">{{__('Go Home')}}</a>
               @else
               <a class="is-btn-lg is-btn-bg-dark txt-uppercase" href="{{ route('login') }}">{{__('Login')}}</a>
               @endauth
             </div>
-            <div class="col-12 col-lg-3 mb-50 d-flex justify-content-center">
+            <div class="col-12 col-lg-4 mb-50 d-flex justify-content-center align-items-start">
               <a class="is-btn-lg is-btn-bg-red txt-uppercase" href="{{ route('donor.register') }}">{{__('Sign Up')}}</a>
             </div>
           </div>

@@ -75,3 +75,25 @@ button:hover, a:hover{
   color: #ffffff;
   opacity: .9;
 }
+
+button.btn-red{
+  color: #fff;
+  background-color: #ED1A3D;
+  border-color: #ED1A3D;
+}
+
+button.btn-red:hover{
+  color: #fff;
+  opacity: 90%;
+}
+
+a.btn-red{
+  color: #fff;
+  background-color: #ED1A3D;
+  border-color: #ED1A3D;
+}
+
+a.btn-red:hover{
+  color: #fff;
+  opacity: 90%;
+}

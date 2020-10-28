@@ -23,7 +23,7 @@ class BloodBankController extends Controller
 
   public function index()
   {
-    $bloodBanks = BloodBank::with('city','state','user')->latest()->paginate(5);
+    $bloodBanks = BloodBank::with('city','state','user', 'campaigns')->latest()->paginate(5);
     return view('bloodbank.index',compact('bloodBanks'));
   }
 
@@ -110,10 +110,20 @@ class BloodBankController extends Controller
 
   public function destroy(BloodBank $bloodbank)
   {
+    $campaigns = $bloodbank->campaigns;
     if($bloodbank->delete()){
+      $this->changeRelatedCampaignsWithBankBlood($campaigns);
       return array('message' =>  __('Blood bank has been deleted succesfully'), 'code' => 200);
     }else{
       return array('message' =>  __('Something went wrong, try again later'), 'code' => 404);
+    }
+  }
+
+  private function changeRelatedCampaignsWithBankBlood($campaigns){
+    foreach ($campaigns as $key => $campaign) {
+      $campaign->campaigntype = 'c1';
+      $campaign->place = __('Blood bank associated has been deleted.');
+      $campaign->save();
     }
   }
 }
