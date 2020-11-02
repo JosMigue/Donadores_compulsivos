@@ -16,8 +16,6 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'name',
         'parental_surname',
         'maternal_surname',
-        'address',
-        'postal_code',
         'city_id',
         'state_id',
         'bloodtype',

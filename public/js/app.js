@@ -2202,6 +2202,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response.data);
         _this.campaigndonors.data[index].pivot.donor_donated = value;
+
+        if (value == 1) {
+          toastNotification('success', 'Asistencia del donador marcada correctamente');
+        } else {
+          toastNotification('success', 'Falta del donador marcada correctamente');
+        }
       })["catch"](function (error) {});
     }
   }

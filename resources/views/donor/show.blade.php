@@ -112,10 +112,6 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-4">
-                <label>{{__('Address')}}</label>
-                <p>{{$donor->address}} {{$donor->postal_code}}</p>
-              </div>
-              <div class="col-12 col-md-4">
                 <label>{{__('City')}}</label>
                 <p>{{$donor->city->name}}</p>
               </div>
@@ -123,12 +119,12 @@
                 <label>{{__('State')}}</label>
                 <p>{{$donor->state->name}}</p>
               </div>
-            </div>
-            <div class="row">
               <div class="col-12 col-md-4">
                 <label>{{__('Born date')}}</label>
                 <p>{{$donor->born_date}}</p>
               </div>
+            </div>
+            <div class="row">
               <div class="col-12 col-md-4">
                 <label>{{__('Age')}}</label>
                 <p>{{$donor->age}}</p>
@@ -137,15 +133,23 @@
                 <label>{{__('Sing up date')}}</label>
                 <p>{{$donor->created_at}}</p>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-6">
+              <div class="col-12 col-md-4">
                 <label>{{__('Blood type')}}</label>
                 <p>{{$donor->getEnum('bloodtype')[$donor->bloodtype]}}</p>
               </div>
+            </div>
+            <div class="row">
               <div class="col-6 col-md-6">
                 <label>{{__('Gender')}}</label>
                 <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
+              </div>
+              <div class="col-6 col-md-6">
+                <label>{{__('Last time donating')}}</label>
+                @if ($donor->last_donate_date)
+                  <p>{{$donor->last_donate_date}}</p>  
+                @else
+                  <p>{{__('This user has not donated yet')}}</p>  
+                @endif
               </div>
             </div>
             @if (Auth::user()->is_admin)

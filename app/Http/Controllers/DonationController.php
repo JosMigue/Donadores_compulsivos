@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Campaign;
 use App\CampaignDonor;
+use App\Donor;
 use Carbon\Carbon;
 
 class DonationController extends Controller
@@ -12,8 +13,14 @@ class DonationController extends Controller
   public function update(Campaign $campaign, Request $request)
   {
     if($request->has('donor_id')){
+      $currentDate = Carbon::now();
       $campaignDonor = $campaign->campaigndonors->where('donor_id', $request->donor_id)->first();
-      CampaignDonor::where('id',$campaignDonor->id)->update(['donor_donated'=> $request->status, 'donation_date' => Carbon::now()]);
+      CampaignDonor::where('id',$campaignDonor->id)->update(['donor_donated'=> $request->status, 'donation_date' => $currentDate]);
+      $donor = Donor::find($request->donor_id);
+      if($request->status == 1){
+        $donor->last_donate_date = $currentDate;
+        $donor->save();
+      }
     }
   }
 }

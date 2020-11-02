@@ -27,8 +27,6 @@ class UpdateDonorRequest extends FormRequest
             'name'          => 'required',
             'parental_surname' => 'required',
             'maternal_surname' => 'required',
-            'address'       => 'required',
-            'postal_code'   => 'required',
             'city_id'       => 'required',
             'state_id'      => 'required',
             'bloodtype'     => 'required',
