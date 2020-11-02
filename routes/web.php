@@ -20,7 +20,7 @@ Auth::routes(['verify' => true, 'register'=> false]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/campaigns', 'CampaignController');
-Route::get('/campaigns/involve/{campaign}', 'CampaignDonorController@show')->name('campaigndonors.show');
+Route::get('/campaigns/involve/{campaign}/donor/{donor}', 'CampaignDonorController@show')->name('campaigndonors.show');
 Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaigndonors.store');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 
@@ -32,7 +32,6 @@ Route::post('/admins', 'AdminController@store')->name('admins.store');
 Route::get('/admins/{user}/edit', 'AdminController@edit')->name('admins.edit');
 Route::patch('/admins/{user}', 'AdminController@update')->name('admins.update');
 Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy');
-
 
 Route::resource('/donors', 'DonorController');
 Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');

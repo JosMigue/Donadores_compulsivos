@@ -14,6 +14,32 @@
         <link href="{{ asset('css/elements/button.css') }}" rel="stylesheet">
     </head>
     <body>
+      <div class="container">
+        @if (session('successMessage'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{__('Done!')}}</strong> {{session('successMessage')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+        @if (session('information'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>{{__('Whoops!')}}</strong> {{session('information')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+        @if (session('errorMessage'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{__('Whoops!')}}</strong> {{session('errorMessage')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+      </div>
       <div class="flex-center position-ref full-height">
         <div class="container">
           <div class="row">

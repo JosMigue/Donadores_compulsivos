@@ -16,24 +16,37 @@ class CampaignDonorController extends Controller
 {
 
   public function __construct(){
-    $this->middleware('auth');
-    $this->middleware('verified');
+/*     $this->middleware('auth');
+    $this->middleware('verified'); */
   }
 
-  public function show(Campaign $campaign){
-    if(!Auth::user()->is_admin){
-      $donorAuth = Auth::user()->load('donor')->donor->id;
-      if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
+  public function show(Campaign $campaign, Donor $donor){
+    $donorAuth = $donor->id;
+    if(Auth::check()){
+      if(Auth::user()->is_admin){
+        return redirect()->route('home')->with('errorMessage', __('An administrator cannot register for a campaign'));
+      }else{
         if($this->isAvailableCampaign($campaign)){
-          return view('campaigndonor.show', compact('campaign'));
+          if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
+            $donorAuth = Auth::user()->id;
+            return view('campaigndonor.show', compact('campaign', 'donorAuth'));
+          }else{
+            return  redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
+          }
         }else{
           return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
         } 
-      }else{
-        return redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
       }
     }else{
-      return redirect()->route('home')->with('errorMessage', __('An administrator cannot register for a campaign'));
+      if($this->isAvailableCampaign($campaign)){
+        if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
+          return view('campaigndonor.show', compact('campaign', 'donorAuth'));
+        }else{
+          return redirect('/')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
+        }
+      }else{
+        return redirect('/')->with('errorMessage', __('This campaign is no longer available'));
+      } 
     }
   }
 
@@ -49,20 +62,34 @@ class CampaignDonorController extends Controller
   }
 
   public function store(CampaignDonorRequest $request){
-    if($request->validated()['donor'] == Auth::user()->id){
+    if(Auth::check()){
+      if($request->validated()['donor'] == Auth::user()->id){
+        $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
+        $donor = Donor::where('user_id',$request->validated()['donor'])->first();
+        $currentTurn = $campaign->donors->count();
+        $currentTurn +=1;
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
+        if($campaign->campaigndonors()->save($campaigDonor)){
+          $this->sendEmailWithTurn($donor, $currentTurn);
+          return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+        }else{
+          return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+        }
+      }else{
+        return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+      }
+    }else{
       $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
-      $donor = Donor::where('user_id',$request->validated()['donor'])->first();
+      $donor = Donor::where('id',$request->validated()['donor'])->first();
       $currentTurn = $campaign->donors->count();
       $currentTurn +=1;
       $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
       if($campaign->campaigndonors()->save($campaigDonor)){
         $this->sendEmailWithTurn($donor, $currentTurn);
-        return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+        return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
       }else{
-        return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+        return redirect('/')->with('errorMessage', __('Something went wrong, try again later'));
       }
-    }else{
-      return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
     }
   }
   
