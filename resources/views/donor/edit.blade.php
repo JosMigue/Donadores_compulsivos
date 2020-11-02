@@ -58,11 +58,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-8 pr-md-1">
-                <label>{{__('Address')}}</label>
-                <input type="text" id="address" name="address" class="form-control" placeholder="{{__('Type your address here')}}" value="{{$donor->address}}">
-              </div>
-              <div class="col-12 col-md-4 pl-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('State')}}</label>
                 <select type="text" id="state_id" name="state_id" class="form-control"  onchange="getAllCitiesState(this)">
                   @foreach ($states as $state)
@@ -70,19 +66,13 @@
                   @endforeach
                 </select>
               </div>
-            </div>
-            <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-md-4 px-md-1">
                 <label>{{__('City')}}</label>
                 <select type="text" id="city_id" name="city_id" class="form-control" placeholder="{{__('City')}}">
                   @foreach ($cities as $city)
                     <option @if ($city->id == $donor->city_id) selected='selected' @endif value="{{$city->id}}">{{$city->name}}</option>
                   @endforeach
                 </select>
-              </div>
-              <div class="col-md-4 px-md-1">
-                <label>{{__('Postal Code')}}</label>
-                <input type="number" id="postal_code" name="postal_code" class="form-control" placeholder="{{__('Postal code')}}" value="{{$donor->postal_code}}">
               </div>
               <div class="col-md-4 pl-md-1">
                 <label>{{__('Born date')}}</label>

@@ -109,8 +109,14 @@ class DonorController extends Controller
 
   private function setUser(Request $request){
     $this->validator($request->all())->validate();
-    event(new Registered($user = $this->createUser($request->all())));
-    return $this->registered($request, $user) ? : $user;
+    $user = $this->createUser($request->all());
+    try{
+        $user->sendEmailVerificationNotification();
+        return $user;
+    }catch(Exception $e){
+        $user->delete();
+        return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
+    }
   }
 
   private function createUser($data){

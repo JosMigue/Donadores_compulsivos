@@ -65,10 +65,8 @@ export default {
     .then(response => {
       this.campaigndonors.data[index].pivot.donor_donated = value;
       if(value==1){
-        console.log(value);
         toastNotification('success', 'Asistencia del donador marcada correctamente');
       }else{
-        console.log(value);
         toastNotification('success', 'Falta del donador marcada correctamente');
       }
     }).catch(error =>{

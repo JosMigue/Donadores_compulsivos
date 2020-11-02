@@ -84,7 +84,7 @@ class CampaignController extends Controller
     }
     if($request->has('state_id_filter')){
       $state = $request->state_id_filter;
-      $donors->where('state_id', $state);
+      $hasFilter ? $donors->where('state_id', $state) : $donors = Donor::where('state_id', $state);
       $hasFilter = true;
     }
     $hasFilter ? $donors = $donors->get() : '';
