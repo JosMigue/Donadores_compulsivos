@@ -68,7 +68,7 @@
           </h6>
           <div class="d-flex justify-content-around">
             <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>
-            <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->count()}}</span></p>
+            <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->total()}}</span></p>
           </div>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">

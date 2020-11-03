@@ -88,11 +88,7 @@ class CampaignController extends Controller
       $hasFilter = true;
     }
     $hasFilter ? $donors = $donors->get() : '';
-    //I had not another way to make this better :( 
-    foreach($donors as $donor){
-      $donor->notify(new CampaignNotify($campaign, $donor->id));
-    }
-    //Notification::send($donors, new CampaignNotify($campaign));
+    Notification::send($donors, new CampaignNotify($campaign));
   }
 
   public function show(Campaign $campaign)

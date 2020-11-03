@@ -20,10 +20,9 @@ class CampaignNotify extends Notification
      *
      * @return void
      */
-    public function __construct($campaign, $donor)
+    public function __construct($campaign)
     {
         $this->campaign = $campaign;
-        $this->donor = $donor;
     }
 
     /**
@@ -53,10 +52,10 @@ class CampaignNotify extends Notification
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center"><img src="'.asset($this->campaign->campaign_image).'" width="150px" height="150px" alt=""></div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Information').'</div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Campaign name').': '.$this->campaign->name.'</div>'))
-                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">'.__('Date').': '.$this->campaign->date_start.'</div><div style="display: flex; flex-flow: column;">'. __('Time').': '.$this->campaign->time_start.'</div></div>'))
+                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">'.__('Date').': '.$this->campaign->date_start.'</div><div style="display: flex; flex-flow: column;">     '.__('Time').': '.$this->campaign->time_start.'</div></div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Place').': '.$this->campaign->place.'</div>'))
-                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">'.__('State').': '.$this->campaign->state->name.'</div><div style="display: flex; flex-flow: column;">'. __('City').': '.$this->campaign->city->name.'</div></div>'))
-                ->action(__('Yes, I want to donate'), url('/campaigns/involve/'.$this->campaign->id.'/donor/'.$this->donor))
+                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">'.__('State').': '.$this->campaign->state->name.'</div><div style="display: flex; flex-flow: column;">   '.__('City').': '.$this->campaign->city->name.'</div></div>'))
+                ->action(__('Yes, I want to donate'), url('/campaigns/involve/'.$this->campaign->id.'/donor/'.$notifiable->id))
                 ->line(__('Thank you for using our application!'));
 
         }else{
@@ -67,10 +66,10 @@ class CampaignNotify extends Notification
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center"><img src="'.asset($this->campaign->campaign_image).'" width="150px" height="150px" alt=""></div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Information').'</div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Campaign name').': '.$this->campaign->name.'</div>'))
-                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">'.__('Date').': '.$this->campaign->date_start.'</div><div style="display: flex; flex-flow: column;">'. __('Time').': '.$this->campaign->time_start.'</div></div>'))
+                ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content: space-evenly;"><div style="display: flex; flex-flow: column;">     '.__('Date').': '.$this->campaign->date_start.'</div><div style="display: flex; flex-flow: column;">       '. __('Time').': '.$this->campaign->time_start.'</div></div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Blood bank').': '.$this->campaign->bloodbank->name.'</div>'))
                 ->line(new HtmlString('<div style="display:flex; flex-flow:row; justify-content:center">'.__('Blood bank address').': '.$this->campaign->bloodbank->address.'</div>'))
-                ->action(__('Yes, I want to donate'), url('/campaigns/involve/'.$this->campaign->id.'/donor/'.$this->donor))
+                ->action(__('Yes, I want to donate'), url('/campaigns/involve/'.$this->campaign->id.'/donor/'.$notifiable->id))
                 ->line(__('Thank you for using our application!'));
         }
     }
