@@ -15,6 +15,7 @@ class AddDonorAttendedToCampaignDonorsTable extends Migration
     {
         Schema::table('campaign_donors', function ($table) {
             $table->boolean('donor_attended')->nullable(false)->default(0)->after('donor_donated');
+            $table->text('reason_not_donation')->nullable(true)->default(null)->after('donor_attended');
         });
     }
 
