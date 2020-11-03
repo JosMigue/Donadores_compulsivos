@@ -7,7 +7,7 @@
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
               <th scope="col">Tipo de sangre</th>
-              <th scope="col">Genero</th>
+              <th scope="col">Género</th>
               <th scope="col">Teléfono</th>
               <th scope="col">Correo electrónico</th>
               <th scope="col">Turno</th>
@@ -47,7 +47,7 @@
               </td>
             </tr>
             <tr v-if="campaigndonors.data && campaigndonors.data.length == 0">
-              <td colspan="9">No se encontraron registros</td>
+              <td colspan="10">No se encontraron registros</td>
             </tr>
           </tbody>
         </table>

@@ -49,7 +49,7 @@
             @foreach ($campaigns as $index => $campaign)
               <tr>
                 <th scope="row">{{$index + 1}}</th>
-                <td>{{$campaign->name}}</td>
+                <td>{{__($campaign->name)}}</td>
                 @if ($campaign->campaigntype=='c1')
                   <td>{{$campaign->place}}</td>
                 @else 

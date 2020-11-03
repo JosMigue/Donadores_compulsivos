@@ -42525,7 +42525,7 @@ var render = function() {
               _vm._v(" "),
               _vm.campaigndonors.data && _vm.campaigndonors.data.length == 0
                 ? _c("tr", [
-                    _c("td", { attrs: { colspan: "9" } }, [
+                    _c("td", { attrs: { colspan: "10" } }, [
                       _vm._v("No se encontraron registros")
                     ])
                   ])
@@ -42551,7 +42551,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de sangre")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Genero")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Género")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Teléfono")]),
         _vm._v(" "),

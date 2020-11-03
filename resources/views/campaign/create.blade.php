@@ -34,7 +34,13 @@
             <div class="row my-1">
               <div class="col-md-4 pr-md-1" >
                 <label>{{__('Name')}}</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}">
+                {{-- <input class="form-control" type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}"> --}}
+                <select name="name" id="name" class="form-control" required>
+                  <option value="" selected disabled>{{__('Select...')}}</option>
+                  <option value="Donating love" @if(old('name')=='Donating love') selected @endif>{{__('Donating love')}}</option>
+                  <option value="Donors students" @if(old('name')=='Donors students') selected @endif>{{__('Donors students')}}</option>
+                  <option value="Donors workers" @if(old('name')=='Donors workers') selected @endif>{{__('Donors workers')}}</option>
+                </select>
               </div>
               <div class="col-md-8 pr-md-1" id="place_section">
                 <label>{{__('Place')}}</label>
@@ -42,18 +48,19 @@
               </div>
               <div class="col-md-8 d-none" id="blood_bank_section">
                 <label for="blood_bank_id">{{__('Blood bank')}}</label>
-                <select class="form-control" name="blood_bank_id" id="blood_bank_id">
+                <select class="form-control" onchange="getBloodBankLocationInfo(this)" name="blood_bank_id" id="blood_bank_id">
                   <option value="" selected disabled>{{__('Select blood bank')}}</option>
                   @foreach ($bloodBanks as $bloodBank)
-                    <option value="{{$bloodBank->id}}">{{$bloodBank->name}}</option>
+                    <option value="{{$bloodBank->id}}" data-city-name="{{$bloodBank->city->name}}" data-city-id="{{$bloodBank->city->id}}" data-state-name="{{$bloodBank->state->name}}" data-state-id="{{$bloodBank->state->id}}">{{$bloodBank->name}}</option>
                   @endforeach
                 </select>
               </div>
             </div>
+
             <div class="row">
               <div class="col-md-6 pr-md-1">
                 <label>{{__('State')}}</label>
-                <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)">
+                <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($states as $key => $state)
                     <option value="{{$state->id}}">{{$state->name}}</option>
@@ -62,7 +69,7 @@
               </div>
               <div class="col-md-6 pl-md-1">
                 <label>{{__('City')}}</label>
-                <select id="city_id" name="city_id" class="form-control">
+                <select id="city_id" name="city_id" class="form-control" required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
               </div>
@@ -70,19 +77,19 @@
             <div class="row my-1">
               <div class="col-md-3 pr-md-1">
                 <label>{{__('Date start')}}</label>
-                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{old('date_start')}}">
+                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{old('date_start')}}" required>
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Time start')}}</label>
-                <input type="time" id="time_start" name="time_start" class="form-control" placeholder="{{__('Time start')}}" value="{{old('time_start')}}">
+                <input type="time" id="time_start" name="time_start" class="form-control" placeholder="{{__('Time start')}}" value="{{old('time_start')}}" required>
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Date finish')}}</label>
-                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{old('date_finish')}}">
+                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{old('date_finish')}}" required>
               </div>
               <div class="col-md-3 pl-md-1">
                 <label>{{__('Time finish')}}</label>
-                <input type="time" id="time_finish" name="time_finish" class="form-control" placeholder="{{__('Time finish')}}" value="{{old('time_finish')}}">
+                <input type="time" id="time_finish" name="time_finish" class="form-control" placeholder="{{__('Time finish')}}" value="{{old('time_finish')}}" required>
               </div>
             </div>
             <div class="row my-1">
@@ -160,6 +167,6 @@
 @endsection
 
 @section('scripts')
-  <script src="{{asset('js/campaign.js')}}"></script>
-  <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/campaign.js')}}" defer></script>
+  <script src="{{asset('js/getDataOptions.js')}}" defer></script>
 @endsection
