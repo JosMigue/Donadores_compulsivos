@@ -36,7 +36,7 @@
           <div class="row text-center text-lg-left mt-2">
             <div class="col-6 col-lg-4">
               <label>{{__('Name')}}</label>
-              <p>{{$campaign->name}}</p>
+              <p>{{__($campaign->name)}}</p>
             </div>
             <div class="col-6 col-lg-4">
               <label>{{__('Place')}}</label>
