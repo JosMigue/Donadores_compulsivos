@@ -36,6 +36,7 @@ function toggleBloodbanksSection(ratioInput){
       section.classList.add('d-none');
       field_place.classList.remove('d-none')
       select.value = '';
+      resetCityStateSelector();
     }
   }else{
     section.classList.remove('d-none')
@@ -68,4 +69,22 @@ function showHelp(){
       popup: 'animate__animated animate__bounceOut'
     }
   })
+}
+
+function getBloodBankLocationInfo(bloodBank) { 
+  const cityName = bloodBank.options[bloodBank.selectedIndex].getAttribute('data-city-name');
+  const cityId = bloodBank.options[bloodBank.selectedIndex].getAttribute('data-city-id');
+  const stateName = bloodBank.options[bloodBank.selectedIndex].getAttribute('data-state-name');
+  const stateId = bloodBank.options[bloodBank.selectedIndex].getAttribute('data-state-id');
+  toggleCityStateSection(cityName, cityId, stateName, stateId)
+}
+
+function toggleCityStateSection(cityName, cityId, stateName, stateId){
+  document.getElementById('city_id').innerHTML=`<select id="city_id" name="city_id" class="form-control" required><option selected value="${cityId}">${cityName}</option></select>`;
+  document.getElementById('state_id').value=stateId;
+}
+
+function resetCityStateSelector(){
+  document.getElementById('state_id').value='';
+  document.getElementById('city_id').innerHTML=`<select id="city_id" name="city_id" class="form-control" required><option value="" selected disabled>Seleccione un estado primero</option></select>`;
 }

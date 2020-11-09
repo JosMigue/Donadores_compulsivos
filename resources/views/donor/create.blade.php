@@ -21,7 +21,7 @@
       </div>
     @endif
     <div class="row d-flex justify-content-center">
-      <div class="card">
+      <div class="card" style="width: 60rem">
         <div class="card-header">
           <h4 class="card-title">{{__('Add donor')}}</h4>
         </div>
@@ -90,11 +90,11 @@
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Password')}}</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}" required>
+                <input type="password" id="password" name="password" value="1234567890" class="form-control" placeholder="{{__('Password')}}" required>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
+                <input id="password-confirm" value="1234567890" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
               </div>
             </div>
             <div class="row my-1">
@@ -134,6 +134,12 @@
                 {{__('I have already donated before')}}
               </label>
             </div>
+            <p class="text-justify text-danger">
+              Nota al administrador: La contraseña por defecto es 1234567890, en caso de querer poner otra diferente modificar 
+              el campo de contraseña y la confirmación de esta. Como consejo y por recomendaciones de Google no se deben utilizar 
+              esta clase de contraseña, debido al nivel muy bajo de seguridad que cuentan. Se recomienda al donador que cambie la 
+              contraseña una vez llegado el correo de confirmación. Atentamente: JLMarketing
+            </p>
             <div class="text-right my-2">
               @guest
                 <a class="btn btn-danger btn-fill" href="/">{{__('Cancel')}}</a>                

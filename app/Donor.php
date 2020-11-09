@@ -67,7 +67,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
     }
 
     public function campaigns(){
-        return $this->belongsToMany('App\Campaign', 'campaign_donors')->withPivot(['created_at', 'turn', 'donor_donated', 'donation_date']);
+        return $this->belongsToMany('App\Campaign', 'campaign_donors')->withPivot(['created_at', 'turn', 'donor_donated', 'donation_date', 'donor_attended']);
     }
 
     public function user(){

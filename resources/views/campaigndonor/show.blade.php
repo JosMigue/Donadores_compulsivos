@@ -41,7 +41,7 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-12 col-md-6">
               <label for="">{{__('Campaign')}}</label>
-              <p>{{$campaign->name}}</p>
+              <p>{{__($campaign->name)}}</p>
             </div>
             @if ($campaign->campaigntype == 'c1')
               <div class="col-12 col-md-6">

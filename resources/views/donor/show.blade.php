@@ -59,13 +59,18 @@
           <h5>
             {{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}
           </h5>
-          <h6>
-            @if ($donor->first_time_donating)
-              {{__('First time being donor')}}  
-            @else
-              {{__('Donor')}}  
+          <div class="d-flex justify-content-between">
+            <h6>
+              @if ($donor->first_time_donating)
+                {{__('First time being donor')}}  
+              @else
+                {{__('Donor')}}  
+              @endif
+            </h6>
+            @if (Auth::user()->is_admin)
+              <h6>{{__('Identifier')}}: {{$donor->id}}</h6>
             @endif
-          </h6>
+          </div>
           <div class="d-flex justify-content-around">
             <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>
             <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->total()}}</span></p>
@@ -178,7 +183,8 @@
                     <th scope="col">{{__('Place')}}</th>
                     <th scope="col">{{__('Date time start')}}</th>
                     <th scope="col">{{__('Date time finish')}}</th>
-                    <th scope="col">{{__('Status')}}</th>
+                    <th scope="col">{{__('Attended')}}</th>
+                    <th scope="col">{{__('Donated')}}</th>
                     <th scope="col">{{__('Donation date')}}</th>
                     <th scope="col">{{__('Registration date')}}</th>
                   </tr>
@@ -188,10 +194,17 @@
                     @foreach ($campaigns as $index => $campaign)
                       <tr>
                         <th scope="row">{{$index+1}}</th>
-                        <td>{{$campaign->name}}</td>
+                        <td>{{__($campaign->name)}}</td>
                         <td>{{$campaign->place}}</td>
                         <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
                         <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
+                        <td>
+                          @if ($campaign->pivot->donor_attended)
+                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                          @else
+                            <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                          @endif
+                        </td>
                         <td>
                           @if ($campaign->pivot->donor_donated)
                             <i class="fa fa-check text-success" aria-hidden="true"></i>
