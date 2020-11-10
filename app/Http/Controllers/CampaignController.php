@@ -22,9 +22,9 @@ class CampaignController extends Controller
 {
 
 	public function __construct(){
-		$this->middleware('auth');
-    $this->middleware('admin');
-    $this->middleware('verified');
+		$this->middleware('auth')->except('showComingCampaigns');
+    $this->middleware('admin')->except('showComingCampaigns');
+    $this->middleware('verified')->except('showComingCampaigns');
 	}
 
   public function index()
@@ -98,6 +98,11 @@ class CampaignController extends Controller
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
     return view('campaign.show', compact('campaign', 'donors', 'bloodTypes', 'genderTypes'));
+  }
+
+  public function showComingCampaigns(){
+    $campaigns = Campaign::with('city', 'state')->latest()->limit(3)->get();
+    return view('campaign.listing', compact('campaigns'));
   }
 
   public function edit(Campaign $campaign)

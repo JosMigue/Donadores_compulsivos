@@ -9,6 +9,7 @@ Auth::routes(['verify' => true, 'register'=> false]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/campaigns', 'CampaignController');
+Route::get('/listing/campaigns', 'CampaignController@showComingCampaigns')->name('campaigns.listing');
 Route::get('/campaigns/involve/{campaign}/donor/{donor}', 'CampaignDonorController@show')->name('campaigndonors.show');
 Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaigndonors.store');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
