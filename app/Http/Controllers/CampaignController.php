@@ -88,7 +88,16 @@ class CampaignController extends Controller
       $hasFilter = true;
     }
     $hasFilter ? $donors = $donors->get() : '';
-    Notification::send($donors, new CampaignNotify($campaign));
+    try{
+      Notification::send($donors, new CampaignNotify($campaign));
+    }catch(\Swift_TransportException $e){
+      if($e->getMessage()) {
+        return redirect()->route('campaigns.index')->with('errorMessage',$e->getMessage());
+      }
+    }
+    catch(Exception $e){
+      return redirect()->route('campaigns.index')->with('errorMessage',__('Campaign has been added but the email has not been sent to donors, there was an error when trying to make conection with smtp server. Sorry for inconvenencies'));
+    }
   }
 
   public function show(Campaign $campaign)
@@ -101,7 +110,7 @@ class CampaignController extends Controller
   }
 
   public function showComingCampaigns(){
-    $campaigns = Campaign::with('city', 'state')->latest()->limit(3)->get();
+    $campaigns = Campaign::with('city', 'state')->orderBy('created_at', 'ASC')->limit(3)->get();
     return view('campaign.listing', compact('campaigns'));
   }
 
