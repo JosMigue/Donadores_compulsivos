@@ -22,9 +22,9 @@ class CampaignController extends Controller
 {
 
 	public function __construct(){
-		$this->middleware('auth');
-    $this->middleware('admin');
-    $this->middleware('verified');
+		$this->middleware('auth')->except('showComingCampaigns');
+    $this->middleware('admin')->except('showComingCampaigns');
+    $this->middleware('verified')->except('showComingCampaigns');
 	}
 
   public function index()
@@ -88,7 +88,16 @@ class CampaignController extends Controller
       $hasFilter = true;
     }
     $hasFilter ? $donors = $donors->get() : '';
-    Notification::send($donors, new CampaignNotify($campaign));
+    try{
+      Notification::send($donors, new CampaignNotify($campaign));
+    }catch(\Swift_TransportException $e){
+      if($e->getMessage()) {
+        return redirect()->route('campaigns.index')->with('errorMessage',$e->getMessage());
+      }
+    }
+    catch(Exception $e){
+      return redirect()->route('campaigns.index')->with('errorMessage',__('Campaign has been added but the email has not been sent to donors, there was an error when trying to make conection with smtp server. Sorry for inconvenencies'));
+    }
   }
 
   public function show(Campaign $campaign)
@@ -98,6 +107,11 @@ class CampaignController extends Controller
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
     return view('campaign.show', compact('campaign', 'donors', 'bloodTypes', 'genderTypes'));
+  }
+
+  public function showComingCampaigns(){
+    $campaigns = Campaign::with('city', 'state')->orderBy('created_at', 'ASC')->limit(3)->get();
+    return view('campaign.listing', compact('campaigns'));
   }
 
   public function edit(Campaign $campaign)
