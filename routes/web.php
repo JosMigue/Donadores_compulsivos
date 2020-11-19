@@ -15,6 +15,7 @@ Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaig
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 
 Route::get('/cities', 'CityController@index')->name('cities');
+Route::post('/citiesByState', 'CityController@citiesByState')->name('citiesbystate');
 
 Route::get('/admins', 'AdminController@index')->name('admins.index');
 Route::get('/admins/create', 'AdminController@create')->name('admins.create');
@@ -42,3 +43,9 @@ Route::get('/reports/donations', 'ReportController@create')->name('reports.donat
 
 //Quiz routes
 Route::get('/blood-donation', 'QuizController@show')->name('quiz');
+
+//filters routes
+Route::get('api/donors/search/{search}', 'DonorFilterController@filterByName');
+Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
+Route::post('/filter/donors', 'DonorFilterController@filter');
+

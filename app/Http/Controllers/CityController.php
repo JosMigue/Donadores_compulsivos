@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\City;
+use App\State;
 
 class CityController extends Controller
 {
@@ -16,5 +17,11 @@ class CityController extends Controller
       ]);
 
       return $html = $view->render();
+  }
+
+  public function citiesByState(Request $request)
+  {
+    $state = State::where('id',$request->input('stateId'))->first();
+    return $state->cities;
   }
 }
