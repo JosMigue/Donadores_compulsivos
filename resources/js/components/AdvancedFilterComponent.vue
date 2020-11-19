@@ -57,6 +57,9 @@
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
         <button class="btn btn-primary mx-1" v-on:click="filterTable()" >Buscar<i class="fa fa-filter ml-1"></i></button>
       </div>
+      <div class="row justify-content-center" v-if="isFilterTable">
+        Se han encontrado: {{this.donors.length}} coincidencias
+      </div>
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -135,6 +138,7 @@ export default {
     }
   },
   mounted() {
+    console.log('Mondado');
     this.donors = this.donorsarray.data;
     this.citiesbystate = this.cities;
   },
