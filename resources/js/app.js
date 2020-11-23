@@ -8,6 +8,8 @@ Vue.component('dayofweek-component', require('./components/DaysOfTheWeekComponen
 Vue.component('autocomplete-component', require('./components/AutoCompleteComponent.vue').default);
 Vue.component('table-campaigns-donors-component', require('./components/TableComponent.vue').default);
 Vue.component('filters-donors-component', require('./components/AdvancedFilterComponent.vue').default);
+Vue.component('filters-component', require('./components/filterDonorComponent.vue').default);
+Vue.component('pagination', require('./components/paginatorComponent.vue').default);
 Vue.config.productionTip = false;
 
 const app = new Vue({

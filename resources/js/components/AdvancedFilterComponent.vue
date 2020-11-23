@@ -20,47 +20,49 @@
           <input class="form-control" type="text" v-model="search" placeholder="Buscar por nombre o apellidos" v-on:keyup="searchByName()">
         </div>
       </div>
-      <div class="row justify-content-center pt-2">
-        <p>Filtro avanzado</p>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 col-12">
-          <label for="">Tipo de donador</label>
-          <select class="form-control" name="" id="" v-model="selectedDonorType">
-            <option value="" selected disabled>Seleccione un tipo de donador</option>
-            <option v-bind:value="index" v-for="(donortype, index) in donortypes" :key="index">{{donortype}}</option>
-          </select>
+      <form action="/filter/donors" method="GET">
+        <div class="row justify-content-center pt-2">
+          <p>Filtro avanzado</p>
         </div>
-        <div class="col-lg-3 col-12">
-          <label for="">Tipo de sangre</label>
-          <select class="form-control" v-model="selectedBloodType">
-            <option value="" selected disabled>Seleccione un tipo de sangre</option>
-            <option v-bind:value="index" v-for="(bloodtype, index) in bloodtypes" :key="index">{{bloodtype}}</option>
-          </select>
+        <div class="row">
+          <div class="col-lg-3 col-12">
+            <label for="">Tipo de donador</label>
+            <select class="form-control" name="donorType" id="donorType" v-model="selectedDonorType">
+              <option value="" selected disabled>Seleccione un tipo de donador</option>
+              <option v-bind:value="index" v-for="(donortype, index) in donortypes" :key="index">{{donortype}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-12">
+            <label for="">Tipo de sangre</label>
+            <select class="form-control" name="bloodType" v-model="selectedBloodType">
+              <option value="" selected disabled>Seleccione un tipo de sangre</option>
+              <option v-bind:value="index" v-for="(bloodtype, index) in bloodtypes" :key="index">{{bloodtype}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-12">
+            <label for="">Estado</label>
+            <select class="form-control" name="stateId" v-model="selectedState" v-on:change="getCitiesByState()">
+              <option value="" disabled>Selecciones un estado</option>
+              <option v-bind:value="state.id" v-for="(state, index) in states" :key="index">{{state.name}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-12">
+            <label for="">Ciudad</label>
+            <select class="form-control" name="cityId" v-model="selectedCity">
+              <option value="" selected disabled>Selecciones una ciudad</option>
+              <option v-bind:value="city.id" v-for="(city, index) in citiesbystate" :key="index">{{city.name}}</option>
+            </select>
+          </div>
         </div>
-        <div class="col-lg-3 col-12">
-          <label for="">Estado</label>
-          <select class="form-control" v-model="selectedState" name="" id="" v-on:change="getCitiesByState()">
-            <option value="" disabled>Selecciones un estado</option>
-            <option v-bind:value="state.id" v-for="(state, index) in states" :key="index">{{state.name}}</option>
-          </select>
+        <div class="row justify-content-end mt-2">
+          <button class="btn btn-primary mx-1" type="submit">Buscar<i class="fa fa-filter ml-1"></i></button>
         </div>
-        <div class="col-lg-3 col-12">
-          <label for="">Ciudad</label>
-          <select class="form-control" v-model="selectedCity" name="" id="">
-            <option value="" selected disabled>Selecciones una ciudad</option>
-            <option v-bind:value="city.id" v-for="(city, index) in citiesbystate" :key="index">{{city.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="row justify-content-end mt-2">
-        <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
-        <button class="btn btn-primary mx-1" v-on:click="filterTable()" >Buscar<i class="fa fa-filter ml-1"></i></button>
-      </div>
+      </form>
       <div class="row justify-content-center" v-if="isFilterTable">
-        Se han encontrado: {{this.donors.length}} coincidencias
+        Se han encontrado: {{this.donors.data.length}} coincidencias (limitado a 50 resultados)
       </div>
     </div>
+    <pagination :paginator="donors" v-if="!isFilterTable"></pagination>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead class="thead-dark text-center">
@@ -77,7 +79,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(donor, index) in donors" :key="index">
+          <tr v-for="(donor, index) in donors.data" :key="index">
             <th>{{donor.id}}</th>
             <td>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
             <td>{{donor.city.name}}</td>
@@ -99,23 +101,17 @@
               </div>
             </td>
           </tr>
-          <tr v-if="donors.length == 0">
+          <tr v-if="donors['total'] == 0 && this.search == '' && this.iddonor == ''">
             <td class="table-info text-center" colspan="10">Nada para mostrar</td>
           </tr>
-          <tr v-if="donors.length == 0 && this.search == '' && this.iddonor == ''">
-            <td class="table-info text-center" colspan="10">Nada para mostrar</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.isFilterTable">
-            <td class="table-info text-center" colspan="10">No hay resultados al filtrar</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.search">
+          <tr v-if="donors['total'] == 0 && this.search">
             <td class="table-info text-center" colspan="10">No hay resultados para la busqueda "{{this.search}}"</td>
           </tr>
-          <tr v-if="donors.length == 0 && this.iddonor">
+          <tr v-if="donors['total'] == 0 && this.iddonor">
             <td class="table-info text-center" colspan="10">No hay resultados para el id "{{this.iddonor}}"</td>
           </tr>
         </tbody>
-      </table>    
+      </table>  
     </div>
   </div>
 </template>
@@ -138,8 +134,7 @@ export default {
     }
   },
   mounted() {
-    console.log('Mondado');
-    this.donors = this.donorsarray.data;
+    this.donors = this.donorsarray;
     this.citiesbystate = this.cities;
   },
   methods: {
@@ -149,7 +144,7 @@ export default {
         axios.delete(`/donors/${donorId}`)
         .then(response => {
           if(response.data['code']==200){
-            this.donors.splice(index, 1);
+            this.donors.data.splice(index, 1);
             successNotification(response.data['message']);
           }else{
             errorNotification(response.data['message']);
@@ -163,6 +158,7 @@ export default {
     searchByName:function(){
       this.iddonor = ''; 
       if(this.search){
+        this.isFilterTable=true;
         axios.get(`api/donors/search/${this.search}`)
         .then(response =>{
           this.donors = response.data;
@@ -174,6 +170,7 @@ export default {
     searchById:function(){
       this.search = ''; 
       if(this.iddonor){
+        this.isFilterTable=true;
         axios.get(`api/donors/id/${this.iddonor}`)
         .then(response =>{
           console.log(response.data);
@@ -198,11 +195,13 @@ export default {
       })
     },
     filterTable:function(){
-      axios.post('/filter/donors',{
-        bloodType: this.selectedBloodType,
-        donorType: this.selectedDonorType,
-        city: this.selectedCity,
-        state: this.selectedState
+      axios.get('/filter/donors',{ 
+        params: {
+          bloodType: this.selectedBloodType,
+          donorType: this.selectedDonorType,
+          city: this.selectedCity,
+          state: this.selectedState
+        } 
       })
       .then(response => {
         this.isFilterTable = true;
@@ -210,14 +209,20 @@ export default {
       })
     },
     resetFilter:function(){
-      this.donors = this.donorsarray.data;
-      this.isFilterTable = false;
+      this.donors = this.donorsarray;
+      this.isFilterTable=false;
       this.citiesbystate = this.cities;
       this.selectedState =  '';
       this.selectedCity =  '';
       this.selectedBloodType =  '';
       this.selectedDonorType =  '';
     },
+    getResults(page = 1) {
+			axios.get('donors?page=' + page)
+				.then(response => {
+					this.donors = response.data;
+				});
+		}
   },
 }
 </script>

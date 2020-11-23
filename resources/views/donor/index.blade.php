@@ -33,9 +33,6 @@
       <a class="is-panel-button is-btn-bg-red" href="{{route('donors.create')}}">{{__('Add')}}<i class="fa fa-plus mx-1"></i></a>
     </div>
       <filters-donors-component v-bind:donorsArray="{{  json_encode($donors) }}" v-bind:bloodtypes="{{  json_encode($bloodTypes) }}" v-bind:gendertypes="{{  json_encode($genderTypes) }}" v-bind:donortypes="{{  json_encode($donorTypes) }}" v-bind:cities="{{  json_encode($cities) }}" v-bind:states="{{  json_encode($states) }}"></filters-donors-component>
-    <div class="">
-      {{$donors->onEachSide(1)->links()}}
-    </div> 
   </div>
 @endsection
 

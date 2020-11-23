@@ -180,11 +180,20 @@ class DonorController extends Controller
   public function destroy(Donor $donor)
   {
     $imageFile = $donor->id.'pf.jpg';
-    if($donor->delete() &  $donor->user()->delete()){
-      Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
-      return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+    if($donor->user){
+      if($donor->delete() &  $donor->user()->delete()){
+        Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
+        return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+      }else{
+        return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      }
     }else{
-      return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      if($donor->delete()){
+        Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
+        return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+      }else{
+        return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      }
     }
   }
 }
