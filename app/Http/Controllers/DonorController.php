@@ -34,13 +34,12 @@ class DonorController extends Controller
   
   public function index()
   {
-    $donors = Donor::with(['city', 'state', 'user'])->orderBy('id', 'ASC')->paginate(15);
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
     $donorTypes = Donor::getEnum('donortype');
     $states = State::all();
     $cities = City::orderBy('name', 'ASC')->get();
-    return view('donor.index', compact('donors', 'bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
+    return view('donor.index', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
 
   public function create()

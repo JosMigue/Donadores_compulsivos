@@ -46,6 +46,7 @@ Route::get('/blood-donation', 'QuizController@show')->name('quiz');
 
 //filters routes
 Route::get('api/donors/search/{search}', 'DonorFilterController@filterByName');
+Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
-Route::post('/filter/donors', 'DonorFilterController@filter');
+Route::get('/filter/donors', 'DonorFilterController@filter');
 

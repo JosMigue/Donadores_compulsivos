@@ -13,11 +13,11 @@
       <div class="row">
         <div class="col-lg-3 col-12">
           <label for="">Por Id:</label>
-          <input class="form-control" type="text" v-model="iddonor" placeholder="id" v-on:keyup="searchById()">
+          <input class="form-control" type="text" v-model="iddonor" placeholder="id" v-on:keyup="filterTable()">
         </div>
         <div class="col-lg-9 col-12">
           <label for="">Por nombre o apellido:</label>
-          <input class="form-control" type="text" v-model="search" placeholder="Buscar por nombre o apellidos" v-on:keyup="searchByName()">
+          <input class="form-control" type="text" v-model="search" placeholder="Buscar por nombre o apellidos" v-on:keyup="filterTable()">
         </div>
       </div>
       <div class="row justify-content-center pt-2">
@@ -26,28 +26,28 @@
       <div class="row">
         <div class="col-lg-3 col-12">
           <label for="">Tipo de donador</label>
-          <select class="form-control" name="" id="" v-model="selectedDonorType">
+          <select class="form-control" v-on:change="filterTable()" name="" id="" v-model="selectedDonorType">
             <option value="" selected disabled>Seleccione un tipo de donador</option>
             <option v-bind:value="index" v-for="(donortype, index) in donortypes" :key="index">{{donortype}}</option>
           </select>
         </div>
         <div class="col-lg-3 col-12">
           <label for="">Tipo de sangre</label>
-          <select class="form-control" v-model="selectedBloodType">
+          <select class="form-control" v-on:change="filterTable()" v-model="selectedBloodType">
             <option value="" selected disabled>Seleccione un tipo de sangre</option>
             <option v-bind:value="index" v-for="(bloodtype, index) in bloodtypes" :key="index">{{bloodtype}}</option>
           </select>
         </div>
         <div class="col-lg-3 col-12">
           <label for="">Estado</label>
-          <select class="form-control" v-model="selectedState" name="" id="" v-on:change="getCitiesByState()">
+          <select class="form-control" v-model="selectedState" v-on:change="getCitiesByState()">
             <option value="" disabled>Selecciones un estado</option>
             <option v-bind:value="state.id" v-for="(state, index) in states" :key="index">{{state.name}}</option>
           </select>
         </div>
         <div class="col-lg-3 col-12">
           <label for="">Ciudad</label>
-          <select class="form-control" v-model="selectedCity" name="" id="">
+          <select class="form-control" v-on:change="getCitiesByState()" v-model="selectedCity">
             <option value="" selected disabled>Selecciones una ciudad</option>
             <option v-bind:value="city.id" v-for="(city, index) in citiesbystate" :key="index">{{city.name}}</option>
           </select>
@@ -55,8 +55,13 @@
       </div>
       <div class="row justify-content-end mt-2">
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
-        <button class="btn btn-primary mx-1" v-on:click="filterTable()" >Buscar<i class="fa fa-filter ml-1"></i></button>
       </div>
+    </div>
+    <div class="row d-flex justify-content-center" v-if="isFilterTable">
+      Se han encontrado {{this.donors.length}} conincidencias
+    </div>
+    <div class="row d-flex justify-content-center" v-if="!isFilterTable">
+      Hay {{this.totalDonors}} donadores en total
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -74,6 +79,14 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td colspan="10" v-if="isTableLoading">
+              <div class="d-flex justify-content-center">
+                  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                  <span class="sr-only">Loading...</span>
+              </div>
+            </td>
+          </tr>
           <tr v-for="(donor, index) in donors" :key="index">
             <th>{{donor.id}}</th>
             <td>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
@@ -96,24 +109,16 @@
               </div>
             </td>
           </tr>
-          <tr v-if="donors.length == 0">
+          <tr v-if="donors.length == 0 && !isTableLoading">
             <td class="table-info text-center" colspan="10">Nada para mostrar</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.search == '' && this.iddonor == ''">
-            <td class="table-info text-center" colspan="10">Nada para mostrar</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.isFilterTable">
-            <td class="table-info text-center" colspan="10">No hay resultados al filtrar</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.search">
-            <td class="table-info text-center" colspan="10">No hay resultados para la busqueda "{{this.search}}"</td>
-          </tr>
-          <tr v-if="donors.length == 0 && this.iddonor">
-            <td class="table-info text-center" colspan="10">No hay resultados para el id "{{this.iddonor}}"</td>
           </tr>
         </tbody>
-      </table>    
+      </table>   
     </div>
+    <div class="row d-flex justify-content-center" v-if="!isTableLoading && !isFilterTable">
+      <button class="btn btn-link" v-on:click="loadMore()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar más</button>  
+      <button class="btn btn-link" v-on:click="loadAll()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar todo</button>  
+    </div> 
   </div>
 </template>
 
@@ -123,7 +128,7 @@ export default {
   data() {
     return {
       donors: [],
-      search: null,
+      search: '',
       iddonor: '',
       isSectionFilterActive: false,
       citiesbystate:[],
@@ -131,14 +136,29 @@ export default {
       selectedCity: '',
       selectedBloodType: '',
       selectedDonorType: '',
+      limitDonors: 15,
+      totalDonors: 0,
+      isTableLoading: true,
       isFilterTable: false,
     }
   },
   mounted() {
-    this.donors = this.donorsarray.data;
+    this.getDonors();
     this.citiesbystate = this.cities;
   },
   methods: {
+    getDonors: function(){
+      axios.get('api/donors',{
+        params: {
+          takeRecords:this.limitDonors
+        }
+      })
+      .then(response=>{
+        this.isTableLoading = false;
+        this.donors = response.data.donors;
+        this.totalDonors = response.data.countDonors;
+      })
+    },
     deleteDonor: async function(donorId, index){
       const sweetAlerPromise = await questionNotification('¿Está seguro?', 'Esta acción no se puede corrergir', 'Sí, estoy seguro');
       if(sweetAlerPromise){
@@ -156,28 +176,15 @@ export default {
         });
       }
     },
-    searchByName:function(){
-      this.iddonor = ''; 
-      if(this.search){
-        axios.get(`api/donors/search/${this.search}`)
-        .then(response =>{
-          this.donors = response.data;
-        })
-      }else{
-        this.resetFilter();
-      }
+    loadMore:function(){
+      this.limitDonors += 15;
+      this.getDonors(); 
     },
-    searchById:function(){
-      this.search = ''; 
-      if(this.iddonor){
-        axios.get(`api/donors/id/${this.iddonor}`)
-        .then(response =>{
-          console.log(response.data);
-          this.donors = response.data;
-        })
-      }else{
-        this.resetFilter();
-      }
+    loadAll:function(){
+      this.limitDonors = this.totalDonors;
+      this.isTableLoading = true;
+      this.donors = [],
+      this.getDonors(); 
     },
     toggleFilterSection:function(){
       if(this.isSectionFilterActive){
@@ -191,28 +198,39 @@ export default {
         stateId: this.selectedState
       }).then(response =>{
         this.citiesbystate = response.data;
+        this.filterTable();
       })
     },
     filterTable:function(){
-      axios.post('/filter/donors',{
-        bloodType: this.selectedBloodType,
-        donorType: this.selectedDonorType,
-        city: this.selectedCity,
-        state: this.selectedState
+      this.isTableLoading = true;
+      this.donors = [],
+      axios.get('/filter/donors',{ 
+        params:{
+          bloodType: this.selectedBloodType,
+          donorType: this.selectedDonorType,
+          city: this.selectedCity,
+          state: this.selectedState,
+          name: this.search,
+          id: this.iddonor
+        }
       })
       .then(response => {
+        this.isTableLoading = false;
         this.isFilterTable = true;
         this.donors = response.data;
       })
     },
     resetFilter:function(){
-      this.donors = this.donorsarray.data;
+      this.getDonors();
       this.isFilterTable = false;
       this.citiesbystate = this.cities;
       this.selectedState =  '';
       this.selectedCity =  '';
       this.selectedBloodType =  '';
       this.selectedDonorType =  '';
+      this.search= '',
+      this.iddonor= '',
+      this.limitDonors= 15
     },
   },
 }
