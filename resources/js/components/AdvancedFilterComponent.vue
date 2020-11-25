@@ -71,8 +71,8 @@
             <th scope="col">Nombre</th>
             <th scope="col">Ciudad</th>
             <th scope="col">Estado</th>
-            <th scope="col">Tipo de sangre</th>
-            <th scope="col">Tipo de donador</th>
+            <th scope="col">TS</th>
+            <th scope="col">TD</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
             <th scope="col">Acciones</th>
