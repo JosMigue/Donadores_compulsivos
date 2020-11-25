@@ -34,7 +34,7 @@ class SaveDonorRequest extends FormRequest
             'donortype'    => 'required',
             'born_date'     => 'required',
             'first_time_donating' => 'boolean',
-            'email'         => 'required|email|unique:donors',
+            'email'         => 'nullable|email|unique:donors',
             'mobile'        => 'digits:10|max:10|min:10',
             'age'           => 'required|numeric',
             'observations'  => 'max:255',

@@ -47,7 +47,7 @@
         </div>
         <div class="col-lg-3 col-12">
           <label for="">Ciudad</label>
-          <select class="form-control" v-on:change="getCitiesByState()" v-model="selectedCity">
+          <select class="form-control" v-on:change="filterTable()" v-model="selectedCity">
             <option value="" selected disabled>Selecciones una ciudad</option>
             <option v-bind:value="city.id" v-for="(city, index) in citiesbystate" :key="index">{{city.name}}</option>
           </select>
@@ -113,7 +113,7 @@
             <td class="table-info text-center" colspan="10">Nada para mostrar</td>
           </tr>
         </tbody>
-      </table>   
+      </table>
     </div>
     <div class="row d-flex justify-content-center" v-if="!isTableLoading && !isFilterTable">
       <button class="btn btn-link" v-on:click="loadMore()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar más</button>  

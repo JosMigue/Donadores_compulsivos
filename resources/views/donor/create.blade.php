@@ -86,15 +86,15 @@
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('E-Mail Address')}}</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}">
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Password')}}</label>
-                <input type="password" id="password" name="password" value="1234567890" class="form-control" placeholder="{{__('Password')}}" required>
+                <input type="password" id="password" name="password" value="1234567890" class="form-control" placeholder="{{__('Password')}}">
               </div>
               <div class="col-12 col-md-4 pl-md-1">
                 <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                <input id="password-confirm" value="1234567890" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
+                <input id="password-confirm" value="1234567890" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}">
               </div>
             </div>
             <div class="row my-1">

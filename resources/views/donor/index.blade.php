@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/icon.css')}}">
   <link rel="stylesheet" href="{{asset('css/theme/autocomplete.css')}}">
-  <link rel="stylesheet" href="{{asset('css/list-transition.css')}}">
 @endsection
 
 @section('content')

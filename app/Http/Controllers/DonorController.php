@@ -54,25 +54,41 @@ class DonorController extends Controller
 
   public function store(SaveDonorRequest $request)
   {
-    $user = $this->setUser($request); 
-    $donor =  new Donor ($request->validated());
-    $donor->profile_picture = '';
-    $donor->user_id = $user->id;
-    $credentials = $request->only('email', 'password');
-    if($donor->save()){
-      $this->saveUploadedPicture($donor, $request);
-      if (Auth::check()) {
-        return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
-      }else{
-        if (Auth::attempt($credentials)) {
-          return redirect()->intended('home');
+    if($request->validated()['email'] != null){
+      $user = $this->setUser($request); 
+      $donor =  new Donor ($request->validated());
+      $donor->profile_picture = '';
+      $donor->user_id = $user->id;
+      $credentials = $request->only('email', 'password');
+      $donor = $this->saveUploadedPicture($donor, $request);
+      if($donor->save()){
+        if (Auth::check()) {
+          return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
         }else{
-          return redirect()->route('login')->with('loginMessage', __('Something went wrong, try again later'));
+          if (Auth::attempt($credentials)) {
+            return redirect()->intended('home');
+          }else{
+            return redirect()->route('login')->with('loginMessage', __('Something went wrong, try again later'));
+          }
         }
+      }else{
+        return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
       }
     }else{
-      return redirect()->route('donors.create')->with('errorMessage', __('Something went wrong, try again later'));
+      if($this->saveDonorWithoutAccess($request)){
+        return redirect()->route('donors.index')->with('successMessage', __('Donor has been added successfully'));
+      }else{
+        return redirect()->route('donors.index')->with('errorMessage', __('Something went wrong, try again later'));
+      }
     }
+  }
+
+  private function saveDonorWithoutAccess($request){
+    $donor =  new Donor ($request->validated());
+    $donor->profile_picture = '';
+    $donor->user_id = 0;
+    $donor = $this->saveUploadedPicture($donor, $request);
+    return $donor->save();
   }
 
   public function updateProfilePicture(Donor $donor, UploadProfilePictureRequest $request){
@@ -108,7 +124,7 @@ class DonorController extends Controller
         $donor->profile_picture = 'img/default_avatar.jpg';
       }
     }
-    $donor->save();
+    return $donor;
   }
 
   private function setUser(Request $request){
@@ -179,11 +195,19 @@ class DonorController extends Controller
   public function destroy(Donor $donor)
   {
     $imageFile = $donor->id.'pf.jpg';
-    if($donor->delete() &  $donor->user()->delete()){
-      Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
-      return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+    if($donor->user){
+      if($donor->delete() &  $donor->user()->delete()){
+        Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
+        return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+      }else{
+        return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      }
     }else{
-      return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      if($donor->delete()){
+        return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
+      }else{
+        return array('message' => __('Something went wrong, try again later'), 'code' => 500);
+      }
     }
   }
 }
