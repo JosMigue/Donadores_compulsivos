@@ -71,6 +71,24 @@
               <h6>{{__('Identifier')}}: {{$donor->id}}</h6>
             @endif
           </div>
+          @if (Auth::user()->is_admin)
+            <div class="d-flex justify-content-between">
+              <h6>
+                @if ($donor->be_the_match)
+                  {{__('Be The Match')}}  <i class="fa fa-check text-success"></i>
+                @else
+                {{__('Be The Match')}}  <i class="fa fa-times text-danger"></i>
+                @endif
+              </h6>
+              <h6>
+                @if ($donor->letter)
+                  {{__('Letter')}}  <i class="fa fa-check text-success"></i>
+                @else
+                  {{__('Letter')}}  <i class="fa fa-times text-danger"></i>
+                @endif
+              </h6>
+            </div>
+          @endif
           <div class="d-flex justify-content-around">
             <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>
             <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->total()}}</span></p>

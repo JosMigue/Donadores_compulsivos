@@ -23,6 +23,8 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'donortype',
         'born_date',
         'first_time_donating',
+        'be_the_match',
+        'letter',
         'email',
         'password',
         'mobile',
