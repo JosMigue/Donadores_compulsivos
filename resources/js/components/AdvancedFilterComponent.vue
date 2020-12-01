@@ -46,7 +46,7 @@
           </select>
         </div>
         <div class="col-lg-3 col-12">
-          <label for="">Ciudad</label>
+          <label for="">Municipio</label>
           <select class="form-control" v-on:change="filterTable()" v-model="selectedCity">
             <option value="" selected disabled>Selecciones una ciudad</option>
             <option v-bind:value="city.id" v-for="(city, index) in citiesbystate" :key="index">{{city.name}}</option>
@@ -89,7 +89,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Ciudad</th>
+            <th scope="col">Municipio</th>
             <th scope="col">Estado</th>
             <th scope="col">TS</th>
             <th scope="col">TD</th>
