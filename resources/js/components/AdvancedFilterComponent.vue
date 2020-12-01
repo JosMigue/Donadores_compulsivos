@@ -53,6 +53,26 @@
           </select>
         </div>
       </div>
+      <div class="d-flex flex-wrap flex-lg-row flex-column justify-content-around my-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="be_the_match" v-on:change="filterTable()">
+          <label class="form-check-label" for="defaultCheck1">
+            Be The Match
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="letter" v-on:change="filterTable()">
+          <label class="form-check-label">
+            Carta
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="is_donor_first_time" v-on:change="filterTable()">
+          <label class="form-check-label">
+            Primera vez siendo donador
+          </label>
+        </div>
+      </div>
       <div class="row justify-content-end mt-2">
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
       </div>
@@ -116,8 +136,8 @@
       </table>
     </div>
     <div class="row d-flex justify-content-center" v-if="!isTableLoading && !isFilterTable">
-      <button class="btn btn-link" v-on:click="loadMore()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar más</button>  
-      <button class="btn btn-link" v-on:click="loadAll()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar todo</button>  
+      <button class="btn btn-primary btn-md mx-1" v-on:click="loadMore()"><i class="fa fa-refresh mx-1" v-bind:class="{ 'fa-spin': isLoadingMore }" aria-hidden="true"></i>Cargar más</button>  
+      <button class="btn btn-primary btn-md mx-1" v-on:click="loadAll()"><i class="fa fa-refresh mx-1" aria-hidden="true"></i>Cargar todo</button>  
     </div> 
   </div>
 </template>
@@ -136,10 +156,14 @@ export default {
       selectedCity: '',
       selectedBloodType: '',
       selectedDonorType: '',
+      be_the_match: 0,
+      letter: 0,
+      is_donor_first_time: 0,
       limitDonors: 15,
       totalDonors: 0,
       isTableLoading: true,
       isFilterTable: false,
+      isLoadingMore: false,
     }
   },
   mounted() {
@@ -155,6 +179,7 @@ export default {
       })
       .then(response=>{
         this.isTableLoading = false;
+        this.isLoadingMore = false;
         this.donors = response.data.donors;
         this.totalDonors = response.data.countDonors;
       })
@@ -177,6 +202,7 @@ export default {
       }
     },
     loadMore:function(){
+      this.isLoadingMore = true;
       this.limitDonors += 15;
       this.getDonors(); 
     },
@@ -211,7 +237,10 @@ export default {
           city: this.selectedCity,
           state: this.selectedState,
           name: this.search,
-          id: this.iddonor
+          id: this.iddonor,
+          be_the_match: this.be_the_match,
+          letter: this.letter,
+          isFirstTimeDonor: this.is_donor_first_time
         }
       })
       .then(response => {
@@ -228,9 +257,12 @@ export default {
       this.selectedCity =  '';
       this.selectedBloodType =  '';
       this.selectedDonorType =  '';
-      this.search= '',
-      this.iddonor= '',
-      this.limitDonors= 15
+      this.search = '',
+      this.iddonor = '',
+      this.limitDonors = 15,
+      this.be_the_match = 0,
+      this.letter = 0,
+      this.is_donor_first_time = 0;
     },
   },
 }

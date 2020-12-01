@@ -2052,6 +2052,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['donorsarray', 'donortypes', 'gendertypes', 'bloodtypes', 'cities', 'states'],
   data: function data() {
@@ -2065,10 +2085,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selectedCity: '',
       selectedBloodType: '',
       selectedDonorType: '',
+      be_the_match: 0,
+      letter: 0,
+      is_donor_first_time: 0,
       limitDonors: 15,
       totalDonors: 0,
       isTableLoading: true,
-      isFilterTable: false
+      isFilterTable: false,
+      isLoadingMore: false
     };
   },
   mounted: function mounted() {
@@ -2085,6 +2109,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }).then(function (response) {
         _this.isTableLoading = false;
+        _this.isLoadingMore = false;
         _this.donors = response.data.donors;
         _this.totalDonors = response.data.countDonors;
       });
@@ -2133,6 +2158,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return deleteDonor;
     }(),
     loadMore: function loadMore() {
+      this.isLoadingMore = true;
       this.limitDonors += 15;
       this.getDonors();
     },
@@ -2170,7 +2196,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           city: this.selectedCity,
           state: this.selectedState,
           name: this.search,
-          id: this.iddonor
+          id: this.iddonor,
+          be_the_match: this.be_the_match,
+          letter: this.letter,
+          isFirstTimeDonor: this.is_donor_first_time
         }
       }).then(function (response) {
         _this4.isTableLoading = false;
@@ -2186,7 +2215,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.selectedCity = '';
       this.selectedBloodType = '';
       this.selectedDonorType = '';
-      this.search = '', this.iddonor = '', this.limitDonors = 15;
+      this.search = '', this.iddonor = '', this.limitDonors = 15, this.be_the_match = 0, this.letter = 0, this.is_donor_first_time = 0;
     }
   }
 });
@@ -43168,6 +43197,171 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex flex-wrap flex-lg-row flex-column justify-content-around my-2"
+              },
+              [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.be_the_match,
+                        expression: "be_the_match"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.be_the_match)
+                        ? _vm._i(_vm.be_the_match, null) > -1
+                        : _vm.be_the_match
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.be_the_match,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.be_the_match = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.be_the_match = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.be_the_match = $$c
+                          }
+                        },
+                        function($event) {
+                          return _vm.filterTable()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "form-check-label",
+                      attrs: { for: "defaultCheck1" }
+                    },
+                    [_vm._v("\n          Be The Match\n        ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-check" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.letter,
+                        expression: "letter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.letter)
+                        ? _vm._i(_vm.letter, null) > -1
+                        : _vm.letter
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.letter,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.letter = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.letter = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.letter = $$c
+                          }
+                        },
+                        function($event) {
+                          return _vm.filterTable()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _vm._v("\n          Carta\n        ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-check" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.is_donor_first_time,
+                        expression: "is_donor_first_time"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.is_donor_first_time)
+                        ? _vm._i(_vm.is_donor_first_time, null) > -1
+                        : _vm.is_donor_first_time
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.is_donor_first_time,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.is_donor_first_time = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.is_donor_first_time = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.is_donor_first_time = $$c
+                          }
+                        },
+                        function($event) {
+                          return _vm.filterTable()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _vm._v("\n          Primera vez siendo donador\n        ")
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row justify-content-end mt-2" }, [
               _vm.isFilterTable
                 ? _c(
@@ -43338,7 +43532,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-link",
+              staticClass: "btn btn-primary btn-md mx-1",
               on: {
                 click: function($event) {
                   return _vm.loadMore()
@@ -43348,6 +43542,7 @@ var render = function() {
             [
               _c("i", {
                 staticClass: "fa fa-refresh mx-1",
+                class: { "fa-spin": _vm.isLoadingMore },
                 attrs: { "aria-hidden": "true" }
               }),
               _vm._v("Cargar más")
@@ -43357,7 +43552,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-link",
+              staticClass: "btn btn-primary btn-md mx-1",
               on: {
                 click: function($event) {
                   return _vm.loadAll()
