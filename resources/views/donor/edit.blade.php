@@ -112,6 +112,35 @@
                 </div>
               </div>
             @endif
+            <div class="row">
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="first_time_donating">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->first_time_donating == 1) checked @endif name="first_time_donating">
+                  <label class="form-check-label" for="first_time_donating">
+                    {{__('I have already donated before')}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="be_the_match">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->be_the_match == 1) checked @endif name="be_the_match">
+                  <label class="form-check-label" for="be_the_match">
+                    Be The Match
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="letter">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->letter == 1) checked @endif name="letter">
+                  <label class="form-check-label" for="letter">
+                    {{__('Letter')}}
+                  </label>
+                </div>
+              </div>
+            </div>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
