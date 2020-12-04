@@ -9,7 +9,7 @@
 @section('content')
   <div class="container">
     <div class="row d-flex justify-content-center">
-      <div class="card">
+      <div class="card"  style="width: 60rem">
         <div class="card-header">
           @if (Auth::user()->is_admin)
             <h4 class="card-title">{{__('Update donor')}}</h4>
@@ -146,6 +146,9 @@
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
             </div>
           </form>
+          @if (Auth::user()->is_admin)
+            <p class="text-danger">ADVERTENCIA: Tenga mucho cuidado al momento de quitar un correo al usuario, en caso de hacerlo el usuario perderá el acceso al sistema por completo. JLMarketing se libra de toda responsabilidad al momento de que un administrador proceda con lo antes mencionado. ESTA ACCIÓN NO SE PUEDE CORREGIR.</p>
+          @endif
           @if ($errors->any())
           <div class="container">
             <div class="alert alert-danger">

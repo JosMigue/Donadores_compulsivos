@@ -181,7 +181,9 @@ class DonorController extends Controller
   public function update(UpdateDonorRequest $request, Donor $donor)
   {
     if($donor->update($request->validated())){
-      $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name']]);
+      if($donor->user_id != 0){
+        $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name']]);
+      }
       if(Auth::user()->is_admin){
         return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
       }else{
