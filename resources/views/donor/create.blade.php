@@ -128,11 +128,31 @@
                 <input type="file" class="form-control" name="profile_picture" id="profile_picture">
               </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating">
-              <label class="form-check-label" for="first_time_donating">
-                {{__('I have already donated before')}}
-              </label>
+            <div class="row">
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating">
+                  <label class="form-check-label" for="first_time_donating">
+                    {{__('I have already donated before')}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="1" name="be_the_match" id="be_the_match">
+                  <label class="form-check-label" for="be_the_match">
+                    Be The Match
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="1" name="letter" id="letter">
+                  <label class="form-check-label" for="letter">
+                    {{__('Letter')}}
+                  </label>
+                </div>
+              </div>
             </div>
             <p class="text-justify text-danger">
               Nota al administrador: La contraseña por defecto es 1234567890, en caso de querer poner otra diferente modificar 

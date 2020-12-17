@@ -17,6 +17,15 @@ class DonorFilterController extends Controller
 
   public function filter(Request $request){
     $donors = Donor::query();
+    if($request->input('be_the_match') === 'true'){
+      $donors->where('be_the_match', 1);
+    }
+    if($request->input('letter') === 'true'){
+      $donors->where('letter', 1);
+    }
+    if($request->input('isFirstTimeDonor') === 'true'){
+      $donors->where('first_time_donating', 1);
+    }
     if($request->input('bloodType')){
       $donors->where('bloodtype', $request->input('bloodType'));
     }

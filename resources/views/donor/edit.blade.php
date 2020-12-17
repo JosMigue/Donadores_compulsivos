@@ -9,7 +9,7 @@
 @section('content')
   <div class="container">
     <div class="row d-flex justify-content-center">
-      <div class="card">
+      <div class="card"  style="width: 60rem">
         <div class="card-header">
           @if (Auth::user()->is_admin)
             <h4 class="card-title">{{__('Update donor')}}</h4>
@@ -112,11 +112,43 @@
                 </div>
               </div>
             @endif
+            <div class="row">
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="first_time_donating">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->first_time_donating == 1) checked @endif name="first_time_donating">
+                  <label class="form-check-label" for="first_time_donating">
+                    {{__('I have already donated before')}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="be_the_match">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->be_the_match == 1) checked @endif name="be_the_match">
+                  <label class="form-check-label" for="be_the_match">
+                    Be The Match
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-check">
+                  <input type="hidden" value="0" name="letter">
+                  <input class="form-check-input" value="1" type="checkbox" @if($donor->letter == 1) checked @endif name="letter">
+                  <label class="form-check-label" for="letter">
+                    {{__('Letter')}}
+                  </label>
+                </div>
+              </div>
+            </div>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
             </div>
           </form>
+          @if (Auth::user()->is_admin)
+            <p class="text-danger">ADVERTENCIA: Tenga mucho cuidado al momento de quitar un correo al usuario, en caso de hacerlo el usuario perderá el acceso al sistema por completo. JLMarketing se libra de toda responsabilidad al momento de que un administrador proceda con lo antes mencionado. ESTA ACCIÓN NO SE PUEDE CORREGIR.</p>
+          @endif
           @if ($errors->any())
           <div class="container">
             <div class="alert alert-danger">
