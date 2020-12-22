@@ -46,4 +46,8 @@ class DonorFilterController extends Controller
     }
     return $donors->with(['city', 'state'])->get();
   }
+
+  public function filterByName(Request $request){
+    return Donor::where('name', 'LIKE', '%'.$request->input('search').'%')->orWhere('parental_surname','LIKE','%'.$request->input('search').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('search').'%')->take(10)->with('city', 'state')->get();
+  }
 }

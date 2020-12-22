@@ -92,6 +92,28 @@ class CampaignDonorController extends Controller
       }
     }
   }
+
+  public function addDonorCampaign(CampaignDonorRequest $request){
+    if(Auth::user()->is_admin){
+      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
+      $donor = Donor::where('id',$request->validated()['donor'])->first();
+      if($campaign->campaigndonors->where('donor_id',$request->validated()['donor'])->count() == 0){
+        $currentTurn = $campaign->donors->count();
+        $currentTurn +=1;
+        $campaignAt = Carbon::create($campaign->time_start);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)),'ip_address' => $request->ip()]);
+        $campaign->campaigndonors()->save($campaigDonor);
+        return array('status' => 200, 'message' => __('Donor has been added successfully'));
+      }else{
+        return array('status' => 400, 'message' => __('It looks like donor is already checked in this campaign'));
+      }
+    }
+  }
+
+  public function getDonorsInCampaign(Request $request){
+    $campaign = Campaign::where('id',$request->input('campaignId'))->first();
+    return $campaign->donors()->get();
+  }
   
   private function sendEmailWithTurn($donor, $currentTurn){
     $donor->notify(new SendTurnDonation($currentTurn));

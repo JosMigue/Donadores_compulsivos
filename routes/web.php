@@ -12,7 +12,9 @@ Route::resource('/campaigns', 'CampaignController');
 Route::get('/listing/campaigns', 'CampaignController@showComingCampaigns')->name('campaigns.listing');
 Route::get('/campaigns/involve/{campaign}/donor/{donor}', 'CampaignDonorController@show')->name('campaigndonors.show');
 Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaigndonors.store');
+Route::post('/campaigns/donors/involve/manually', 'CampaignDonorController@addDonorCampaign');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
+Route::post('/campaign/donors/list', 'CampaignDonorController@getDonorsInCampaign');
 
 Route::get('/cities', 'CityController@index')->name('cities');
 Route::post('/citiesByState', 'CityController@citiesByState')->name('citiesbystate');
@@ -45,7 +47,7 @@ Route::get('/reports/donations', 'ReportController@create')->name('reports.donat
 Route::get('/blood-donation', 'QuizController@show')->name('quiz');
 
 //filters routes
-Route::get('api/donors/search/{search}', 'DonorFilterController@filterByName');
+Route::get('api/donors/search', 'DonorFilterController@filterByName');
 Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
