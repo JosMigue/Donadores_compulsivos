@@ -16,8 +16,7 @@ class CampaignDonorController extends Controller
 {
 
   public function __construct(){
-/*     $this->middleware('auth');
-    $this->middleware('verified'); */
+    $this->middleware('auth')->except(['show', 'store']);
   }
 
   public function show(Campaign $campaign, Donor $donor){
@@ -68,7 +67,8 @@ class CampaignDonorController extends Controller
         $donor = Donor::where('user_id',$request->validated()['donor'])->first();
         $currentTurn = $campaign->donors->count();
         $currentTurn +=1;
-        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
+        $campaignAt = Carbon::create($campaign->time_start);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
         if($campaign->campaigndonors()->save($campaigDonor)){
           $this->sendEmailWithTurn($donor, $currentTurn);
           return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
@@ -83,7 +83,8 @@ class CampaignDonorController extends Controller
       $donor = Donor::where('id',$request->validated()['donor'])->first();
       $currentTurn = $campaign->donors->count();
       $currentTurn +=1;
-      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
+      $campaignAt = Carbon::create($campaign->time_start);
+      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
       if($campaign->campaigndonors()->save($campaigDonor)){
         $this->sendEmailWithTurn($donor, $currentTurn);
         return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
