@@ -12,7 +12,7 @@ class DonorFilterController extends Controller
   }
   
   public function index(Request $request){
-    return json_encode(array('donors' => Donor::with(['city', 'state', 'user'])->take($request->input('takeRecords'))->get(), 'countDonors' => Donor::count()));
+    return json_encode(array('donors' => Donor::with(['city', 'state', 'user'])->where('is_active',1)->take($request->input('takeRecords'))->get(), 'countDonors' => Donor::count()));
   }
 
   public function filter(Request $request){
@@ -43,6 +43,11 @@ class DonorFilterController extends Controller
     }
     if($request->input('id')){
       $donors->where('id', $request->input('id'));
+    }
+    if($request->input('isActive')==='true'){
+      $donors->where('is_active', 0);
+    }else{
+      $donors->where('is_active', 1);
     }
     return $donors->with(['city', 'state'])->get();
   }

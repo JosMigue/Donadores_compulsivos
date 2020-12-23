@@ -41,6 +41,10 @@
     </div>
     <div class="row">
       <div class="col-md-4 pr-md-1">
+        <label>Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" v-model="email">
+      </div>
+      <div class="col-md-4 pr-md-1">
         <label>Estado</label>
         <select id="state_id" name="state_id" class="form-control" v-model="selectedState" v-on:change="getCitiesByStates(selectedState)" required>
           <option value="" selected disabled>seleccione un estado...</option>
@@ -55,21 +59,23 @@
           <option :value="city.id" v-for="(city, index) in cities" :key="index" >{{city.name}}</option>
         </select>
       </div>
-      <div class="col-md-4 pl-md-1">
-        <label>Fecha de nacimiento</label>
-        <input type="date" v-model="selectedDate" v-on:change="calculateAge()" id="born_date" name="born_date" class="form-control" required>
-      </div>
     </div>
     <div class="row my-1">
       <div class="col-12 col-md-4 pr-md-1">
+        <label>Fecha de nacimiento</label>
+        <input type="date" v-model="selectedDate" v-on:change="calculateAge()" id="born_date" name="born_date" class="form-control" required>
+      </div>
+      <div class="col-6 col-md-4 px-md-1">
         <label>Teléfono celular</label>
         <input type="tel" id="mobile" name="mobile" class="form-control" v-model="mobile" placeholder="" value="" >
       </div>
-      <div class="col-6 col-md-4 px-md-1">
+      <div class="col-6 col-md-4 pl-md-1">
         <label>Edad</label>
         <input type="text" id="age" name="age" v-model="age" class="form-control" readonly>
       </div>
-      <div class="col-6 col-md-4 pl-md-1">
+    </div>
+    <div class="row my-1">
+      <div class="col-6 col-md-4 pr-md-1">
         <label>Género</label>
         <select id="gendertype" name="gendertype" class="form-control" v-model="selectedGender" required>
           <option value="" selected disabled>Seleccione género...</option>
@@ -78,11 +84,27 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-12">
+      <div class="col-12 col-lg-4 pr-md-1">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" disabled checked name="first_time_donating" id="first_time_donating">
           <label class="form-check-label" for="first_time_donating">
             Donador primera vez
+          </label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 px-md-1">
+        <div class="form-check">
+          <input class="form-check-input" value="0" v-model="beTheMatch" type="checkbox" name="be_the_match" id="be_the_match">
+          <label class="form-check-label" for="be_the_match">
+            Be The Match
+          </label>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 pl-md-1">
+        <div class="form-check">
+          <input class="form-check-input" value="0" v-model="letter" type="checkbox" name="letter" id="letter">
+          <label class="form-check-label" for="letter">
+            Carta
           </label>
         </div>
       </div>
@@ -115,6 +137,9 @@ export default {
       parental_surname: '',
       maternal_surname: '',
       name: '',
+      beTheMatch:false,
+      letter:false,
+      email:'',
       errors: ''
 
     }
@@ -151,6 +176,9 @@ export default {
       this.parental_surname = '';
       this.maternal_surname = '';
       this.name = '';
+      this.beTheMatch = false;
+      this.letter = false;
+      this.email = '';
     },
     addDonor:function(){
       axios.post('/api/donor/store',{
@@ -166,7 +194,11 @@ export default {
         'age': this.age,
         'gendertype': this.selectedGender,
         'campaign': this.campaign,
-        'first_time_donating': 1
+        'first_time_donating': 1,
+        'be_the_match': this.beTheMatch,
+        'letter': this.letter,
+        'email': this.email,
+        'is_active': 0
       }).then((response)=>{
         if(response.data['code']==200){
           this.$emit('add-not-registered-donor-in-campaign-event');

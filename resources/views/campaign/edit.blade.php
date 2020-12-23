@@ -31,7 +31,11 @@
             <div class="row my-1">
               <div class="col-md-4 pr-md-1">
                 <label>{{__('Name')}}</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{$campaign->name}}">
+                <select name="name" id="name" class="form-control" required>
+                  <option value="Donating love" @if($campaign->name=='Donating love') selected @endif>{{__('Donating love')}}</option>
+                  <option value="Donors students" @if($campaign->name=='Donors students') selected @endif>{{__('Donors students')}}</option>
+                  <option value="Donors workers" @if($campaign->name=='Donors workers') selected @endif>{{__('Donors workers')}}</option>
+                </select>
               </div>
               <div class="col-md-8 pr-md-1 {{$campaign->campaigntype != 'c1' ?  'd-none' : 'd:block'}}" id="place_section">
                 <label>{{__('Place')}}</label>

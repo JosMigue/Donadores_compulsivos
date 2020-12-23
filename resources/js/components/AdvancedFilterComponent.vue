@@ -72,6 +72,12 @@
             Primera vez siendo donador
           </label>
         </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="isActive" v-on:change="filterTable()">
+          <label class="form-check-label">
+            Mostrar solo no activos
+          </label>
+        </div>
       </div>
       <div class="row justify-content-end mt-2">
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
@@ -164,6 +170,7 @@ export default {
       isTableLoading: true,
       isFilterTable: false,
       isLoadingMore: false,
+      isActive: false
     }
   },
   mounted() {
@@ -240,7 +247,8 @@ export default {
           id: this.iddonor,
           be_the_match: this.be_the_match,
           letter: this.letter,
-          isFirstTimeDonor: this.is_donor_first_time
+          isFirstTimeDonor: this.is_donor_first_time,
+          isActive:this.isActive
         }
       })
       .then(response => {
@@ -263,6 +271,7 @@ export default {
       this.be_the_match = 0,
       this.letter = 0,
       this.is_donor_first_time = 0;
+      this.isActive = false;
     },
   },
 }

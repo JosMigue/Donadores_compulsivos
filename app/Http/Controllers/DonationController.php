@@ -27,6 +27,11 @@ class DonationController extends Controller
       $donor = Donor::find($request->donor_id);
       if($request->status == 1){
         $donor->last_donate_date = $currentDate;
+        $donor->is_active = 1;
+        $donor->save();
+      }else{
+        $donor->last_donate_date = null;
+        $donor->is_active = 0;
         $donor->save();
       }
     }
