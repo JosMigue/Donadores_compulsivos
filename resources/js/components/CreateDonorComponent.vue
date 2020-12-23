@@ -26,12 +26,14 @@
       <div class="col-12 col-md-6 pr-md-1">
         <label>Tipo de sangre</label>
         <select class="form-control" name="bloodtype" id="bloodtype" v-model="selectedBlood" required>
+          <option value="" selected disabled>Seleccione tipo de sangre...</option>
           <option :value="index" v-for="(blood, index) in bloods" :key="index" >{{blood}}</option>
         </select>
       </div>
       <div class="col-12 col-md-6 pl-md-1">
         <label>Tipo de donador</label>
         <select class="form-control" name="donortype" id="donortype" v-model="selectedDonorType" required>
+          <option value="" selected disabled>Seleccione tipo de donador...</option>
           <option value="D1">Sangre</option>
           <option value="D2">Aéresis</option>
         </select>
@@ -41,14 +43,14 @@
       <div class="col-md-4 pr-md-1">
         <label>Estado</label>
         <select id="state_id" name="state_id" class="form-control" v-model="selectedState" v-on:change="getCitiesByStates(selectedState)" required>
-          <option selected disabled>seleccione un estado...</option>
+          <option value="" selected disabled>seleccione un estado...</option>
           <option :value="state" v-for="(state, index) in states" :key="index">{{state.name}}</option>
         </select>
       </div>
       <div class="col-md-4 px-md-1">
         <label>Municipio</label>
         <select id="city_id" name="city_id" class="form-control" v-model="selectedCity" required>
-          <option v-if="cities.length>0" selected disabled>seleccione municipio</option>
+          <option v-if="cities.length>0" value="" selected disabled>seleccione municipio</option>
           <option v-else value="" selected disabled>Seleccione un estado primero...</option>
           <option :value="city.id" v-for="(city, index) in cities" :key="index" >{{city.name}}</option>
         </select>
@@ -70,6 +72,7 @@
       <div class="col-6 col-md-4 pl-md-1">
         <label>Género</label>
         <select id="gendertype" name="gendertype" class="form-control" v-model="selectedGender" required>
+          <option value="" selected disabled>Seleccione género...</option>
           <option :value="index" v-for="(gender, index) in genders" :key="index">{{gender}}</option>
         </select>
       </div>

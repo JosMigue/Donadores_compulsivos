@@ -2429,6 +2429,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['genders', 'bloods', 'campaign'],
   data: function data() {
@@ -44318,12 +44321,18 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.bloods, function(blood, index) {
-            return _c("option", { key: index, domProps: { value: index } }, [
-              _vm._v(_vm._s(blood))
-            ])
-          }),
-          0
+          [
+            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
+              _vm._v("Seleccione tipo de sangre...")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.bloods, function(blood, index) {
+              return _c("option", { key: index, domProps: { value: index } }, [
+                _vm._v(_vm._s(blood))
+              ])
+            })
+          ],
+          2
         )
       ]),
       _vm._v(" "),
@@ -44360,6 +44369,10 @@ var render = function() {
             }
           },
           [
+            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
+              _vm._v("Seleccione tipo de donador...")
+            ]),
+            _vm._v(" "),
             _c("option", { attrs: { value: "D1" } }, [_vm._v("Sangre")]),
             _vm._v(" "),
             _c("option", { attrs: { value: "D2" } }, [_vm._v("Aéresis")])
@@ -44407,7 +44420,7 @@ var render = function() {
             }
           },
           [
-            _c("option", { attrs: { selected: "", disabled: "" } }, [
+            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
               _vm._v("seleccione un estado...")
             ]),
             _vm._v(" "),
@@ -44455,9 +44468,11 @@ var render = function() {
           },
           [
             _vm.cities.length > 0
-              ? _c("option", { attrs: { selected: "", disabled: "" } }, [
-                  _vm._v("seleccione municipio")
-                ])
+              ? _c(
+                  "option",
+                  { attrs: { value: "", selected: "", disabled: "" } },
+                  [_vm._v("seleccione municipio")]
+                )
               : _c(
                   "option",
                   { attrs: { value: "", selected: "", disabled: "" } },
@@ -44602,12 +44617,18 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.genders, function(gender, index) {
-            return _c("option", { key: index, domProps: { value: index } }, [
-              _vm._v(_vm._s(gender))
-            ])
-          }),
-          0
+          [
+            _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
+              _vm._v("Seleccione género...")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.genders, function(gender, index) {
+              return _c("option", { key: index, domProps: { value: index } }, [
+                _vm._v(_vm._s(gender))
+              ])
+            })
+          ],
+          2
         )
       ])
     ]),
