@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Donor;
+use App\Campaign;
+use App\CampaignDonor;
 use App\City;
 use App\State;
 use App\User;
 use Excel;
+use Carbon\Carbon;
 use App\Exports\DonorsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
@@ -83,12 +86,32 @@ class DonorController extends Controller
     }
   }
 
+  public function apiStore(SaveDonorRequest $request){
+    $donor = $this->saveDonorWithoutAccess($request);
+    if($this->addNewDonorInCampaign($donor->id, $request->input('campaign'), $request)){
+      return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
+    }else{
+      return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
+    }
+  }
+  
+  private function addNewDonorInCampaign($donorId, $campaignId, $request){
+    $campaign = Campaign::where('id',$campaignId)->with(['donors'])->first();
+    $currentTurn = $campaign->donors->count();
+    $currentTurn +=1;
+    $campaignAt = Carbon::create($campaign->time_start);
+    $campaigDonor = new CampaignDonor(['donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
+    $campaign->campaigndonors()->save($campaigDonor);
+    return true;
+  }
+
   private function saveDonorWithoutAccess($request){
-    $donor =  new Donor ($request->validated());
+    $donor = new Donor ($request->validated());
     $donor->profile_picture = '';
     $donor->user_id = 0;
     $donor = $this->saveUploadedPicture($donor, $request);
-    return $donor->save();
+    $donor->save();
+    return $donor;
   }
 
   public function updateProfilePicture(Donor $donor, UploadProfilePictureRequest $request){

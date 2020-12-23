@@ -16,8 +16,10 @@ Route::post('/campaigns/donors/involve/manually', 'CampaignDonorController@addDo
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 Route::post('/campaign/donors/list', 'CampaignDonorController@getDonorsInCampaign');
 
+//cities and states routes
 Route::get('/cities', 'CityController@index')->name('cities');
 Route::post('/citiesByState', 'CityController@citiesByState')->name('citiesbystate');
+Route::get('/states', 'StateController@index')->name('states');
 
 Route::get('/admins', 'AdminController@index')->name('admins.index');
 Route::get('/admins/create', 'AdminController@create')->name('admins.create');
@@ -51,4 +53,7 @@ Route::get('api/donors/search', 'DonorFilterController@filterByName');
 Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
+
+//API routes
+Route::post('/api/donor/store', 'DonorController@apiStore');
 

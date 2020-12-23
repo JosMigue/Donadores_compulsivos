@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="modal fade" id="modalDonors" tabindex="-1" role="dialog" aria-labelledby="modalDonorsTitle" aria-hidden="true">
-      <div class="modal-dialog" v-bind:class="{'modal-lg': donorIsRegistered, 'modal-md': donorIsNotRegistered, 'modal-sm': isVisibleContent}" role="document" style="transition: .2s;">
+      <div class="modal-dialog" v-bind:class="{'modal-lg': donorIsRegistered, 'modal-lg': donorIsNotRegistered, 'modal-sm': isVisibleContent}" role="document" style="transition: .2s;">
         <div class="modal-content" >
           <div class="modal-header">
             <h5 class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
@@ -31,7 +31,8 @@
             </div>
             <div v-if="donorIsNotRegistered" >
               <p class="text-danger text-center">No Registrado</p>
-              <p class="text-center">Esta sección aún está en desarrollo, perdone las molestias :)</p>
+              <p class="text-danger text-center">Ingrese los datos aquí mostrados</p>
+              <create-donor-component :genders = genders :bloods = blood :campaign = campaign v-on:add-not-registered-donor-in-campaign-event="reloadDonors();"></create-donor-component>
             </div>
           </div>
           <div class="modal-footer">
@@ -44,8 +45,10 @@
 </template>
 
 <script>
+import CreateDonorComponent from './CreateDonorComponent.vue';
 export default {
-  props: ['campaign'],
+  components: { CreateDonorComponent },
+  props: ['campaign', 'genders', 'blood'],
     data() {
         return {
           donorIsRegistered: false,
@@ -56,6 +59,9 @@ export default {
         }
     },
     methods: {
+      reloadDonors:function(){
+        this.$emit('added-donor-campaign-event');
+      },
       isNewDonor: function(){
         this.isVisibleContent = false;
         this.donorIsRegistered =  false;

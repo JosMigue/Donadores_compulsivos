@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/paragrams.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/autocomplete.css')}}">
-  <link rel="stylesheet" href="{{asset('css/elements/pagination.css')}}">
   <link rel="stylesheet" href="{{asset('css/theme/profile.css')}}">
 @endsection
 

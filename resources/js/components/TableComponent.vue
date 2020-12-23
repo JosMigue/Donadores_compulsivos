@@ -8,7 +8,7 @@
         Agregar donador <i class="fa fa-plus mx-1" aria-hidden="true"></i>
       </button>
     </div>
-    <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()"></modal-donor-component>
+    <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()" :genders = gendertypes :blood = bloodtypes></modal-donor-component>
     <div class="table-responsive">
       <table class="table table-hover table-striped table-sm text-center">
         <thead class="thead-dark">
