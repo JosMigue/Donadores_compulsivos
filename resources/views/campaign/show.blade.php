@@ -73,6 +73,9 @@
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end">
+      <a href="{{route('reports.campaigndonor', $campaign->id)}}" class="btn btn-primary btn-sm">Exportar <i class="fa fa-download"></i></a>
+    </div>
     <table-campaigns-donors-component campaignid="{{$campaign->id}}" v-bind:bloodtypes="{{json_encode($bloodTypes)}}" v-bind:gendertypes="{{json_encode($genderTypes)}}"></table-campaigns-donors-component>
   </div>
 @endsection

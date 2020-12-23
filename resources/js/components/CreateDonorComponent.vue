@@ -80,25 +80,9 @@
     <div class="row">
       <div class="col-lg-4 col-12">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="first_time_donating" id="first_time_donating">
+          <input class="form-check-input" type="checkbox" disabled checked name="first_time_donating" id="first_time_donating">
           <label class="form-check-label" for="first_time_donating">
             Donador primera vez
-          </label>
-        </div>
-      </div>
-      <div class="col-lg-4 col-12">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox"  name="be_the_match" id="be_the_match">
-          <label class="form-check-label" for="be_the_match">
-            Be The Match
-          </label>
-        </div>
-      </div>
-      <div class="col-lg-4 col-12">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="letter" id="letter">
-          <label class="form-check-label" for="letter">
-            Carta
           </label>
         </div>
       </div>
@@ -181,7 +165,8 @@ export default {
         'mobile': this.mobile,
         'age': this.age,
         'gendertype': this.selectedGender,
-        'campaign': this.campaign
+        'campaign': this.campaign,
+        'first_time_donating': 1
       }).then((response)=>{
         if(response.data['code']==200){
           this.$emit('add-not-registered-donor-in-campaign-event');

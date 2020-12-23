@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use App\CampaignDonor;
 use App\Campaign;
 use App\Donor;
+use Excel;
+use App\Exports\DonorsPerCampaign;
 
 class CampaignDonorController extends Controller
 {
@@ -118,6 +120,10 @@ class CampaignDonorController extends Controller
   
   private function sendEmailWithTurn($donor, $currentTurn){
     $donor->notify(new SendTurnDonation($currentTurn));
+  }
+  
+  public function export($campaignId){
+    return Excel::download(new DonorsPerCampaign($campaignId), 'donadoresporcampaña.xlsx');
   }
 }
 
