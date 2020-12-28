@@ -73,7 +73,7 @@
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" v-model="isActive" v-on:change="filterTable()">
+          <input class="form-check-input" type="checkbox" v-model="isActive" value="1" v-on:change="filterTable()">
           <label class="form-check-label">
             Mostrar solo no activos
           </label>
@@ -83,10 +83,10 @@
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
       </div>
     </div>
-    <div class="row d-flex justify-content-center" v-if="isFilterTable">
+    <div class="row d-flex justify-content-center" v-if="isFilterTable && !isActive">
       Se han encontrado {{this.donors.length}} conincidencias
     </div>
-    <div class="row d-flex justify-content-center" v-if="!isFilterTable">
+    <div class="row d-flex justify-content-center" v-if="!isFilterTable && isActive">
       Hay {{this.totalDonors}} donadores en total
     </div>
     <div class="table-responsive">
@@ -114,15 +114,16 @@
             </td>
           </tr>
           <tr v-for="(donor, index) in donors" :key="index">
-            <th>{{donor.id}}</th>
-            <td>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
-            <td>{{donor.city.name}}</td>
-            <td>{{donor.state.name}}</td>
-            <td>{{bloodtypes[donor.bloodtype]}}</td>
-            <td>{{donortypes[donor.donortype]}}</td>
-            <td>{{donor.mobile}}</td>
-            <td>{{donor.email}}</td>
-            <td>
+            <!-- My god I had no option, this a terrible idea but it will work temporally. Don't kill me please :( -->
+            <th v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.id}}</th>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.city.name}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.state.name}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{bloodtypes[donor.bloodtype]}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donortypes[donor.donortype]}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.mobile}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.email}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">
               <div class="btn-group dropleft">
                 <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Action <i class="fa fa-cog mx-1" aria-hidden="true"></i>
@@ -170,7 +171,7 @@ export default {
       isTableLoading: true,
       isFilterTable: false,
       isLoadingMore: false,
-      isActive: false
+      isActive: 0
     }
   },
   mounted() {
