@@ -69,8 +69,16 @@
           <td>{{$donor->email}}</td>
           <td>{{$donor->campaigndonors->where('campaign_id', $campaign->id)->first()->turn}}</td>
           <td>{{$donor->campaigndonors->where('campaign_id', $campaign->id)->first()->time_turn}}</td>
-          <td>{{$donor->campaigndonors->where('campaign_id', $campaign->id)->first()->donor_attended}}</td>
-          <td>{{$donor->campaigndonors->where('campaign_id', $campaign->id)->first()->donor_donated}}</td>
+          @if($donor->campaigndonors->where('campaign_id', $campaign->id)->first()->donor_attended == 1)
+            <td>Sí</td>
+          @else
+            <td>No</td>
+          @endif
+          @if($donor->campaigndonors->where('campaign_id', $campaign->id)->first()->donor_donated == 1)
+            <td>Sí</td>
+          @else
+            <td>No</td>
+          @endif
         </tr>
       @endforeach
     @else

@@ -73,9 +73,14 @@
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" v-model="isActive" value="1" v-on:change="filterTable()">
+          <!-- <input class="form-check-input" type="checkbox" v-model="isActive" value="1" v-on:change="filterTable()"> -->
+          <input type="radio" id="activeDonor" name="activeDonor" v-model="isActive" value="0" checked v-on:change="filterTable()">
           <label class="form-check-label">
-            Mostrar solo no activos
+            Activos
+          </label>
+          <input type="radio" id="activeDonor" name="activeDonor" v-model="isActive" value="1" v-on:change="filterTable()">
+          <label class="form-check-label">
+            Inactivos
           </label>
         </div>
       </div>
@@ -83,11 +88,14 @@
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
       </div>
     </div>
-    <div class="row d-flex justify-content-center" v-if="isFilterTable && !isActive">
+    <div class="row d-flex justify-content-center" v-if="isFilterTable && isActive == 0">
       Se han encontrado {{this.donors.length}} conincidencias
     </div>
-    <div class="row d-flex justify-content-center" v-if="!isFilterTable && isActive">
-      Hay {{this.totalDonors}} donadores en total
+    <div class="row d-flex justify-content-center" v-if="isActive == 0">
+      Hay {{this.countActiveDonors}} donadores activos
+    </div>
+    <div class="row d-flex justify-content-center" v-if="isActive == 1">
+      Hay {{this.countInActiveDonors}} {{countInActiveDonors == 1 ? 'donador inactivo':'donadores inactivos'}}
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -171,7 +179,9 @@ export default {
       isTableLoading: true,
       isFilterTable: false,
       isLoadingMore: false,
-      isActive: 0
+      isActive: 0,
+      countActiveDonors:0,
+      countInActiveDonors:0,
     }
   },
   mounted() {
@@ -190,6 +200,8 @@ export default {
         this.isLoadingMore = false;
         this.donors = response.data.donors;
         this.totalDonors = response.data.countDonors;
+        this.countActiveDonors = response.data.activeDonors;
+        this.countInActiveDonors = response.data.inActiveDonors;
       })
     },
     deleteDonor: async function(donorId, index){
@@ -272,7 +284,7 @@ export default {
       this.be_the_match = 0,
       this.letter = 0,
       this.is_donor_first_time = 0;
-      this.isActive = false;
+      this.isActive = 0;
     },
   },
 }

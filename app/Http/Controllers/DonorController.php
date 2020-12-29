@@ -100,9 +100,16 @@ class DonorController extends Controller
     $currentTurn = $campaign->donors->count();
     $currentTurn +=1;
     $campaignAt = Carbon::create($campaign->time_start);
-    $campaigDonor = new CampaignDonor(['donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
+    $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+    $campaigDonor = new CampaignDonor(['donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
     $campaign->campaigndonors()->save($campaigDonor);
     return true;
+  }
+
+  private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
+    $calculated = $currentTurn/$campaignFrecuencyDonors;
+    $rounded =  ceil($calculated);
+    return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
   }
 
   private function saveDonorWithoutAccess($request){
