@@ -104,6 +104,22 @@
                 <input class="form-control" type="file" name="campaign_image" id="campaign_image">
               </div>
             </div>
+            <div id="frecuency-section my-1">
+              <div class="row d-flex flex-column align-content-center">                
+                <p class="text-center">{{__('Frecuencia de atención')}}</p>
+                <p class="text-dark text-center">En caso de dejar en blanco los siguinetes campos, por defecto se usa 1 persona cada 10 minutos.</p>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-12">
+                  <label for="frecuency">Turnos por persona</label>
+                  <input type="number" name="frecuency" id="frecuency" step="1" class="form-control">
+                </div>
+                <div class="col-lg-6 col-12">
+                  <label for="frecuency_time">Intervalos de tiempo</label>
+                  <input type="number" name="frecuency_time" id="frecuency_time" step="1" class="form-control">
+                </div>
+              </div>
+            </div>
             <div class="d-flex justify-content-center">
               <button class="btn btn-link" type="button" onclick="toggleFilters()">¿Desea agregar filtros? <i class="fa fa-filter mx-1" aria-hidden="true"></i></button>
             </div>

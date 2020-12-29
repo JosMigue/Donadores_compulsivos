@@ -35,7 +35,9 @@ class UpdateCampaignRequest extends FormRequest
             'time_finish'=> 'required',
             'campaigntype'=> 'required|string',
             'blood_bank_id'=> 'exclude_if:campaigntype,c1|required|integer',
-            'description'=> 'required'
+            'description'=> 'required',
+            'frecuency' =>'nullable|integer',
+            'frecuency_time'=> 'nullable|integer' ,
         ];
     }
 }

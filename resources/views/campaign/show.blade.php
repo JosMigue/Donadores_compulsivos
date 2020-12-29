@@ -70,6 +70,16 @@
               <p>{{$campaign->time_finish}}</p>
             </div>
           </div>
+          <div class="row text-center text-lg-left">
+            <div class="col-6 col-lg-3">
+              <label>{{__('Frecuency by donors')}}</label>
+              <p>{{$campaign->frecuency}}</p>
+            </div>
+            <div class="col-6 col-lg-3">
+              <label>{{__('Frecuency time')}}</label>
+              <p>{{$campaign->frecuency_time}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

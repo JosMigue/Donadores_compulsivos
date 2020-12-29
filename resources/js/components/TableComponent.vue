@@ -4,7 +4,7 @@
       Donadores suscritos {{this.campaigndonors.length}}
     </label>
     <div class="d-flex justify-content-center">
-      <button type="button" class="is-link-red" data-toggle="modal" data-target="#modalDonors">
+      <button type="button" class="is-link-red" data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false">
         Agregar donador <i class="fa fa-plus mx-1" aria-hidden="true"></i>
       </button>
     </div>

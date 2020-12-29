@@ -70,7 +70,8 @@ class CampaignDonorController extends Controller
         $currentTurn = $campaign->donors->count();
         $currentTurn +=1;
         $campaignAt = Carbon::create($campaign->time_start);
-        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
+        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
         if($campaign->campaigndonors()->save($campaigDonor)){
           $this->sendEmailWithTurn($donor, $currentTurn);
           return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
@@ -86,7 +87,8 @@ class CampaignDonorController extends Controller
       $currentTurn = $campaign->donors->count();
       $currentTurn +=1;
       $campaignAt = Carbon::create($campaign->time_start);
-      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)), 'ip_address' => $request->ip()]);
+      $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
       if($campaign->campaigndonors()->save($campaigDonor)){
         $this->sendEmailWithTurn($donor, $currentTurn);
         return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
@@ -94,6 +96,12 @@ class CampaignDonorController extends Controller
         return redirect('/')->with('errorMessage', __('Something went wrong, try again later'));
       }
     }
+  }
+
+  private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
+    $calculated = $currentTurn/$campaignFrecuencyDonors;
+    $rounded =  ceil($calculated);
+    return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
   }
 
   public function addDonorCampaign(CampaignDonorRequest $request){
@@ -104,7 +112,8 @@ class CampaignDonorController extends Controller
         $currentTurn = $campaign->donors->count();
         $currentTurn +=1;
         $campaignAt = Carbon::create($campaign->time_start);
-        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $campaignAt->addMinutes((($currentTurn-1)*10)),'ip_address' => $request->ip()]);
+        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
         $campaign->campaigndonors()->save($campaigDonor);
         return array('status' => 200, 'message' => __('Donor has been added successfully'));
       }else{

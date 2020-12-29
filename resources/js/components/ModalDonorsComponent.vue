@@ -5,7 +5,7 @@
         <div class="modal-content" >
           <div class="modal-header">
             <h5 class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetValues()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -13,10 +13,10 @@
             <div v-if="isVisibleContent" >
               <p class="text-danger text-center">¿De dónde desea agregar donadores?</p>
               <div class="row">
-                <div class="col-12 col-lg-6 d-flex justify-content-center">
+                <div class="col-6 d-flex justify-content-center">
                   <button v-on:click="isNewDonor()" class="btn btn-primary btn-md">No registrado</button>
                 </div>
-                <div class="col-12 col-lg-6 d-flex justify-content-center">
+                <div class="col-6 d-flex justify-content-center">
                   <button v-on:click="isRegisteredDonor()" class="btn btn-primary btn-md">Registrado</button>
                 </div>
               </div>

@@ -36,6 +36,8 @@ class SaveCampaignRequest extends FormRequest
             'campaigntype'=> 'required|string',
             'blood_bank_id'=> 'exclude_if:campaigntype,c1|required|integer',
             'description'=> 'required',
+            'frecuency' =>'nullable|integer',
+            'frecuency_time'=> 'nullable|integer' ,
             'user_id' =>    'required',
             'campaign_image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];

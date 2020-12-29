@@ -20,6 +20,8 @@ class Campaign extends Model
         'time_finish',
         'campaigntype',
         'blood_bank_id',
+        'frecuency',
+        'frecuency_time',
         'description',
         'user_id',
         'campaign_image'
