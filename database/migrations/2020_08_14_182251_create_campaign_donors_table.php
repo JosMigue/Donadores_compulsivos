@@ -20,6 +20,7 @@ class CreateCampaignDonorsTable extends Migration
             $table->boolean('donor_donated')->nullable(false)->default(0);
             $table->string('donation_date')->nullable(false)->default('0000-00-00 00:00:00');
             $table->integer('turn')->nullable(false);
+            $table->time('time_turn')->nullable(false)->default('00:00');
             $table->string('ip_address')->nullable(false);
             $table->timestamps();
         });

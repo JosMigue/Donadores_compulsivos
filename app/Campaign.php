@@ -20,6 +20,8 @@ class Campaign extends Model
         'time_finish',
         'campaigntype',
         'blood_bank_id',
+        'frecuency',
+        'frecuency_time',
         'description',
         'user_id',
         'campaign_image'
@@ -45,7 +47,7 @@ class Campaign extends Model
     }
 
     public function donors(){
-        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['created_at', 'turn', 'donor_donated', 'donor_attended', 'reason_not_donation']);
+        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['created_at', 'turn', 'time_turn', 'donor_donated', 'donor_attended', 'reason_not_donation']);
     }
 
     public function campaigndonors(){

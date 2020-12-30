@@ -12,7 +12,12 @@ class DonorFilterController extends Controller
   }
   
   public function index(Request $request){
-    return json_encode(array('donors' => Donor::with(['city', 'state', 'user'])->take($request->input('takeRecords'))->get(), 'countDonors' => Donor::count()));
+    return json_encode(array(
+      'donors' => Donor::with(['city', 'state', 'user'])->where('is_active',1)->take($request->input('takeRecords'))->get(), 
+      'countDonors' => Donor::count(),
+      'inActiveDonors' => Donor::where('is_active',0)->get()->count(),
+      'activeDonors' => Donor::where('is_active',1)->get()->count(),
+    ));
   }
 
   public function filter(Request $request){
@@ -38,12 +43,17 @@ class DonorFilterController extends Controller
     if($request->input('state')){
       $donors->where('state_id', $request->input('state'));
     }
-    if($request->input('name')){
-      $donors->where('name', 'LIKE', '%'.$request->input('name').'%')->orWhere('parental_surname','LIKE','%'.$request->input('name').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('name').'%');
-    }
     if($request->input('id')){
       $donors->where('id', $request->input('id'));
     }
+    if($request->input('name')){
+      $donors->where('name', 'LIKE', '%'.$request->input('name').'%')->orWhere('parental_surname','LIKE','%'.$request->input('name').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('name').'%');
+    }
+
     return $donors->with(['city', 'state'])->get();
+  }
+
+  public function filterByName(Request $request){
+    return Donor::where('is_active',1)->where('name', 'LIKE', '%'.$request->input('search').'%')->orWhere('parental_surname','LIKE','%'.$request->input('search').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('search').'%')->take(10)->with('city', 'state')->get();
   }
 }

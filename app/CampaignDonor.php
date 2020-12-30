@@ -11,6 +11,7 @@ class CampaignDonor extends Model
         'donor_id',
         'donor_attended',
         'turn',
+        'time_turn',
         'ip_address'
     ];
 

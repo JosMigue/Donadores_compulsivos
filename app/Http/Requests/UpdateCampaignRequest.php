@@ -26,7 +26,7 @@ class UpdateCampaignRequest extends FormRequest
         return [
             'name'      => 'required|max:255',
             'place'     => 'exclude_if:campaigntype,c2|required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'nullable|max:255',
             'city_id'  => 'required|numeric',
             'state_id'  => 'required|numeric',
             'date_start'=> 'required|date',
@@ -35,7 +35,9 @@ class UpdateCampaignRequest extends FormRequest
             'time_finish'=> 'required',
             'campaigntype'=> 'required|string',
             'blood_bank_id'=> 'exclude_if:campaigntype,c1|required|integer',
-            'description'=> 'required'
+            'description'=> 'required',
+            'frecuency' =>'nullable|integer',
+            'frecuency_time'=> 'nullable|integer' ,
         ];
     }
 }

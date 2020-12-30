@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="{{asset('css/elements/label.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
   <link rel="stylesheet" href="{{asset('css/elements/paragrams.css')}}">
+  <link rel="stylesheet" href="{{asset('css/elements/autocomplete.css')}}">
   <link rel="stylesheet" href="{{asset('css/theme/profile.css')}}">
 @endsection
 
@@ -69,16 +70,23 @@
               <p>{{$campaign->time_finish}}</p>
             </div>
           </div>
+          <div class="row text-center text-lg-left">
+            <div class="col-6 col-lg-3">
+              <label>{{__('Frecuency by donors')}}</label>
+              <p>{{$campaign->frecuency}}</p>
+            </div>
+            <div class="col-6 col-lg-3">
+              <label>{{__('Frecuency time')}}</label>
+              <p>{{$campaign->frecuency_time}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <label for="">
-      {{__('Subscribed donors')}}: {{$donors->total()}}
-    </label>
-    <table-campaigns-donors-component  v-bind:campaigndonorsarray="{{  json_encode($donors) }}" campaignid="{{$campaign->id}}" v-bind:bloodtypes="{{json_encode($bloodTypes)}}" v-bind:gendertypes="{{json_encode($genderTypes)}}"></table-campaigns-donors-component>
-    <div class="links-section">
-      {{$donors->links()}}
-    </div>   
+    <div class="d-flex justify-content-end">
+      <a href="{{route('reports.campaigndonor', $campaign->id)}}" class="btn btn-primary btn-sm">Exportar <i class="fa fa-download"></i></a>
+    </div>
+    <table-campaigns-donors-component campaignid="{{$campaign->id}}" v-bind:bloodtypes="{{json_encode($bloodTypes)}}" v-bind:gendertypes="{{json_encode($genderTypes)}}"></table-campaigns-donors-component>
   </div>
 @endsection
 

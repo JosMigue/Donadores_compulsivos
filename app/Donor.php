@@ -13,9 +13,11 @@ class Donor extends Authenticatable implements MustVerifyEmail
     use Notifiable; 
 
     protected $fillable = [
+        'identifier',
         'name',
         'parental_surname',
         'maternal_surname',
+        'curp',
         'city_id',
         'state_id',
         'bloodtype',
@@ -30,7 +32,9 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'mobile',
         'age',
         'observations',
-        'profile_picture'
+        'profile_picture',
+        'is_active',
+        'is_temporal'
     ];
 
     protected $hidden = [
@@ -71,12 +75,13 @@ class Donor extends Authenticatable implements MustVerifyEmail
     public function campaigns(){
         return $this->belongsToMany('App\Campaign', 'campaign_donors')->withPivot(['created_at', 'turn', 'donor_donated', 'donation_date', 'donor_attended']);
     }
-
+    
+    public function campaigndonors(){
+        return $this->hasMany('App\CampaignDonor');
+    }
+    
     public function user(){
         return $this->belongsTo('App\User');
     }
 
-    public function campaigndonors(){
-        return $this->hasMany('App\CampaignDonor');
-    }
 }

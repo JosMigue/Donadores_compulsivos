@@ -44,6 +44,12 @@
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
+/**
+ * vue-paginate v3.6.0
+ * (c) 2018 Taha Shashtari
+ * @license MIT
+ */
+
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
  * @version 1.16.1

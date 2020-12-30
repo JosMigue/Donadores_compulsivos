@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Donor;
+use App\Campaign;
+use App\CampaignDonor;
 use App\City;
 use App\State;
 use App\User;
 use Excel;
+use Carbon\Carbon;
 use App\Exports\DonorsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveDonorRequest;
@@ -59,6 +62,8 @@ class DonorController extends Controller
       $donor =  new Donor ($request->validated());
       $donor->profile_picture = '';
       $donor->user_id = $user->id;
+      $identifier = $this->asignIdentifier();
+      $donor->identifier = $identifier;
       $credentials = $request->only('email', 'password');
       $donor = $this->saveUploadedPicture($donor, $request);
       if($donor->save()){
@@ -83,12 +88,58 @@ class DonorController extends Controller
     }
   }
 
+  public function changeStatus(Request $request){
+    $donor = Donor::findOrFail($request->input('donor_id'));
+    $donor->is_active = $request->input('status');
+    if($donor->save()){
+      return json_encode(array('code' => 200, 'message'=> __('Status updated')));
+    }else{
+      return json_encode(array('code' => 500, 'message'=> __('Something went wrong, try again later')));
+    }
+  }
+
+  private function asignIdentifier(){
+    $donor = Donor::latest()->first();
+    return $donor->identifier +1;
+  }
+
+  public function apiStore(SaveDonorRequest $request){
+    $donor = $this->saveDonorWithoutAccess($request);
+    $donor->is_temporal = 1;
+    $donor->save();
+    if($this->addNewDonorInCampaign($donor->id, $request->input('campaign'), $request)){
+      return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
+    }else{
+      return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
+    }
+  }
+  
+  private function addNewDonorInCampaign($donorId, $campaignId, $request){
+    $campaign = Campaign::where('id',$campaignId)->with(['donors'])->first();
+    $currentTurn = $campaign->donors->count();
+    $currentTurn +=1;
+    $campaignAt = Carbon::create($campaign->time_start);
+    $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+    $campaigDonor = new CampaignDonor(['donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
+    $campaign->campaigndonors()->save($campaigDonor);
+    return true;
+  }
+
+  private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
+    $calculated = $currentTurn/$campaignFrecuencyDonors;
+    $rounded =  ceil($calculated);
+    return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
+  }
+
   private function saveDonorWithoutAccess($request){
-    $donor =  new Donor ($request->validated());
+    $donor = new Donor ($request->validated());
     $donor->profile_picture = '';
     $donor->user_id = 0;
+    $identifier = $this->asignIdentifier();
+    $donor->identifier = $identifier;
     $donor = $this->saveUploadedPicture($donor, $request);
-    return $donor->save();
+    $donor->save();
+    return $donor;
   }
 
   public function updateProfilePicture(Donor $donor, UploadProfilePictureRequest $request){

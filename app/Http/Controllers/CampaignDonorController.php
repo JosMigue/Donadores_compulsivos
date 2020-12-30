@@ -11,13 +11,14 @@ use Carbon\Carbon;
 use App\CampaignDonor;
 use App\Campaign;
 use App\Donor;
+use Excel;
+use App\Exports\DonorsPerCampaign;
 
 class CampaignDonorController extends Controller
 {
 
   public function __construct(){
-/*     $this->middleware('auth');
-    $this->middleware('verified'); */
+    $this->middleware('auth')->except(['show', 'store']);
   }
 
   public function show(Campaign $campaign, Donor $donor){
@@ -68,7 +69,9 @@ class CampaignDonorController extends Controller
         $donor = Donor::where('user_id',$request->validated()['donor'])->first();
         $currentTurn = $campaign->donors->count();
         $currentTurn +=1;
-        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
+        $campaignAt = Carbon::create($campaign->time_start);
+        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
         if($campaign->campaigndonors()->save($campaigDonor)){
           $this->sendEmailWithTurn($donor, $currentTurn);
           return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
@@ -83,7 +86,9 @@ class CampaignDonorController extends Controller
       $donor = Donor::where('id',$request->validated()['donor'])->first();
       $currentTurn = $campaign->donors->count();
       $currentTurn +=1;
-      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'ip_address' => $request->ip()]);
+      $campaignAt = Carbon::create($campaign->time_start);
+      $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
       if($campaign->campaigndonors()->save($campaigDonor)){
         $this->sendEmailWithTurn($donor, $currentTurn);
         return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
@@ -92,9 +97,42 @@ class CampaignDonorController extends Controller
       }
     }
   }
+
+  private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
+    $calculated = $currentTurn/$campaignFrecuencyDonors;
+    $rounded =  ceil($calculated);
+    return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
+  }
+
+  public function addDonorCampaign(CampaignDonorRequest $request){
+    if(Auth::user()->is_admin){
+      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
+      $donor = Donor::where('id',$request->validated()['donor'])->first();
+      if($campaign->campaigndonors->where('donor_id',$request->validated()['donor'])->count() == 0){
+        $currentTurn = $campaign->donors->count();
+        $currentTurn +=1;
+        $campaignAt = Carbon::create($campaign->time_start);
+        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
+        $campaign->campaigndonors()->save($campaigDonor);
+        return array('status' => 200, 'message' => __('Donor has been added successfully'));
+      }else{
+        return array('status' => 400, 'message' => __('It looks like donor is already checked in this campaign'));
+      }
+    }
+  }
+
+  public function getDonorsInCampaign(Request $request){
+    $campaign = Campaign::where('id',$request->input('campaignId'))->first();
+    return $campaign->donors()->get();
+  }
   
   private function sendEmailWithTurn($donor, $currentTurn){
     $donor->notify(new SendTurnDonation($currentTurn));
+  }
+  
+  public function export($campaignId){
+    return Excel::download(new DonorsPerCampaign($campaignId), 'donadoresporcampaña.xlsx');
   }
 }
 

@@ -72,16 +72,30 @@
             Primera vez siendo donador
           </label>
         </div>
+        <div class="form-check">
+          <!-- <input class="form-check-input" type="checkbox" v-model="isActive" value="1" v-on:change="filterTable()"> -->
+          <input type="radio" id="activeDonor" name="activeDonor" v-model="isActive" value="0" checked v-on:change="filterTable()">
+          <label class="form-check-label">
+            Activos
+          </label>
+          <input type="radio" id="activeDonor" name="activeDonor" v-model="isActive" value="1" v-on:change="filterTable()">
+          <label class="form-check-label">
+            Inactivos
+          </label>
+        </div>
       </div>
       <div class="row justify-content-end mt-2">
         <button class="btn btn-primary mx-1" v-on:click="resetFilter()" v-if="isFilterTable" >Reset filtros<i class="fa fa-refresh ml-1"></i></button>
       </div>
     </div>
-    <div class="row d-flex justify-content-center" v-if="isFilterTable">
+    <div class="row d-flex justify-content-center" v-if="isFilterTable && isActive == 0">
       Se han encontrado {{this.donors.length}} conincidencias
     </div>
-    <div class="row d-flex justify-content-center" v-if="!isFilterTable">
-      Hay {{this.totalDonors}} donadores en total
+    <div class="row d-flex justify-content-center" v-if="isActive == 0">
+      Hay {{this.countActiveDonors}} donadores activos
+    </div>
+    <div class="row d-flex justify-content-center" v-if="isActive == 1">
+      Hay {{this.countInActiveDonors}} {{countInActiveDonors == 1 ? 'donador inactivo':'donadores inactivos'}}
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -95,6 +109,7 @@
             <th scope="col">TD</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
+            <th scope="col">Estado</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -108,15 +123,28 @@
             </td>
           </tr>
           <tr v-for="(donor, index) in donors" :key="index">
-            <th>{{donor.id}}</th>
-            <td>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
-            <td>{{donor.city.name}}</td>
-            <td>{{donor.state.name}}</td>
-            <td>{{bloodtypes[donor.bloodtype]}}</td>
-            <td>{{donortypes[donor.donortype]}}</td>
-            <td>{{donor.mobile}}</td>
-            <td>{{donor.email}}</td>
-            <td>
+            <!-- My god I had no option, this a terrible idea but it will work temporally. Don't kill me please :( -->
+            <th v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.id}}</th>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.city.name}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.state.name}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{bloodtypes[donor.bloodtype]}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donortypes[donor.donortype]}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.mobile}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''"><div style="width:235px;">{{donor.email}}</div></td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''" v-if="donor.is_active == 1">
+              <label class="switch">
+                <input type="checkbox"  v-on:change="changeStatusDonor(donor, 0)" checked>
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''" v-else>
+              <label class="switch">
+                <input type="checkbox" v-on:change="changeStatusDonor(donor, 1)">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">
               <div class="btn-group dropleft">
                 <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Action <i class="fa fa-cog mx-1" aria-hidden="true"></i>
@@ -164,6 +192,9 @@ export default {
       isTableLoading: true,
       isFilterTable: false,
       isLoadingMore: false,
+      isActive: 0,
+      countActiveDonors:0,
+      countInActiveDonors:0,
     }
   },
   mounted() {
@@ -182,7 +213,25 @@ export default {
         this.isLoadingMore = false;
         this.donors = response.data.donors;
         this.totalDonors = response.data.countDonors;
+        this.countActiveDonors = response.data.activeDonors;
+        this.countInActiveDonors = response.data.inActiveDonors;
       })
+    },
+    changeStatusDonor:function(donor,status){
+      axios.post('/donor/status/change',{
+        'donor_id': donor.id, 
+        'status':status}
+      ).then((response)=>{
+        if(response.data.code == 200){
+          donor.is_active = status;
+          this.filterTable();
+          toastNotification('success',response.data.message);
+        }else if(response.data.code == 500){
+          errorNotification(response.data.message);
+        }
+      }).catch((error)=>{
+        errorNotification(`Algo salió mal, intente más tarde ${error}`);
+      });
     },
     deleteDonor: async function(donorId, index){
       const sweetAlerPromise = await questionNotification('¿Está seguro?', 'Esta acción no se puede corrergir', 'Sí, estoy seguro');
@@ -240,7 +289,8 @@ export default {
           id: this.iddonor,
           be_the_match: this.be_the_match,
           letter: this.letter,
-          isFirstTimeDonor: this.is_donor_first_time
+          isFirstTimeDonor: this.is_donor_first_time,
+          isActive:this.isActive
         }
       })
       .then(response => {
@@ -263,6 +313,7 @@ export default {
       this.be_the_match = 0,
       this.letter = 0,
       this.is_donor_first_time = 0;
+      this.isActive = 0;
     },
   },
 }

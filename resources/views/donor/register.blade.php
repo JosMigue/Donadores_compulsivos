@@ -35,7 +35,11 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-6 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
+                <label>{{__('CURP')}}</label>
+                <input type="text" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp" value="{{old('curp')}}">
+              </div>
+              <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Blood type')}}</label>
                 <select class="form-control" name="bloodtype" id="bloodtype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
@@ -44,7 +48,7 @@
                   @endforeach
                 </select>
               </div>
-              <div class="col-12 col-md-6 pl-md-1">
+              <div class="col-12 col-md-4 pl-md-1">
                 <label>{{__('Donor type')}}</label>
                 <select class="form-control" name="donortype" id="donortype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>

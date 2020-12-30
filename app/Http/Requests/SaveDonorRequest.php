@@ -27,6 +27,7 @@ class SaveDonorRequest extends FormRequest
             'name'          => 'required',
             'parental_surname' => 'required',
             'maternal_surname' => 'required',
+            'curp' => 'nullable|string',
             'city_id'       => 'required',
             'state_id'      => 'required',
             'bloodtype'     => 'required',
@@ -41,6 +42,7 @@ class SaveDonorRequest extends FormRequest
             'age'           => 'required|numeric',
             'observations'  => 'max:255',
             'profile_picture'  => 'image|mimes:jpeg,png,jpg|max:2048',
+            'is_active' => 'boolean|nullable',
         ];
     }
 }

@@ -25,8 +25,13 @@ class DonationController extends Controller
         CampaignDonor::where('id',$campaignDonor->id)->update(['donor_donated'=> $request->status, 'donation_date' => $currentDate]);
       }
       $donor = Donor::find($request->donor_id);
-      if($request->status == 1){
+      if($request->status == 1 && $request->attribute == 2){
         $donor->last_donate_date = $currentDate;
+        $donor->is_temporal == 1? $donor->is_active = 1: '';
+        $donor->save();
+      }else{
+        $donor->last_donate_date = null;
+        $donor->is_temporal == 1? $donor->is_active = 0: '';
         $donor->save();
       }
     }
