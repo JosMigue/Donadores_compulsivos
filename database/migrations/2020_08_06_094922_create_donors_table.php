@@ -15,6 +15,7 @@ class CreateDonorsTable extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('identifier')->nullable(true)->default(0);
             $table->string('name')->nullable(false);
             $table->string('parental_surname')->nullable(false);
             $table->string('maternal_surname')->nullable(false);

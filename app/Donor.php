@@ -13,6 +13,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
     use Notifiable; 
 
     protected $fillable = [
+        'identifier',
         'name',
         'parental_surname',
         'maternal_surname',

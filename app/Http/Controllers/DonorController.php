@@ -62,6 +62,8 @@ class DonorController extends Controller
       $donor =  new Donor ($request->validated());
       $donor->profile_picture = '';
       $donor->user_id = $user->id;
+      $identifier = $this->asignIdentifier();
+      $donor->identifier = $identifier;
       $credentials = $request->only('email', 'password');
       $donor = $this->saveUploadedPicture($donor, $request);
       if($donor->save()){
@@ -84,6 +86,11 @@ class DonorController extends Controller
         return redirect()->route('donors.index')->with('errorMessage', __('Something went wrong, try again later'));
       }
     }
+  }
+
+  private function asignIdentifier(){
+    $donor = Donor::latest()->first();
+    return $donor->identifier +1;
   }
 
   public function apiStore(SaveDonorRequest $request){
@@ -118,6 +125,8 @@ class DonorController extends Controller
     $donor = new Donor ($request->validated());
     $donor->profile_picture = '';
     $donor->user_id = 0;
+    $identifier = $this->asignIdentifier();
+    $donor->identifier = $identifier;
     $donor = $this->saveUploadedPicture($donor, $request);
     $donor->save();
     return $donor;
