@@ -16,6 +16,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'name',
         'parental_surname',
         'maternal_surname',
+        'curp',
         'city_id',
         'state_id',
         'bloodtype',
@@ -31,7 +32,8 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'age',
         'observations',
         'profile_picture',
-        'is_active'
+        'is_active',
+        'is_temporal'
     ];
 
     protected $hidden = [

@@ -120,17 +120,21 @@
         <div class="tab-content profile-tab" id="myTabContent">
           <div class="tab-pane fade show" id="information-tab" role="tabpanel" aria-labelledby="information">
             <div class="row">
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
                 <label>{{__('Full name')}}</label>
                 <p>{{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}</p>
               </div>
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
                 <label>{{__('E-Mail Address')}}</label>
                 <p>{{$donor->email}}</p>
               </div>
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
                 <label>{{__('Mobile')}}</label>
                 <p>{{$donor->mobile}}</p>
+              </div>
+              <div class="col-12 col-md-3">
+                <label>{{__('CURP')}}</label>
+                <p>{{$donor->curp}}</p>
               </div>
             </div>
             <div class="row">

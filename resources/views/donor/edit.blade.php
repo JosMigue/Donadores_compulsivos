@@ -36,7 +36,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-6 pr-md-1">
+              <div class="col-12 col-md-4 pr-md-1">
+                <div class="form-group">
+                  <label>{{__('CURP')}}</label>
+                  <input class="form-control" type="text" id="curp" name="curp" value="{{$donor->curp}}" placeholder="Ingrese su curp">
+                </div>
+              </div>
+              <div class="col-12 col-md-4 px-md-1">
                 <div class="form-group">
                   <label>{{__('Blood type')}}</label>
                   <select class="form-control" name="bloodtype" id="bloodtype">
@@ -46,7 +52,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-md-6 pl-md-1">
+              <div class="col-12 col-md-4 pl-md-1">
                 <div class="form-group">
                   <label>{{__('Donor type')}}</label>
                   <select class="form-control" name="donortype" id="donortype">

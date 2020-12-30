@@ -23,14 +23,18 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 col-md-6 pr-md-1">
+      <div class="col-12 col-md-4 pr-md-1">
+        <label>Curp</label>
+        <input type="text" v-model="curp" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp">
+      </div>
+      <div class="col-12 col-md-4 px-md-1">
         <label>Tipo de sangre</label>
         <select class="form-control" name="bloodtype" id="bloodtype" v-model="selectedBlood" required>
           <option value="" selected disabled>Seleccione tipo de sangre...</option>
           <option :value="index" v-for="(blood, index) in bloods" :key="index" >{{blood}}</option>
         </select>
       </div>
-      <div class="col-12 col-md-6 pl-md-1">
+      <div class="col-12 col-md-4 pl-md-1">
         <label>Tipo de donador</label>
         <select class="form-control" name="donortype" id="donortype" v-model="selectedDonorType" required>
           <option value="" selected disabled>Seleccione tipo de donador...</option>
@@ -136,6 +140,7 @@ export default {
       mobile: '',
       parental_surname: '',
       maternal_surname: '',
+      curp:'',
       name: '',
       beTheMatch:false,
       letter:false,
@@ -179,12 +184,14 @@ export default {
       this.beTheMatch = false;
       this.letter = false;
       this.email = '';
+      this.curp = '';
     },
     addDonor:function(){
       axios.post('/api/donor/store',{
         'name': this.name,
         'parental_surname': this.parental_surname,
         'maternal_surname': this.maternal_surname,
+        'curp': this.curp,
         'bloodtype': this.selectedBlood,
         'donortype': this.selectedDonorType,
         'state_id': this.selectedState.id,

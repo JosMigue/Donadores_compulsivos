@@ -88,6 +88,8 @@ class DonorController extends Controller
 
   public function apiStore(SaveDonorRequest $request){
     $donor = $this->saveDonorWithoutAccess($request);
+    $donor->is_temporal = 1;
+    $donor->save();
     if($this->addNewDonorInCampaign($donor->id, $request->input('campaign'), $request)){
       return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
     }else{

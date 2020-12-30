@@ -26,7 +26,7 @@ class UpdateCampaignRequest extends FormRequest
         return [
             'name'      => 'required|max:255',
             'place'     => 'exclude_if:campaigntype,c2|required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'nullable|max:255',
             'city_id'  => 'required|numeric',
             'state_id'  => 'required|numeric',
             'date_start'=> 'required|date',

@@ -18,8 +18,9 @@ class CreateDonorsTable extends Migration
             $table->string('name')->nullable(false);
             $table->string('parental_surname')->nullable(false);
             $table->string('maternal_surname')->nullable(false);
-            $table->string('address')->nullable(true)->default(null);
+            $table->string('curp',20)->nullable(true)->default(null);
             $table->string('postal_code')->nullable(true)->default(null);
+            $table->string('address')->nullable(true)->default(null);
             $table->integer('city_id')->nullable(false); 
             $table->integer('state_id')->nullable(false); 
             $table->string('bloodtype')->nullable(false);
@@ -38,6 +39,7 @@ class CreateDonorsTable extends Migration
             $table->string('profile_picture')->nullable(true);
             $table->text('signature')->nullable(true);
             $table->boolean('is_active')->default(1)->nullable(false);
+            $table->boolean('is_temporal')->default(0)->nullable(false);
             $table->timestamps();
         });
     }
