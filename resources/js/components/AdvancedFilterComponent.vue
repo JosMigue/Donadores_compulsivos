@@ -109,6 +109,7 @@
             <th scope="col">TD</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
+            <th scope="col">Estado</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -130,7 +131,19 @@
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{bloodtypes[donor.bloodtype]}}</td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donortypes[donor.donortype]}}</td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.mobile}}</td>
-            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.email}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''"><div style="width:235px;">{{donor.email}}</div></td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''" v-if="donor.is_active == 1">
+              <label class="switch">
+                <input type="checkbox"  v-on:change="changeStatusDonor(donor, 0)" checked>
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''" v-else>
+              <label class="switch">
+                <input type="checkbox" v-on:change="changeStatusDonor(donor, 1)">
+                <span class="slider round"></span>
+              </label>
+            </td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">
               <div class="btn-group dropleft">
                 <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -203,6 +216,22 @@ export default {
         this.countActiveDonors = response.data.activeDonors;
         this.countInActiveDonors = response.data.inActiveDonors;
       })
+    },
+    changeStatusDonor:function(donor,status){
+      axios.post('/donor/status/change',{
+        'donor_id': donor.id, 
+        'status':status}
+      ).then((response)=>{
+        if(response.data.code == 200){
+          donor.is_active = status;
+          this.filterTable();
+          toastNotification('success',response.data.message);
+        }else if(response.data.code == 500){
+          errorNotification(response.data.message);
+        }
+      }).catch((error)=>{
+        errorNotification(`Algo salió mal, intente más tarde ${error}`);
+      });
     },
     deleteDonor: async function(donorId, index){
       const sweetAlerPromise = await questionNotification('¿Está seguro?', 'Esta acción no se puede corrergir', 'Sí, estoy seguro');

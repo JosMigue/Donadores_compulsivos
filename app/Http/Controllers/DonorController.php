@@ -88,6 +88,16 @@ class DonorController extends Controller
     }
   }
 
+  public function changeStatus(Request $request){
+    $donor = Donor::findOrFail($request->input('donor_id'));
+    $donor->is_active = $request->input('status');
+    if($donor->save()){
+      return json_encode(array('code' => 200, 'message'=> __('Status updated')));
+    }else{
+      return json_encode(array('code' => 500, 'message'=> __('Something went wrong, try again later')));
+    }
+  }
+
   private function asignIdentifier(){
     $donor = Donor::latest()->first();
     return $donor->identifier +1;

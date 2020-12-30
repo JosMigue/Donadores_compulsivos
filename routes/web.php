@@ -35,6 +35,8 @@ Route::get('/donor/register','DonorController@showregistreview')->name('donor.re
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');
 
+Route::post('/donor/status/change', 'DonorController@changeStatus');
+
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');
 
