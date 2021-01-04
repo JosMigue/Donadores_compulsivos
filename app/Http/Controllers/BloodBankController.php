@@ -27,6 +27,11 @@ class BloodBankController extends Controller
     return view('bloodbank.index',compact('bloodBanks'));
   }
 
+  public function getBloodBanksData()
+  {
+    return BloodBank::with('city','state')->get();
+  }
+
   public function create()
   {
     $states = State::all();

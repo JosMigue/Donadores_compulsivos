@@ -84,4 +84,8 @@ class Donor extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo('App\User');
     }
 
+    public function individualDonations(){
+        return $this->hasMany('App\IndividualDonation');
+    }
+
 }

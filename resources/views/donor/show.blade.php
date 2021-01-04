@@ -100,6 +100,9 @@
             <li class="nav-item">
               <a class="nav-link is-red" id="campaigns" data-toggle="tab" href="#campaigns-tab" role="tab" aria-controls="campaigns" aria-selected="false" onClick="saveTabSelect(this)">{{__('Campaigns history')}}</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link is-red" id="individual-donation" data-toggle="tab" href="#individual-donation-tab" role="tab" aria-controls="individual-donation-tab" aria-selected="false">{{__('Individual donations')}}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -213,44 +216,47 @@
                 </thead>
                 <tbody>
                   @if($campaigns->count() > 0)
-                    @foreach ($campaigns as $index => $campaign)
-                      <tr>
-                        <th scope="row">{{$index+1}}</th>
-                        <td>{{__($campaign->name)}}</td>
-                        <td>{{$campaign->place}}</td>
-                        <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
-                        <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
-                        <td>
-                          @if ($campaign->pivot->donor_attended)
-                            <i class="fa fa-check text-success" aria-hidden="true"></i>
-                          @else
-                            <i class="fa fa-times text-danger" aria-hidden="true"></i>
-                          @endif
-                        </td>
-                        <td>
-                          @if ($campaign->pivot->donor_donated)
-                            <i class="fa fa-check text-success" aria-hidden="true"></i>
-                          @else
-                            <i class="fa fa-times text-danger" aria-hidden="true"></i>
-                          @endif
-                        </td>
-                        @if ($campaign->pivot->donor_donated) 
-                          <td>{{$campaign->pivot->donation_date}}</td>
-                        @else
-                        <td>/</td>
-                        @endif
-                        <td>{{$campaign->pivot->created_at}}</td>
-                      </tr>
-                    @endforeach
+                  @foreach ($campaigns as $index => $campaign)
+                  <tr>
+                    <th scope="row">{{$index+1}}</th>
+                    <td>{{__($campaign->name)}}</td>
+                    <td>{{$campaign->place}}</td>
+                    <td>{{$campaign->date_start}} {{$campaign->time_start}}</td>
+                    <td>{{$campaign->date_finish}} {{$campaign->time_finish}}</td>
+                    <td>
+                      @if ($campaign->pivot->donor_attended)
+                      <i class="fa fa-check text-success" aria-hidden="true"></i>
+                      @else
+                      <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                      @endif
+                    </td>
+                    <td>
+                      @if ($campaign->pivot->donor_donated)
+                      <i class="fa fa-check text-success" aria-hidden="true"></i>
+                      @else
+                      <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                      @endif
+                    </td>
+                    @if ($campaign->pivot->donor_donated) 
+                    <td>{{$campaign->pivot->donation_date}}</td>
+                    @else
+                    <td>/</td>
+                    @endif
+                    <td>{{$campaign->pivot->created_at}}</td>
+                  </tr>
+                  @endforeach
                   @else
-                      <tr>
-                        <td class="text-center" colspan="8">{{__('There is not nothing to show')}}</td>
-                      </tr>
+                  <tr>
+                    <td class="text-center" colspan="8">{{__('There is not nothing to show')}}</td>
+                  </tr>
                   @endif
                 </tbody>
               </table>
             </div>
             {{$campaigns->links()}}
+          </div>
+          <div class="tab-pane fade show" id="individual-donation-tab" role="tabpanel" aria-labelledby="individual-donation-tab">
+            <individual-donation-component :loggeduseradmin={{Auth::user()->is_admin}} :donorid="{{$donor->id}}" ></individual-donation-component>
           </div>
         </div>
       </div>
