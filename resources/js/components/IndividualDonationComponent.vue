@@ -13,7 +13,7 @@
               <th scope="col">Municipio</th>
               <th scope="col">Fecha</th>
               <th scope="col">Hora</th>
-              <th scope="col">T.P</th>
+              <th scope="col">T.D</th>
               <th v-if="loggeduseradmin == 1" scope="col">Acción</th>
             </tr>
           </thead>

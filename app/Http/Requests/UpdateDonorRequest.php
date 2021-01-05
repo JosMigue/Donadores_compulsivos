@@ -26,19 +26,19 @@ class UpdateDonorRequest extends FormRequest
         return [
             'name'          => 'required',
             'parental_surname' => 'required',
-            'maternal_surname' => 'required',
+            'maternal_surname' => 'nullable',
             'curp' => 'nullable|string',
             'city_id'       => 'required',
             'state_id'      => 'required',
             'bloodtype'     => 'required',
-            'gendertype'    => 'required',
+            'gendertype'    => 'nullable',
             'donortype'    => 'required',
             'born_date'     => 'required',
             'first_time_donating' => 'boolean',
             'be_the_match' => 'boolean',
             'letter' => 'boolean',
             'email'         => 'nullable|email|unique:donors,email,'.$this->donor->id,
-            'mobile'        => 'digits:10|max:10|min:10',
+            'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
             'observations'  => 'max:255'
         ];

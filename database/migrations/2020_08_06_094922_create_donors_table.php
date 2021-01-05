@@ -18,7 +18,7 @@ class CreateDonorsTable extends Migration
             $table->integer('identifier')->nullable(true)->default(0);
             $table->string('name')->nullable(false);
             $table->string('parental_surname')->nullable(false);
-            $table->string('maternal_surname')->nullable(false);
+            $table->string('maternal_surname')->nullable(true);
             $table->string('curp',20)->nullable(true)->default(null);
             $table->string('postal_code')->nullable(true)->default(null);
             $table->string('address')->nullable(true)->default(null);
@@ -26,7 +26,7 @@ class CreateDonorsTable extends Migration
             $table->integer('state_id')->nullable(false); 
             $table->string('bloodtype')->nullable(false);
             $table->string('donortype')->nullable(false);
-            $table->string('gendertype')->nullable(false);
+            $table->string('gendertype')->nullable(true)->default(null);
             $table->date('born_date')->nullable(false);
             $table->boolean('first_time_donating')->default(false)->nullable(false);
             $table->boolean('be_the_match')->default(false)->nullable(false);

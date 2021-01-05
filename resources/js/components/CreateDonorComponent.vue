@@ -8,13 +8,16 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <div class="row m-1">
+      <p class="text-dark">Campos obligatorios<span class="text-danger">*</span></p>
+    </div>
     <div class="row my-1">
       <div class="col-12 col-md-4 pr-md-1">
-        <label>Nombre</label>
+        <label>Nombre <span class="text-danger text-sm">*</span> </label>
         <input type="text" id="name" name="name" autofocus="true" class="form-control" v-model="name">
       </div>
       <div class="col-12 col-md-4 px-md-1">
-        <label>Apellido paterno</label>
+        <label>Apellido paterno <span class="text-danger text-sm">*</span></label>
         <input type="text" id="parental_surname" name="parental_surname" class="form-control" v-model="parental_surname">
       </div>
       <div class="col-12 col-md-4 pl-md-1">
@@ -24,22 +27,22 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-4 pr-md-1">
-        <label>Curp</label>
+        <label>CURP</label>
         <input type="text" v-model="curp" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp">
       </div>
       <div class="col-12 col-md-4 px-md-1">
-        <label>Tipo de sangre</label>
+        <label>Tipo de sangre <span class="text-danger text-sm">*</span></label>
         <select class="form-control" name="bloodtype" id="bloodtype" v-model="selectedBlood" required>
           <option value="" selected disabled>Seleccione tipo de sangre...</option>
           <option :value="index" v-for="(blood, index) in bloods" :key="index" >{{blood}}</option>
         </select>
       </div>
       <div class="col-12 col-md-4 pl-md-1">
-        <label>Tipo de donador</label>
+        <label>Tipo de donador <span class="text-danger text-sm">*</span></label>
         <select class="form-control" name="donortype" id="donortype" v-model="selectedDonorType" required>
           <option value="" selected disabled>Seleccione tipo de donador...</option>
           <option value="D1">Sangre</option>
-          <option value="D2">Aéresis</option>
+          <option value="D2">Aféresis</option>
         </select>
       </div>
     </div>
@@ -48,15 +51,15 @@
         <label>Correo electrónico</label>
         <input type="email" class="form-control" id="email" name="email" v-model="email">
       </div>
-      <div class="col-md-4 pr-md-1">
-        <label>Estado</label>
+      <div class="col-md-4 px-md-1">
+        <label>Estado <span class="text-danger text-sm">*</span></label>
         <select id="state_id" name="state_id" class="form-control" v-model="selectedState" v-on:change="getCitiesByStates(selectedState)" required>
           <option value="" selected disabled>seleccione un estado...</option>
           <option :value="state" v-for="(state, index) in states" :key="index">{{state.name}}</option>
         </select>
       </div>
-      <div class="col-md-4 px-md-1">
-        <label>Municipio</label>
+      <div class="col-md-4 pl-md-1">
+        <label>Municipio <span class="text-danger text-sm">*</span></label>
         <select id="city_id" name="city_id" class="form-control" v-model="selectedCity" required>
           <option v-if="cities.length>0" value="" selected disabled>seleccione municipio</option>
           <option v-else value="" selected disabled>Seleccione un estado primero...</option>
@@ -66,15 +69,15 @@
     </div>
     <div class="row my-1">
       <div class="col-12 col-md-4 pr-md-1">
-        <label>Fecha de nacimiento</label>
+        <label>Fecha de nacimiento <span class="text-danger text-sm">*</span></label>
         <input type="date" v-model="selectedDate" v-on:change="calculateAge()" id="born_date" name="born_date" class="form-control" required>
       </div>
       <div class="col-6 col-md-4 px-md-1">
-        <label>Teléfono celular</label>
+        <label>Teléfono celular </label>
         <input type="tel" id="mobile" name="mobile" class="form-control" v-model="mobile" placeholder="" value="" >
       </div>
       <div class="col-6 col-md-4 pl-md-1">
-        <label>Edad</label>
+        <label>Edad <span class="text-danger text-sm">*</span></label>
         <input type="text" id="age" name="age" v-model="age" class="form-control" readonly>
       </div>
     </div>

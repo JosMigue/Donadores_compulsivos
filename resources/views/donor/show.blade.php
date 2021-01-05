@@ -179,7 +179,11 @@
             <div class="row">
               <div class="col-6 col-md-6">
                 <label>{{__('Gender')}}</label>
-                <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
+                @if ($donor->gendertype)
+                  <p>{{$donor->getEnum('gendertype')[$donor->gendertype]}}</p>
+                @else
+                  <p>No se especifica</p>
+                @endif
               </div>
               <div class="col-6 col-md-6">
                 <label>{{__('Last time donating')}}</label>
