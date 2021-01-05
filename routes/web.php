@@ -60,7 +60,7 @@ Route::get('/filter/donors', 'DonorFilterController@filter');
 
 //individual donations
 Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationController@show');
-Route::resource('/individual-donations', 'IndividualDonationController')->only(['store']);
+Route::resource('/individual-donations', 'IndividualDonationController')->only(['store', 'edit', 'update']);
 
 //API routes
 Route::post('/api/donor/store', 'DonorController@apiStore');

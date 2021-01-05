@@ -26,10 +26,10 @@
               <td>{{individualDonation.time_donation}}</td>
               <td v-if="individualDonation.donationtype == 'D1'">Sangre</td>
               <td v-else>Aféresis</td>
-              <td v-if="loggeduseradmin == 1"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button></td>
+              <td v-if="loggeduseradmin == 1"><a class="btn btn-warning btn-sm" @click="redirectToEdit(individualDonation.id)" ><i class="fa fa-pencil"></i></a></td>
             </tr>
             <tr class="text-center" v-if="individualdonations.length == 0">
-              <td colspan="5">No se encontraron registros</td>
+              <td colspan="7">No se encontraron registros</td>
             </tr>
           </paginate>
         </table>
@@ -45,7 +45,8 @@
     data() {
       return {
           individualdonations: [],
-          paginate:['individualdonations']
+          paginate:['individualdonations'],
+          individualDonationForEdit: ''
         }
     },
     mounted() {
@@ -57,6 +58,9 @@
         .then((response)=>{
           this.individualdonations = response.data.individualDonations;
         });
+      },
+      redirectToEdit:function(id){
+        window.location.href=`/individual-donations/${id}/edit`;
       }
     },
   }

@@ -36,6 +36,14 @@
         </button>
       </div>
     @endif   
+    @if (session('errorMessage'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{session('errorMessage')}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif   
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="profile-img" id="profile-img">
@@ -101,7 +109,7 @@
               <a class="nav-link is-red" id="campaigns" data-toggle="tab" href="#campaigns-tab" role="tab" aria-controls="campaigns" aria-selected="false" onClick="saveTabSelect(this)">{{__('Campaigns history')}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link is-red" id="individual-donation" data-toggle="tab" href="#individual-donation-tab" role="tab" aria-controls="individual-donation-tab" aria-selected="false">{{__('Individual donations')}}</a>
+              <a class="nav-link is-red" id="individual-donation" data-toggle="tab" href="#individual-donation-tab" role="tab" aria-controls="individual-donation-tab" aria-selected="false" onClick="saveTabSelect(this)">{{__('Individual donations')}}</a>
             </li>
           </ul>
         </div>
