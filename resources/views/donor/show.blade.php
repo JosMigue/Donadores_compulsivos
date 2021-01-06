@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="profile-img" id="profile-img">
-          <img src="{{asset($donor->profile_picture)}}" alt="Profile picture for donor"/>
+          <img class="rounded" src="{{asset($donor->profile_picture)}}" alt="Profile picture for donor"/>
           <div class="file btn btn-lg btn-primary">
             {{__('Change Photo')}}
             <form method="POST" action="{{route('donors.upload', $donor->id)}}" enctype="multipart/form-data">
@@ -98,7 +98,7 @@
             </div>
           @endif
           <div class="d-flex justify-content-around">
-            <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$numberOfDonations}}</span></p>
+            <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$donationsInTotal}}</span></p>
             <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->total()}}</span></p>
           </div>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -188,7 +188,7 @@
               <div class="col-6 col-md-6">
                 <label>{{__('Last time donating')}}</label>
                 @if ($donor->last_donate_date)
-                  <p>{{$donor->last_donate_date}}</p>  
+                  <p>{{$donor->last_donate_date->diffForHumans()}} / {{$donor->last_donate_date->format('Y-m-d')}}</p>  
                 @else
                   <p>{{__('This user has not donated yet')}}</p>  
                 @endif
@@ -204,13 +204,6 @@
             @endif
           </div>
           <div class="tab-pane fade show" id="campaigns-tab" role="tabpanel" aria-labelledby="campaigns">
-            <div class="row">
-              <div class="col">
-                <i class="fa fa-check text-success"></i> <span>Asistió</span>
-                <br>
-                <i class="fa fa-times text-danger"></i> <span>No Asistió</span>
-              </div>
-            </div>
             <div class="table-responsive">
               <table class="table table-hover table-striped table-sm">
                 <thead class="thead-dark">
