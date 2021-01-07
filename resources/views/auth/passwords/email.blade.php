@@ -11,7 +11,10 @@
           <div class="card-body">
             @if (session('status'))
               <div class="alert alert-success" role="alert">
-                {{ session('status') }}
+                {{ session('status') }} <br>
+              </div>
+              <div class="alert alert-info" role="alert">
+                Verifique su carpeta de SPAM en caso de ser necesario...
               </div>
             @endif
             <form method="POST" action="{{ route('password.email') }}">

@@ -104,6 +104,15 @@ class CampaignDonorController extends Controller
     return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
   }
 
+  public function update(Request $request, CampaignDonor $campaigndonor){
+    $data = ['time_turn' => $request->input('time_turn')];
+    if($campaigndonor->update($data)){
+      return json_encode(array('code'=>200, 'message'=>__('Time updated successfully')));
+    }else{
+      return json_encode(array('code'=>500, 'message'=>__('Something went wrong, try again later')));
+    }
+  }
+
   public function addDonorCampaign(CampaignDonorRequest $request){
     if(Auth::user()->is_admin){
       $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
@@ -124,7 +133,7 @@ class CampaignDonorController extends Controller
 
   public function getDonorsInCampaign(Request $request){
     $campaign = Campaign::where('id',$request->input('campaignId'))->first();
-    return $campaign->donors()->get();
+    return $campaign->donors()->orderBy('time_turn')->get();
   }
   
   private function sendEmailWithTurn($donor, $currentTurn){
@@ -133,6 +142,14 @@ class CampaignDonorController extends Controller
   
   public function export($campaignId){
     return Excel::download(new DonorsPerCampaign($campaignId), 'donadoresporcampaña.xlsx');
+  }
+
+  public function destroy(CampaignDonor $campaigndonor){
+    if($campaigndonor->delete()){
+      return json_encode(array('code'=>200, 'message' => __('Donor has been deleted successfully')));
+    }else{
+      return json_encode(array('code'=>500, 'message' => __('Something went wrong, try again later')));
+    }
   }
 }
 

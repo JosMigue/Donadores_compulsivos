@@ -18,15 +18,18 @@
           <h4 class="card-title">{{__('Sign Up')}}</h4>
         </div>
         <div class="card-body">
+          <div class="row m-1">
+            <p>{{__('Required fields')}} <span class="text-danger">*</span></p>
+          </div>
           <form action="{{route('donors.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('Name')}}</label>
+                <label>{{__('Name')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="name" name="name" autofocus="true" class="form-control" placeholder="{{__('Name')}}" value="{{old('name')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('Parental Surname')}}</label>
+                <label>{{__('Parental Surname')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="parental_surname" name="parental_surname" class="form-control" placeholder="{{__('Parental Surname')}}" value="{{old('parental_surname')}}" required>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
@@ -36,11 +39,11 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('CURP')}}</label>
+                <label>{{__('CURP')}} </label>
                 <input type="text" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp" value="{{old('curp')}}">
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('Blood type')}}</label>
+                <label>{{__('Blood type')}} <span class="text-danger text-sm">*</span></label>
                 <select class="form-control" name="bloodtype" id="bloodtype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($bloodTypes as $key => $bloodtype)
@@ -49,7 +52,7 @@
                 </select>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label>{{__('Donor type')}}</label>
+                <label>{{__('Donor type')}} <span class="text-danger text-sm">*</span></label>
                 <select class="form-control" name="donortype" id="donortype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($donorTypes as $key => $donortype)
@@ -60,7 +63,7 @@
             </div>
             <div class="row">
               <div class="col-md-4 pr-md-1">
-                <label>{{__('State')}}</label>
+                <label>{{__('State')}} <span class="text-danger text-sm">*</span></label>
                 <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($states as $state)
@@ -69,41 +72,41 @@
                 </select>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('City')}}</label>
+                <label>{{__('City')}} <span class="text-danger text-sm">*</span></label>
                 <select id="city_id" name="city_id" class="form-control" required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label>{{__('Born date')}}</label>
+                <label>{{__('Born date')}} <span class="text-danger text-sm">*</span></label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}" required>
               </div>
             </div>
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('E-Mail Address')}}</label>
+                <label>{{__('E-Mail Address')}} <span class="text-danger text-sm">*</span></label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('Password')}}</label>
+                <label>{{__('Password')}} <span class="text-danger text-sm">*</span></label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}" required>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                <label for="password-confirm">{{ __('Confirm Password') }} <span class="text-danger text-sm">*</span></label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
               </div>
             </div>
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('Mobile')}}</label>
+                <label>{{__('Mobile')}} <span class="text-danger text-sm">*</span></label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}">
               </div>
               <div class="col-6 col-md-4 px-md-1">
-                <label>{{__('Age')}}</label>
+                <label>{{__('Age')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}" required >
               </div>
               <div class="col-6 col-md-4 pl-md-1">
-                <label>{{__('Gender')}}</label>
+                <label>{{__('Gender')}} <span class="text-danger text-sm">*</span></label>
                 <select id="gendertype" name="gendertype" class="form-control">
                   <option value="" disabled selected> {{__('Select...')}}</option>
                   @foreach ($genderTypes as $key => $genderType)

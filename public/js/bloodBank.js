@@ -32,3 +32,10 @@ function showInfoMessage(){
     }
   })
 }
+
+function getStateCityBloodbank(bloodbank){
+  const objBloodBank = JSON.parse(bloodbank.value);
+  document.getElementById('city').value=objBloodBank.city.name;
+  document.getElementById('state').value=objBloodBank.state.name;
+  document.getElementById('bloodbank_id').value=objBloodBank.id;
+}

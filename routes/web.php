@@ -33,6 +33,7 @@ Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePic
 Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
 Route::get('/donor/register','DonorController@showregistreview')->name('donor.register');
 Route::resource('/bloodbanks', 'BloodBankController');
+Route::get('/api/bloodbanks', 'BloodBankController@getBloodBanksData');
 Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');
 
 Route::post('/donor/status/change', 'DonorController@changeStatus');
@@ -57,6 +58,14 @@ Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
 
+//individual donations
+Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationController@show');
+Route::resource('/individual-donations', 'IndividualDonationController')->only(['store', 'edit', 'update']);
+
 //API routes
 Route::post('/api/donor/store', 'DonorController@apiStore');
 
+//Time
+Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker');
+Route::post('/hours/update/campaign/{campaigndonor}','CampaignDonorController@update');
+Route::delete('/campaign/donor/delete/{campaigndonor}','CampaignDonorController@destroy');

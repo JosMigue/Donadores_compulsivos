@@ -17,7 +17,7 @@ class CreateCampaignsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable(false);
             $table->string('place')->nullable(true)->default(null);
-            $table->string('description')->nullable(false);
+            $table->string('description')->nullable(true)->default(null);
             $table->integer('city_id')->nullable(false);
             $table->integer('state_id')->nullable(false);
             $table->string('date_start')->nullable(false);

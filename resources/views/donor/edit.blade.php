@@ -18,20 +18,23 @@
           @endif
         </div>
         <div class="card-body">
+          <div class="row m-1">
+            <p>{{__('Required fields')}} <span class="text-danger">*</span></p>
+          </div>
           <form action="{{route('donors.update', $donor->id)}}" method="POST">
             @csrf
             @method('PATCH')
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('Name')}}</label>
+                <label>{{__('Name')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{$donor->name}}">
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('Parental Surname')}}</label>
+                <label>{{__('Parental Surname')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="parental_surname" name="parental_surname" class="form-control" placeholder="{{__('Parental Surname')}}" value="{{$donor->parental_surname}}">
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label>{{__('Maternal Surname')}}</label>
+                <label>{{__('Maternal Surname')}} </label>
                 <input type="text" id="maternal_surname" name="maternal_surname" class="form-control" placeholder="{{__('Maternal Surname')}}" value="{{$donor->maternal_surname}}">
               </div>
             </div>
@@ -44,7 +47,7 @@
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <div class="form-group">
-                  <label>{{__('Blood type')}}</label>
+                  <label>{{__('Blood type')}} <span class="text-danger text-sm">*</span></label>
                   <select class="form-control" name="bloodtype" id="bloodtype">
                     @foreach ($bloodTypes as $key => $bloodtype)
                       <option @if ($donor->bloodtype == $key) selected @endif value="{{$key}}">{{$bloodtype}}</option>
@@ -54,7 +57,7 @@
               </div>
               <div class="col-12 col-md-4 pl-md-1">
                 <div class="form-group">
-                  <label>{{__('Donor type')}}</label>
+                  <label>{{__('Donor type')}} <span class="text-danger text-sm">*</span></label>
                   <select class="form-control" name="donortype" id="donortype">
                     @foreach ($donorTypes as $key => $donorType)
                       <option @if ($donor->donortype == $key) selected @endif value="{{$key}}">{{$donorType}}</option>
@@ -65,7 +68,7 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('State')}}</label>
+                <label>{{__('State')}} <span class="text-danger text-sm">*</span></label>
                 <select type="text" id="state_id" name="state_id" class="form-control"  onchange="getAllCitiesState(this)">
                   @foreach ($states as $state)
                     <option value="{{$state->id}}" @if ($donor->state_id == $state->id) selected='selected' @endif>{{$state->name}}</option>
@@ -73,7 +76,7 @@
                 </select>
               </div>
               <div class="col-md-4 px-md-1">
-                <label>{{__('City')}}</label>
+                <label>{{__('City')}} <span class="text-danger text-sm">*</span></label>
                 <select type="text" id="city_id" name="city_id" class="form-control" placeholder="{{__('City')}}">
                   @foreach ($cities as $city)
                     <option @if ($city->id == $donor->city_id) selected='selected' @endif value="{{$city->id}}">{{$city->name}}</option>
@@ -81,7 +84,7 @@
                 </select>
               </div>
               <div class="col-md-4 pl-md-1">
-                <label>{{__('Born date')}}</label>
+                <label>{{__('Born date')}} <span class="text-danger text-sm">*</span></label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{$donor->born_date}}">
               </div>
             </div>
@@ -97,7 +100,7 @@
             </div>
             <div class="row my-1">
               <div class="col-6 col-md-4 pr-md-1">
-                <label>{{__('Age')}}</label>
+                <label>{{__('Age')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{$donor->age}}">
               </div>
               <div class="col-6 col-md-8 pl-md-1">

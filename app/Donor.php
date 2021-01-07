@@ -43,6 +43,12 @@ class Donor extends Authenticatable implements MustVerifyEmail
 
     use Enums;
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'last_donate_date'
+    ];
+
     protected $enumBloodtypes = [
         'b1' => 'A+',
         'b2' => 'B+',
@@ -52,6 +58,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'b6' => 'B-',
         'b7' => 'O-',
         'b8' => 'AB-',
+        'd9' => 'No lo sé'
     ];
 
     protected $enumGendertypes = [
@@ -82,6 +89,10 @@ class Donor extends Authenticatable implements MustVerifyEmail
     
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    public function individualDonations(){
+        return $this->hasMany('App\IndividualDonation');
     }
 
 }
