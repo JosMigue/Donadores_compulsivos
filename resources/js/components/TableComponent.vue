@@ -50,14 +50,19 @@
               <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
             </td>
             <td>
-              <div class="row no-gutters">
-                <div class="col">
-                  <button v-if="campaigndonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigndonor, 0)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="Marcar como no asistió">Marcar como no asistió</button>
-                  <button v-else class="btn btn-success btn-sm" v-on:click="changeStatusDonationAttended(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió">Marcar como asistió</button>
-                </div>
-                <div class="col" v-if="campaigndonor.pivot.donor_attended">
-                  <button v-if="campaigndonor.pivot.donor_donated" class="btn btn-danger btn-sm" v-on:click="changeStatusDonation(campaigndonor, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como donó">Marcar como no donó</button>
-                  <button v-else class="btn btn-success btn-sm" v-on:click="changeStatusDonation(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó">Marcar como donó</button>
+              <div class="btn-group dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Acción
+                </button>
+                <div class="dropdown-menu">
+                  <button class="dropdown-item" v-if="campaigndonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigndonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
+                  <button class="dropdown-item" v-else v-on:click="changeStatusDonationAttended(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i> Marcar como asistió</button> 
+                  <div v-if="campaigndonor.pivot.donor_attended">
+                    <button class="dropdown-item" v-if="campaigndonor.pivot.donor_donated"  v-on:click="changeStatusDonation(campaigndonor, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como donó"><i class="fa fa-times"></i>Marcar como no donó</button>
+                    <button class="dropdown-item" v-else  v-on:click="changeStatusDonation(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó"><i class="fa fa-check"></i>Marcar como donó</button>
+                  </div>
+                  <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigndonor)"><i class="fa fa-trash"></i> Borrar</button>
+                  <a :href="'/donors/'+campaigndonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
                 </div>
               </div>
             </td>
@@ -152,7 +157,25 @@
     resetAll:function(){
       this.isButtonActive = false;
       this.lastSelected = '';
+      this.selectedTime= '';
+      this.lastselectedTime= '';
       this.getDonorsInCampaign();
+    },
+    deleteDonorFromCampaign: async function(donor){
+      const userResponse = await questionNotification('¿Está seguro que quiere eliminar el donador de la campaña?', `Se procederá a borrar el donador ${donor.name} de la camapaña`, 'Sí, estoy seguro');
+      if(userResponse){
+        axios.delete(`/campaign/donor/delete/${donor.pivot.id}`)
+        .then((response)=>{
+          if(response.data.code == 200){
+            successNotification(response.data.message);
+            this.resetAll();
+          }else{
+            errorNotification(response.data.message);
+          }
+        }).catch((err)=>{
+          errorNotification(`Algo salió mal, intente más trade. Código de error ${err.response}`)
+        });
+      }
     },
     changeStatusDonation:function(index, value){
     axios.patch(`/donor/campaign/${this.campaignid}/donation`,{ donor_id: index.id, status: value, attribute:2})
@@ -164,9 +187,9 @@
         }else{
           toastNotification('success', 'Donación faltante del donador marcada correctamente');
         }
-      }).catch(error =>{
+      }).catch((error) =>{
       })
-    }  
+    }
   }
 }
 </script>

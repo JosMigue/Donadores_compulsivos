@@ -68,3 +68,4 @@ Route::post('/api/donor/store', 'DonorController@apiStore');
 //Time
 Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker');
 Route::post('/hours/update/campaign/{campaigndonor}','CampaignDonorController@update');
+Route::delete('/campaign/donor/delete/{campaigndonor}','CampaignDonorController@destroy');

@@ -236,6 +236,13 @@ class DonorController extends Controller
     if($donor->update($request->validated())){
       if($donor->user_id != 0){
         $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name']]);
+      }else if($request->has('email')){
+        $dataUser = ['name' => $donor->name, 'email' => $donor->email, 'password' => '$2y$10$LLck65rXlXmE4Ac.UmKqfuJv9zsSOh6YG2hB0bdwwrEMv4epi1/H6'];
+        $user = User::create($dataUser);
+        $donor->user_id = $user->id;
+        if($donor->save()){
+          \Session::flash('infoMessage', __('This donor now has access to the system, remind default password is 1234567890. JL Marketing recommend that you make to know to the donor must to change his password as soon as possible. email must to be confirmed.')); 
+        }
       }
       if(Auth::user()->is_admin){
         return redirect()->route('donors.index')->with('successMessage', __('Donor has been updated successfully'));
