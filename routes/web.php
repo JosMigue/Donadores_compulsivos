@@ -65,4 +65,6 @@ Route::resource('/individual-donations', 'IndividualDonationController')->only([
 //API routes
 Route::post('/api/donor/store', 'DonorController@apiStore');
 
-
+//Time
+Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker');
+Route::post('/hours/update/campaign/{campaigndonor}','CampaignDonorController@update');

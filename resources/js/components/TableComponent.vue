@@ -35,7 +35,12 @@
             <td>{{campaigndonor.mobile}}</td>
             <td>{{campaigndonor.email}}</td>
             <td>{{campaigndonor.pivot.turn}}</td>
-            <td>{{campaigndonor.pivot.time_turn}}</td>
+            <td @dblclick="showTimePicker(campaigndonor)" v-if="campaigndonor.pivot.time_turn != null">{{campaigndonor.pivot.time_turn}}</td>
+            <td v-else>
+              <select v-model="selectedTime" class="form-control" v-on:change="updateTimeTurn(campaigndonor)">
+                <option :value="time" v-for="(time, index) in listTime" :key="index">{{time}}</option>
+              </select>
+            </td>
             <td>
               <i v-if="campaigndonor.pivot.donor_attended" class="fa fa-check text-success" aria-hidden="true"></i>
               <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
@@ -77,13 +82,19 @@
       bloods: [],
       genders: [],
       statusAttend: 0,
-      paginate: ['campaigndonors']
+      paginate: ['campaigndonors'],
+      listTime :[],
+      isButtonActive: true,
+      selectedTime: '',
+      lastSelected: '',
+      lastTimeSelected: ''
     }
   },
   mounted() {
     this.bloods = this.bloodtypes;
     this.genders = this.gendertypes;
     this.getDonorsInCampaign();
+    this.createHoursDropdown();
   },
   methods: {
     getDonorsInCampaign:function(){
@@ -106,6 +117,43 @@
       }).catch(error =>{
       })
     },
+    createHoursDropdown:function(){
+      axios.get(`/get/hours/campaign/${this.campaignid}`)
+      .then((response)=>{
+        this.listTime = response.data;
+      });
+    },
+    showTimePicker:function(campaigndonor){
+      if(this.lastSelected){
+        this.lastSelected.pivot.time_turn = this.lastTimeSelected;
+        this.selectedTime = '';
+      }
+      this.lastSelected = campaigndonor;
+      this.lastTimeSelected = campaigndonor.pivot.time_turn;
+      campaigndonor.pivot.time_turn = null;
+    },
+    updateTimeTurn:function(campaignDonor){
+      axios.post(`/hours/update/campaign/${campaignDonor.pivot.id}`,{
+        'time_turn' : this.selectedTime
+      }).then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success',response.data.message);
+          this.resetAll();
+        }else{
+          toastNotification('error',response.data.message);
+          this.resetAll();
+        }
+      })
+      .catch((err)=>{
+        errorNotification('Algo salió mal intente de nuevo, más tarde');
+        this.resetAll();
+      });
+    },
+    resetAll:function(){
+      this.isButtonActive = false;
+      this.lastSelected = '';
+      this.getDonorsInCampaign();
+    },
     changeStatusDonation:function(index, value){
     axios.patch(`/donor/campaign/${this.campaignid}/donation`,{ donor_id: index.id, status: value, attribute:2})
       .then(response => {
@@ -119,7 +167,7 @@
       }).catch(error =>{
       })
     }  
-  },
+  }
 }
 </script>
     

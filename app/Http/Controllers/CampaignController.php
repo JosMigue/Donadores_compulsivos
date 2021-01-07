@@ -8,6 +8,7 @@ use App\State;
 use App\Donor;
 use App\BloodBank;
 use Excel;
+use Carbon\Carbon;
 use App\Exports\CampaignsExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveCampaignRequest;
@@ -159,5 +160,25 @@ class CampaignController extends Controller
     }else{
       return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
     }
+  }
+
+  public function createTimePicker($campaign){
+    $currentCampaign = Campaign::findOrFail($campaign);
+    $campaignEndat = Carbon::create($currentCampaign->time_finish);
+    $step = $currentCampaign->frecuency_time;
+    $timeList = [];
+    $breaker = true;
+    $count = 0;
+    while($breaker){
+      $time = Carbon::create($currentCampaign->time_start);
+      $minutesToAdd = $count * $step;
+      $time = $time->addMinutes($minutesToAdd);
+      array_push($timeList,$time->format('H:i'));
+      $count= $count + 1;
+      if($campaignEndat->format('H:i') == $time->format('H:i') || $campaignEndat < $time){
+        $breaker = false;
+      }
+    }
+    return $timeList;
   }
 }
