@@ -19,7 +19,6 @@
             <th scope="col">Género</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo electrónico</th>
-            <th scope="col">Turno</th>
             <th scope="col">HT</th>
             <th scope="col">Asistió</th>
             <th scope="col">Donó</th>
@@ -34,7 +33,6 @@
             <td>{{genders[campaigndonor.gendertype]}}</td>
             <td>{{campaigndonor.mobile}}</td>
             <td>{{campaigndonor.email}}</td>
-            <td>{{campaigndonor.pivot.turn}}</td>
             <td @dblclick="showTimePicker(campaigndonor)" v-if="campaigndonor.pivot.time_turn != null">{{campaigndonor.pivot.time_turn}}</td>
             <td v-else>
               <select v-model="selectedTime" class="form-control" v-on:change="updateTimeTurn(campaigndonor)">

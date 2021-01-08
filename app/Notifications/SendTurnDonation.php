@@ -44,7 +44,8 @@ class SendTurnDonation extends Notification
         return (new MailMessage)
                     ->subject(__('Notification of register on campaign'))
                     ->line(__('You have received this email because You just checked in on one campaign'))
-                    ->line(__('You turn for campaign is: ') .$this->currentTurn)
+                    ->line(__('Your turn is at: ') . $this->currentTurn)
+                    ->line(__('Remind that you have to arrive some minutes before your turn'))
                     ->line(__('If you want to know more information about what to do before you donate please click on button below'))
                     ->action(__('Information'), url(''))
                     ->line(__('Thank you for using our application!'));

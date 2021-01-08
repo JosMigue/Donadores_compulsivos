@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CampaignDonorRequest extends FormRequest
+class AddDonorInCampaignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class CampaignDonorRequest extends FormRequest
     {
         return [
             'campaign'      => 'required|integer',
-            'donor'      => 'required|integer',
-            'time_turn'      => 'required|date_format:H:i',
+            'donor'      => 'required|integer'
         ];
     }
 }

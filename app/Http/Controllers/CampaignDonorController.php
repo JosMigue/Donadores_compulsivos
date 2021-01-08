@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NotifyDonorCampaignError;
 use App\Http\Requests\CampaignDonorRequest;
+use App\Http\Requests\AddDonorInCampaignRequest;
 use App\Notifications\SendTurnDonation;
 use Carbon\Carbon;
 use App\CampaignDonor;
@@ -23,25 +24,27 @@ class CampaignDonorController extends Controller
 
   public function show(Campaign $campaign, Donor $donor){
     $donorAuth = $donor->id;
+    $availableHours = $this->checkAvailableHours($campaign);
     if(Auth::check()){
       if(Auth::user()->is_admin){
         return redirect()->route('home')->with('errorMessage', __('An administrator cannot register for a campaign'));
-      }else{
+      }else if($donorAuth == Auth::user()->load('donor')->donor->id){
         if($this->isAvailableCampaign($campaign)){
           if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
-            $donorAuth = Auth::user()->id;
-            return view('campaigndonor.show', compact('campaign', 'donorAuth'));
+            return view('campaigndonor.show', compact('campaign', 'donorAuth', 'availableHours'));
           }else{
             return  redirect()->route('home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
           }
         }else{
           return redirect()->route('home')->with('errorMessage', __('This campaign is no longer available'));
         } 
+      }else{
+        return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
       }
     }else{
       if($this->isAvailableCampaign($campaign)){
         if($campaign->campaigndonors->where('donor_id',$donorAuth)->count() == 0){
-          return view('campaigndonor.show', compact('campaign', 'donorAuth'));
+          return view('campaigndonor.show', compact('campaign', 'donorAuth', 'availableHours'));
         }else{
           return redirect('/')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
         }
@@ -49,6 +52,19 @@ class CampaignDonorController extends Controller
         return redirect('/')->with('errorMessage', __('This campaign is no longer available'));
       } 
     }
+  }
+
+  private function checkAvailableHours($campaign){
+    $timeList = $this->createTimeArrayCampaign($campaign->id);
+    $donorsCampaign =$campaign->donors()->get();
+    foreach ($timeList as $keyh => $hour) {
+      foreach ($donorsCampaign as $keyd => $donor) {
+        if(Carbon::create($hour['time'])->format('H:i') == Carbon::create($donor->pivot->time_turn)->format('H:i')){
+          $timeList[$keyh]['times'] = $timeList[$keyh]['times'] + 1;
+        }
+      }
+    }
+    return $timeList;
   }
 
   private function isAvailableCampaign($campaign){
@@ -63,37 +79,45 @@ class CampaignDonorController extends Controller
   }
 
   public function store(CampaignDonorRequest $request){
-    if(Auth::check()){
-      if($request->validated()['donor'] == Auth::user()->id){
-        $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
-        $donor = Donor::where('user_id',$request->validated()['donor'])->first();
-        $currentTurn = $campaign->donors->count();
-        $currentTurn +=1;
-        $campaignAt = Carbon::create($campaign->time_start);
-        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
-        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
-        if($campaign->campaigndonors()->save($campaigDonor)){
-          $this->sendEmailWithTurn($donor, $currentTurn);
-          return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+    $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
+    $donor = Donor::where('id',$request->validated()['donor'])->first();
+    if($campaign->campaigndonors->where('donor_id',$donor->id)->count() == 0){
+      if(Auth::check()){
+        if($request->validated()['donor'] == Auth::user()->load('donor')->donor->id){
+          $currentTurn = $campaign->donors->count();
+          $currentTurn +=1;
+          $timeTurn = $request->validated()['time_turn'];
+          /* $campaignAt = Carbon::create($campaign->time_start); */
+          /* $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time); */
+          $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
+          if($campaign->campaigndonors()->save($campaigDonor)){
+            $this->sendEmailWithTurn($donor, $timeTurn);
+            return redirect()->route('home')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+          }else{
+            return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+          }
         }else{
           return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
         }
       }else{
-        return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+        $currentTurn = $campaign->donors->count();
+        $currentTurn +=1;
+        $timeTurn = $request->validated()['time_turn'];
+        /* $campaignAt = Carbon::create($campaign->time_start); */
+        /* $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time); */
+        $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
+        if($campaign->campaigndonors()->save($campaigDonor)){
+          $this->sendEmailWithTurn($donor, $timeTurn);
+          return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+        }else{
+          return redirect('/')->with('errorMessage', __('Something went wrong, try again later'));
+        }
       }
     }else{
-      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
-      $donor = Donor::where('id',$request->validated()['donor'])->first();
-      $currentTurn = $campaign->donors->count();
-      $currentTurn +=1;
-      $campaignAt = Carbon::create($campaign->time_start);
-      $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
-      $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
-      if($campaign->campaigndonors()->save($campaigDonor)){
-        $this->sendEmailWithTurn($donor, $currentTurn);
-        return redirect('/')->with('successMessage', __('Thanks for get involved on this campaign'))->with('information', __('A email has been sent to you with information about your turn. Thanks for beign part of this ❤️'));
+      if(Auth::check()){
+        return redirect('/home')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
       }else{
-        return redirect('/')->with('errorMessage', __('Something went wrong, try again later'));
+        return redirect('/')->with('information', __('It looks like you have already checked in on this campaign, please check your email'));
       }
     }
   }
@@ -113,7 +137,7 @@ class CampaignDonorController extends Controller
     }
   }
 
-  public function addDonorCampaign(CampaignDonorRequest $request){
+  public function addDonorCampaign(AddDonorInCampaignRequest $request){
     if(Auth::user()->is_admin){
       $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
       $donor = Donor::where('id',$request->validated()['donor'])->first();
@@ -142,6 +166,26 @@ class CampaignDonorController extends Controller
   
   public function export($campaignId){
     return Excel::download(new DonorsPerCampaign($campaignId), 'donadoresporcampaña.xlsx');
+  }
+
+  private function createTimeArrayCampaign($campaign){
+    $currentCampaign = Campaign::findOrFail($campaign);
+    $campaignEndat = Carbon::create($currentCampaign->time_finish);
+    $step = $currentCampaign->frecuency_time;
+    $timeList = array();
+    $breaker = true;
+    $count = 0;
+    while($breaker){
+      $time = Carbon::create($currentCampaign->time_start);
+      $minutesToAdd = $count * $step;
+      $time = $time->addMinutes($minutesToAdd);
+      array_push($timeList,array('time'=>$time->format('H:i'), 'times'=>0));
+      $count= $count + 1;
+      if($campaignEndat->format('H:i') == $time->format('H:i') || $campaignEndat < $time){
+        $breaker = false;
+      }
+    }
+    return $timeList;
   }
 
   public function destroy(CampaignDonor $campaigndonor){
