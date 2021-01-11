@@ -40,7 +40,7 @@
             <div class="row">
               <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('CURP')}} </label>
-                <input type="text" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp" value="{{old('curp')}}">
+                <input type="text" maxlength="18" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp" value="{{old('curp')}}">
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Blood type')}} <span class="text-danger text-sm">*</span></label>

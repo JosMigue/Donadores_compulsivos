@@ -15,7 +15,7 @@ class adminSeeder extends Seeder
             'name'=>'super admin',
             'email'=> 'admin@admin.com',
             'email_verified_at'=>'2020-08-13 12:07:39',
-            'password'=>'$2y$10$MuXrHqIm6wzgGl32c8iq7eMW/aRgp.SZf1Yn8C0snEMVcNzEMJ7hq',
+            'password'=>'$2y$10$MuXrHqIm6wzgGl32c8iq7eMW/aRgp.SZf1Yn8C0snEMVcNzEMJ7hq', //9<PVwvY_<7ecS,VW
             'is_admin'=>1,
             'is_super_admin'=>1,
             'remember_token' => null,

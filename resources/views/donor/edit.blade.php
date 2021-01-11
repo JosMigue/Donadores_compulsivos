@@ -42,7 +42,7 @@
               <div class="col-12 col-md-4 pr-md-1">
                 <div class="form-group">
                   <label>{{__('CURP')}}</label>
-                  <input class="form-control" type="text" id="curp" name="curp" value="{{$donor->curp}}" placeholder="Ingrese su curp">
+                  <input class="form-control" maxlength="18" type="text" id="curp" name="curp" value="{{$donor->curp}}" placeholder="Ingrese su curp">
                 </div>
               </div>
               <div class="col-12 col-md-4 px-md-1">
