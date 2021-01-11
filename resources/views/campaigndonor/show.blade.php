@@ -76,11 +76,11 @@
           <div class="row text-center">
             <div class="col-12 col-md-6">
               <label>{{__('Date time start')}}</label>
-              <p>{{$campaign->date_start}} : {{$campaign->time_start}}</p>
+              <p>{{$campaign->date_start->format('Y-m-d')}} : {{$campaign->time_start}}</p>
             </div>
             <div class="col-12 col-md-6">
               <label>{{__('Date time finish')}}</label>
-              <p>{{$campaign->date_finish}} : {{$campaign->time_finish}}</p>
+              <p>{{$campaign->date_finish->format('Y-m-d')}} : {{$campaign->time_finish}}</p>
             </div>
           </div>
         </div>

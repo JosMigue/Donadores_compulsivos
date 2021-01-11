@@ -27,6 +27,13 @@ class Campaign extends Model
         'campaign_image'
     ];
 
+    protected $dates = [
+        'date_start',
+        'date_finish',
+        'created_at',
+        'updated_at'
+    ];
+
     use Enums;
 
     protected $enumCampaigntypes = [

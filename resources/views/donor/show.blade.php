@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-8">
         <div class="profile-head">
           <h5>
             {{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}
@@ -101,6 +101,10 @@
             <p class="proile-rating">{{__('Donations')}} <i class="fa fa-heart mx-1" aria-hidden="true"></i>: <span>{{$donationsInTotal}}</span></p>
             <p class="proile-rating">{{__('Campaigns')}} <i class="fa fa-bullhorn mx-1" aria-hidden="true"></i>: <span>{{$campaigns->total()}}</span></p>
           </div>
+          <div class="row d-flex justify-content-lg-end justify-content-center">
+            <a class="is-panel-button is-btn-bg-red mx-2" href="{{route('donors.edit',$donor->id)}}">{{__('Edit')}}</a>
+            <a class="is-panel-button is-btn-bg-dark mx-2" href="{{route('donors.index')}}" >{{__('Get back')}}</a>
+          </div>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link is-red" id="information" data-toggle="tab" href="#information-tab" role="tab" aria-controls="information" aria-selected="true"  onClick="saveTabSelect(this)">{{__('Information')}}</a>
@@ -111,12 +115,11 @@
             <li class="nav-item">
               <a class="nav-link is-red" id="individual-donation" data-toggle="tab" href="#individual-donation-tab" role="tab" aria-controls="individual-donation-tab" aria-selected="false" onClick="saveTabSelect(this)">{{__('Individual donations')}}</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link is-red" id="coming-campaigns" data-toggle="tab" href="#coming-campaigns-tab" role="tab" aria-controls="coming-campaigns-tab" aria-selected="false" onClick="saveTabSelect(this)">{{__('Up coming campaigns')}}</a>
+            </li>
           </ul>
         </div>
-      </div>
-      <div class="col-12 col-md-2 my-4 text-center text-lg-right">
-        <a class="is-panel-button is-btn-bg-red" href="{{route('donors.edit',$donor->id)}}">{{__('Edit')}}</a>
-        <a class="is-panel-button is-btn-bg-dark" href="{{route('donors.index')}}" >{{__('Get back')}}</a>
       </div>
     </div>
     <div class="row">
@@ -262,6 +265,24 @@
           </div>
           <div class="tab-pane fade show" id="individual-donation-tab" role="tabpanel" aria-labelledby="individual-donation-tab">
             <individual-donation-component :loggeduseradmin={{Auth::user()->is_admin}} :donorid="{{$donor->id}}" ></individual-donation-component>
+          </div>
+          <div class="tab-pane fade show" id="coming-campaigns-tab" role="tabpanel" aria-labelledby="coming-campaigns-tab">
+            <div class="row">
+              @foreach ($availablesCampaigns as $availableCampaign)
+                <div class="col-lg-4 col-12 d-flex justify-content-center">
+                  <div class="card" style="width: 13rem;">
+                    <img class="card-img-top" src="{{asset($availableCampaign->campaign_image)}}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{__($availableCampaign->name)}}</h5>
+                      <p class="card-text text-dark">Frecha de inicio: <br> {{$availableCampaign->date_start->format('Y-m-d')}} {{$availableCampaign->time_start}} <br> Publicada: <br> {{$availableCampaign->created_at->diffForHumans()}}</p>
+                      <div class="d-flex justify-content-center">
+                        <a href="{{route('campaigndonors.show', ['campaign' => $availableCampaign->id, 'donor'=> $donor->id])}}" class="btn btn-primary">Saber más</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            </div>
           </div>
         </div>
       </div>

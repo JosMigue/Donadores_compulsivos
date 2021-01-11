@@ -209,11 +209,12 @@ class DonorController extends Controller
 
   public function show(Donor $donor)
   {
+    $availablesCampaigns = Campaign::where('date_start','>', Carbon::now())->orderBy('date_start', 'ASC')->take(3)->get();
     $campaigns = $donor->campaigns()->latest()->paginate(3);
     $numberOfIndividualDonations = $donor->individualdonations()->count();
     $numberOfDonations = $donor->campaigndonors()->where('donor_donated', 1)->count();
     $donationsInTotal = $numberOfDonations + $numberOfIndividualDonations;
-    return view('donor.show', compact('donor', 'campaigns', 'numberOfDonations', 'donationsInTotal', 'numberOfIndividualDonations'));
+    return view('donor.show', compact('donor', 'campaigns', 'numberOfDonations', 'donationsInTotal', 'numberOfIndividualDonations', 'availablesCampaigns'));
   }
 
   public function export() 

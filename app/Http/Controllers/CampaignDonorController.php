@@ -68,8 +68,8 @@ class CampaignDonorController extends Controller
   }
 
   private function isAvailableCampaign($campaign){
-    $dateTimeStart = Carbon::create($campaign->date_start.$campaign->time_start);
-    $dateTimeFinish = Carbon::create($campaign->date_finish.$campaign->time_finish);
+    $dateTimeStart = Carbon::create($campaign->date_start->format('Y-m-d') .' '. $campaign->time_start);
+    $dateTimeFinish = Carbon::create($campaign->date_finish->format('Y-m-d').' '.$campaign->time_finish);
     $currentDate = Carbon::now();
     if($currentDate < $dateTimeStart){
      return true;

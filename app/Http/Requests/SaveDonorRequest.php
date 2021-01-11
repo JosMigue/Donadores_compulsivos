@@ -27,7 +27,7 @@ class SaveDonorRequest extends FormRequest
             'name'          => 'required',
             'parental_surname' => 'required',
             'maternal_surname' => 'nullable',
-            'curp' => 'nullable|string',
+            'curp' => 'nullable|string|max:18|min:18',
             'city_id'       => 'required',
             'state_id'      => 'required',
             'bloodtype'     => 'required',

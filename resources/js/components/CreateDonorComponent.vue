@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-12 col-md-4 pr-md-1">
         <label>CURP</label>
-        <input type="text" v-model="curp" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp">
+        <input type="text" maxlength="18" v-model="curp" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp">
       </div>
       <div class="col-12 col-md-4 px-md-1">
         <label>Tipo de sangre <span class="text-danger text-sm">*</span></label>
