@@ -6,15 +6,29 @@ use Illuminate\Http\Request;
 use App\Campaign;
 use App\CampaignDonor;
 use App\Donor;
+use App\TemporalDonor;
 use Carbon\Carbon;
 
 class DonationController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth');
+    $this->middleware('admin');
+  }
+  
   public function update(Campaign $campaign, Request $request)
   {
     if($request->has('donor_id')){
       $currentDate = Carbon::now();
-      $campaignDonor = $campaign->campaigndonors->where('donor_id', $request->donor_id)->first();
+      $campaignDonor;
+      $donor;
+      if($request->donor_status == 1){
+        $campaignDonor = $campaign->campaigndonors->where('donor_id', $request->donor_id)->first();
+        $donor = Donor::findOrFail($request->donor_id );
+      }else{
+        $campaignDonor = $campaign->campaigndonors->where('temporal_donor_id', $request->donor_id)->first();
+        $donor = TemporalDonor::findOrFail($request->donor_id );
+      }
       if($request->attribute == 1){
         if($request->status){
           CampaignDonor::where('id',$campaignDonor->id)->update(['donor_attended'=> $request->status, 'donation_date' => $currentDate]);
@@ -23,17 +37,27 @@ class DonationController extends Controller
         }
       }else{
         CampaignDonor::where('id',$campaignDonor->id)->update(['donor_donated'=> $request->status, 'donation_date' => $currentDate]);
+        if($request->status == 1 && $request->donor_status == 0){
+          $temporalDonorData = $donor->toArray();
+          $donor->delete();
+          $donor = $this->createDonor($temporalDonorData);
+          $campaignDonor->donor_id = $donor->id;
+          $campaignDonor->temporal_donor_id = null;
+          $campaignDonor->save();
+        }
       }
-      $donor = Donor::find($request->donor_id);
       if($request->status == 1 && $request->attribute == 2){
         $donor->last_donate_date = $currentDate;
-        $donor->is_temporal == 1? $donor->is_active = 1: '';
         $donor->save();
-      }else{
+      }else if($request->status == 0 && $request->attribute == 2){
         $donor->last_donate_date = null;
-        $donor->is_temporal == 1? $donor->is_active = 0: '';
         $donor->save();
       }
     }
   }
+
+  private function createDonor($dataDonor){
+    return $donor = Donor::create($dataDonor);
+  }
+
 }

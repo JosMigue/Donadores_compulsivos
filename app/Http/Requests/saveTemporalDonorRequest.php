@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveDonorRequest extends FormRequest
+class saveTemporalDonorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,9 +40,6 @@ class SaveDonorRequest extends FormRequest
             'email'         => 'nullable|email|unique:donors|unique:temporal_donors',
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
-            'observations'  => 'max:255',
-            'profile_picture'  => 'image|mimes:jpeg,png,jpg|max:2048',
-            'is_active' => 'boolean|nullable',
         ];
     }
 }

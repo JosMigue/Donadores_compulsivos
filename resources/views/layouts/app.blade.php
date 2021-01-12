@@ -37,9 +37,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             @auth
-            @if(!Request::is('home') && Auth::user()->is_admin)
-                <li class="nav-item">
-                  <a class="nav-link" href="{{route('donors.index')}}">{{__('Donors')}}</a>
+              @if(!Request::is('home') && Auth::user()->is_admin)
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    {{__('Donors')}}
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item text-dark text-center" href="{{route('donors.index')}}">{{__('Registered')}}</a>
+                    <a class="dropdown-item text-dark text-center disabled" href="{{route('temporal_donors.index')}}">{{__('Pre donor')}}</a>
+                  </div>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('admins.index')}}">{{__('Admins')}}</a>
@@ -53,7 +59,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('reports.index')}}">{{__('Log files')}}</a>
                 </li>
-            @endif  
+              @endif  
             @endauth
           </ul>
           <ul class="navbar-nav ml-auto">

@@ -11,13 +11,10 @@
           </div>
           <div class="modal-body">
             <div v-if="isVisibleContent" >
-              <p class="text-danger text-center">¿De dónde desea agregar donadores?</p>
-              <div class="row">
-                <div class="col-6 d-flex justify-content-center">
-                  <button v-on:click="isNewDonor()" class="btn btn-primary btn-md">No registrado</button>
-                </div>
-                <div class="col-6 d-flex justify-content-center">
-                  <button v-on:click="isRegisteredDonor()" class="btn btn-primary btn-md">Registrado</button>
+              <p class="text-danger text-center">¿Desea agregar donadores a la campaña?</p>
+              <div class="row d-flex justify-content-center">
+                <div class="col-6 ">
+                  <button v-on:click="isRegisteredDonor()" class="btn btn-primary btn-md">Búsqueda...</button>
                 </div>
               </div>
             </div>
@@ -27,6 +24,9 @@
               <input type="text" class="form-control" placeholder="Buscar donador..." v-model="search" v-on:keyup="searchDonor()">
               <div class="autocomplete-items" v-for="(donor, index) in donors" :key="index">
                 <div class="autocomplete-item" v-on:click="addDonorInCampaign(donor.id)" > <i class="fa fa-user mx-1"></i> {{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}} <strong>/</strong> {{donor.city.name}}<strong>-</strong>{{donor.state.name}}</div>
+              </div>
+              <div class="autocomplete-items" v-if="donors.length == 0 && search != ''">
+                <div class="p-4 text-center"><p>¿No encuentra lo que busca?</p> <br> <button v-on:click="isNewDonor()" class="btn btn-primary btn-md">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
               </div>
             </div>
             <div v-if="donorIsNotRegistered" >
@@ -76,6 +76,7 @@ export default {
         this.isVisibleContent = true;
         this.donorIsNotRegistered =  false;
         this.donorIsRegistered =  false;
+        this.search = '';
       },
       resetFilter: function(){
         this.search = '',
