@@ -113,7 +113,7 @@
         <div class="d-flex flex-row flex-wrap justify-content-lg-end justify-content-center">
           <button class="is-panel-button is-btn-bg-red mx-2 is-btn-sm-block text-center mb-1" type="submit">{{__('Get involved ❤️')}}</button>
           @if (Auth::check())
-            <a class="is-panel-button is-btn-bg-dark mx-2 is-btn-sm-block text-center mb-1" href="{{route('home')}}">{{__('I dont want to get involved 💔')}}</a>
+            <a class="is-panel-button is-btn-bg-dark mx-2 is-btn-sm-block text-center mb-1" href="{{route('donors.show',$donorAuth)}}">{{__('I dont want to get involved 💔')}}</a>
           @else
             <a class="is-panel-button is-btn-bg-dark mx-2 is-btn-sm-block text-center mb-1" href="/">{{__('I dont want to get involved 💔')}}</a>
           @endif

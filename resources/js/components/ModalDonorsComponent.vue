@@ -4,20 +4,18 @@
       <div class="modal-dialog" v-bind:class="{'modal-lg': donorIsRegistered, 'modal-lg': donorIsNotRegistered, 'modal-sm': isVisibleContent}" role="document" style="transition: .2s;">
         <div class="modal-content" >
           <div class="modal-header">
-            <h5 class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
+            <h5 v-if="donorIsNotRegistered" class="modal-title" id="modalDonorsTitle">Agregar un pre donador a la campaña</h5>
+            <h5 v-else class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetValues()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div v-if="isVisibleContent" >
-              <p class="text-danger text-center">¿De dónde desea agregar donadores?</p>
-              <div class="row">
-                <div class="col-6 d-flex justify-content-center">
-                  <button v-on:click="isNewDonor()" class="btn btn-primary btn-md">No registrado</button>
-                </div>
-                <div class="col-6 d-flex justify-content-center">
-                  <button v-on:click="isRegisteredDonor()" class="btn btn-primary btn-md">Registrado</button>
+              <p class="text-danger text-center">¿Desea agregar donadores a la campaña?</p>
+              <div class="row d-flex justify-content-center">
+                <div class="col-6 ">
+                  <button v-on:click="isRegisteredDonor()" class="btn btn-primary btn-md">Búsqueda...</button>
                 </div>
               </div>
             </div>
@@ -28,9 +26,12 @@
               <div class="autocomplete-items" v-for="(donor, index) in donors" :key="index">
                 <div class="autocomplete-item" v-on:click="addDonorInCampaign(donor.id)" > <i class="fa fa-user mx-1"></i> {{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}} <strong>/</strong> {{donor.city.name}}<strong>-</strong>{{donor.state.name}}</div>
               </div>
+              <div class="autocomplete-items" v-if="donors.length == 0 && search != ''">
+                <div class="p-4 text-center"><p>¿No encuentra lo que busca?</p> <br> <button v-on:click="isNewDonor()" class="btn btn-primary btn-md">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
+              </div>
             </div>
             <div v-if="donorIsNotRegistered" >
-              <p class="text-danger text-center">No Registrado</p>
+              <p class="text-danger text-center">Pre Donador</p>
               <p class="text-danger text-center">Ingrese los datos aquí mostrados</p>
               <create-donor-component :genders = genders :bloods = blood :campaign = campaign v-on:add-not-registered-donor-in-campaign-event="reloadDonors();"></create-donor-component>
             </div>
@@ -76,6 +77,7 @@ export default {
         this.isVisibleContent = true;
         this.donorIsNotRegistered =  false;
         this.donorIsRegistered =  false;
+        this.search = '';
       },
       resetFilter: function(){
         this.search = '',

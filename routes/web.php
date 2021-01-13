@@ -21,6 +21,7 @@ Route::get('/cities', 'CityController@index')->name('cities');
 Route::post('/citiesByState', 'CityController@citiesByState')->name('citiesbystate');
 Route::get('/states', 'StateController@index')->name('states');
 
+//admins
 Route::get('/admins', 'AdminController@index')->name('admins.index');
 Route::get('/admins/create', 'AdminController@create')->name('admins.create');
 Route::post('/admins', 'AdminController@store')->name('admins.store');
@@ -57,13 +58,17 @@ Route::get('api/donors/search', 'DonorFilterController@filterByName');
 Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
+Route::get('/filter/temporal_donors', 'DonorFilterController@temporalDonorsFilter');
+Route::get('api/temporal_donors', 'DonorFilterController@temporalDonorsList');
 
 //individual donations
 Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationController@show');
 Route::resource('/individual-donations', 'IndividualDonationController')->only(['store', 'edit', 'update']);
 
 //API routes
-Route::post('/api/donor/store', 'DonorController@apiStore');
+/* Route::post('/api/donor/store', 'TemporalDonorController@store'); */
+Route::resource('/temporal_donors', 'TemporalDonorController')->except(['create']);
+
 
 //Time
 Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker');

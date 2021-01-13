@@ -85,7 +85,6 @@
       <div class="col-6 col-md-4 pr-md-1">
         <label>Género</label>
         <select id="gendertype" name="gendertype" class="form-control" v-model="selectedGender" required>
-          <option value="" selected disabled>Seleccione género...</option>
           <option :value="index" v-for="(gender, index) in genders" :key="index">{{gender}}</option>
         </select>
       </div>
@@ -137,7 +136,7 @@ export default {
       selectedCity: '',
       selectedDate: '',
       selectedBlood: '',
-      selectedGender: '',
+      selectedGender: 'NR',
       selectedDonorType: '',
       age: '',
       mobile: '',
@@ -190,7 +189,7 @@ export default {
       this.curp = '';
     },
     addDonor:function(){
-      axios.post('/api/donor/store',{
+      axios.post('/temporal_donors',{
         'name': this.name,
         'parental_surname': this.parental_surname,
         'maternal_surname': this.maternal_surname,
@@ -208,7 +207,6 @@ export default {
         'be_the_match': this.beTheMatch,
         'letter': this.letter,
         'email': this.email,
-        'is_active': 0
       }).then((response)=>{
         if(response.data['code']==200){
           this.$emit('add-not-registered-donor-in-campaign-event');

@@ -103,34 +103,6 @@ class DonorController extends Controller
     return $donor->identifier +1;
   }
 
-  public function apiStore(SaveDonorRequest $request){
-    $donor = $this->saveDonorWithoutAccess($request);
-    $donor->is_temporal = 1;
-    $donor->save();
-    if($this->addNewDonorInCampaign($donor->id, $request->input('campaign'), $request)){
-      return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
-    }else{
-      return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
-    }
-  }
-  
-  private function addNewDonorInCampaign($donorId, $campaignId, $request){
-    $campaign = Campaign::where('id',$campaignId)->with(['donors'])->first();
-    $currentTurn = $campaign->donors->count();
-    $currentTurn +=1;
-    $campaignAt = Carbon::create($campaign->time_start);
-    $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
-    $campaigDonor = new CampaignDonor(['donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
-    $campaign->campaigndonors()->save($campaigDonor);
-    return true;
-  }
-
-  private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
-    $calculated = $currentTurn/$campaignFrecuencyDonors;
-    $rounded =  ceil($calculated);
-    return $campaignStartAt->addMinutes(($campaignFrecuencyTime*$rounded)-$campaignFrecuencyTime);
-  }
-
   private function saveDonorWithoutAccess($request){
     $donor = new Donor ($request->validated());
     $donor->profile_picture = '';

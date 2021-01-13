@@ -18,8 +18,8 @@
                 </div>
               </div>
             </li>
-            <li class="list-group-item link" v-for="donor in donors" v-if="donors.length >= 1 && search != ''">
-              <div class='row'>
+            <li class="list-group-item link" v-for="donor in donors" :key="donor.id" >
+              <div class='row' v-if="donors.length >= 1 && search != ''">
                 <div class='col-12 col-lg-6'>
                   <div id='center'>
                   <a class="link-donor d-block" v-bind:href="'donors/'+donor.id"><i class="fa fa-user mx-1" aria-hidden="true"></i>{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</a>

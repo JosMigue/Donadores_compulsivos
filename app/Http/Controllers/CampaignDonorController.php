@@ -139,10 +139,10 @@ class CampaignDonorController extends Controller
 
   public function addDonorCampaign(AddDonorInCampaignRequest $request){
     if(Auth::user()->is_admin){
-      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors'])->first();
+      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors', 'temporaldonors'])->first();
       $donor = Donor::where('id',$request->validated()['donor'])->first();
       if($campaign->campaigndonors->where('donor_id',$request->validated()['donor'])->count() == 0){
-        $currentTurn = $campaign->donors->count();
+        $currentTurn = $campaign->donors->count() + $campaign->temporaldonors->count();
         $currentTurn +=1;
         $campaignAt = Carbon::create($campaign->time_start);
         $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
@@ -157,7 +157,7 @@ class CampaignDonorController extends Controller
 
   public function getDonorsInCampaign(Request $request){
     $campaign = Campaign::where('id',$request->input('campaignId'))->first();
-    return $campaign->donors()->orderBy('time_turn')->get();
+    return json_encode(array('campaigndonor' => $campaign->donors()->orderBy('time_turn')->get(), 'campaigntemporaldonors' => $campaign->temporaldonors()->orderBy('time_turn')->get()));
   }
   
   private function sendEmailWithTurn($donor, $currentTurn){

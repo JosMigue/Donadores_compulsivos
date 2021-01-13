@@ -41,13 +41,14 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'password'
     ];
 
-    use Enums;
-
     protected $dates = [
         'created_at',
         'updated_at',
         'last_donate_date'
     ];
+    
+    use Enums;
+
 
     protected $enumBloodtypes = [
         'b1' => 'A+',
@@ -62,6 +63,7 @@ class Donor extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $enumGendertypes = [
+        'NR'=> 'Prefiero no responder',
         'F' => 'Femenino',
         'M' => 'Masculino'
     ];

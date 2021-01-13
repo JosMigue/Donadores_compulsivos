@@ -10,6 +10,7 @@ Vue.component('autocomplete-component', require('./components/AutoCompleteCompon
 Vue.component('table-campaigns-donors-component', require('./components/TableComponent.vue').default);
 Vue.component('modal-donor-component', require('./components/ModalDonorsComponent.vue').default);
 Vue.component('filters-donors-component', require('./components/AdvancedFilterComponent.vue').default);
+Vue.component('datatable-temporal-donors-component', require('./components/TemporalDonorDataTableComponent.vue').default);
 Vue.component('create-donor-component', require('./components/CreateDonorComponent.vue').default);
 Vue.component('individual-donation-component', require('./components/IndividualDonationComponent.vue').default);
 Vue.component('individual-donation-create-component', require('./components/ModalIndividualDOnationCreateComponent.vue').default);
