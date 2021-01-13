@@ -126,7 +126,7 @@
                     <button class="dropdown-item" v-else  v-on:click="changeStatusDonation(campaigntemporaldonor, 1, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó"><i class="fa fa-check"></i>Marcar como donó</button>
                   </div>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
-                  <a :href="'/donors/'+campaigntemporaldonor.id" class="dropdown-item disabled" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
+                  <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
                 </div>
               </div>
             </td>
