@@ -29,10 +29,10 @@ class TemporalDonorController extends Controller
     $cities = City::orderBy('name', 'ASC')->get();
     return view('temporal_donor.index', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
-
+  
   public function create()
   {
-      //
+    return view('temporal_donor.create');
   }
 
   public function store(SaveTemporalDonorRequest $request)

@@ -60,4 +60,7 @@ class TemporalDonor extends Model
     public function state(){
         return $this->belongsTo('App\State');
     }
+    public function campaigntemporaldonors(){
+        return $this->hasMany('App\CampaignDonor');
+    }
 }

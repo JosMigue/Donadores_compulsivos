@@ -13,6 +13,7 @@ Route::get('/listing/campaigns', 'CampaignController@showComingCampaigns')->name
 Route::get('/campaigns/involve/{campaign}/donor/{donor}', 'CampaignDonorController@show')->name('campaigndonors.show');
 Route::post('/campaigns/donors', 'CampaignDonorController@store')->name('campaigndonors.store');
 Route::post('/campaigns/donors/involve/manually', 'CampaignDonorController@addDonorCampaign');
+Route::post('/campaigns/temporal_donors/involve/manually', 'CampaignDonorController@addTemporalDonorCampaign');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 Route::post('/campaign/donors/list', 'CampaignDonorController@getDonorsInCampaign');
 
@@ -31,7 +32,7 @@ Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy
 
 Route::resource('/donors', 'DonorController');
 Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
-Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
+/* Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload'); */
 Route::get('/donor/register','DonorController@showregistreview')->name('donor.register');
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::get('/api/bloodbanks', 'BloodBankController@getBloodBanksData');
@@ -55,6 +56,7 @@ Route::get('/blood-donation', 'QuizController@show')->name('quiz');
 
 //filters routes
 Route::get('api/donors/search', 'DonorFilterController@filterByName');
+Route::get('api/temporal_donors/search', 'DonorFilterController@temporalDonorfilterByName');
 Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
@@ -66,8 +68,7 @@ Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationControl
 Route::resource('/individual-donations', 'IndividualDonationController')->only(['store', 'edit', 'update']);
 
 //API routes
-/* Route::post('/api/donor/store', 'TemporalDonorController@store'); */
-Route::resource('/temporal_donors', 'TemporalDonorController')->except(['create']);
+Route::resource('/temporal_donors', 'TemporalDonorController');
 
 
 //Time

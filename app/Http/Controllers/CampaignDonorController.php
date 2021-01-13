@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\CampaignDonor;
 use App\Campaign;
 use App\Donor;
+use App\TemporalDonor;
 use Excel;
 use App\Exports\DonorsPerCampaign;
 
@@ -147,6 +148,23 @@ class CampaignDonorController extends Controller
         $campaignAt = Carbon::create($campaign->time_start);
         $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
         $campaigDonor = new CampaignDonor(['donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
+        $campaign->campaigndonors()->save($campaigDonor);
+        return array('status' => 200, 'message' => __('Donor has been added successfully'));
+      }else{
+        return array('status' => 400, 'message' => __('It looks like donor is already checked in this campaign'));
+      }
+    }
+  }
+  public function addTemporalDonorCampaign(AddDonorInCampaignRequest $request){
+    if(Auth::user()->is_admin){
+      $campaign = Campaign::where('id',$request->validated()['campaign'])->with(['donors', 'temporaldonors'])->first();
+      $donor = TemporalDonor::where('id',$request->validated()['donor'])->first();
+      if($campaign->campaigndonors->where('temporal_donor_id',$request->validated()['donor'])->count() == 0){
+        $currentTurn = $campaign->donors->count() + $campaign->temporaldonors->count();
+        $currentTurn +=1;
+        $campaignAt = Carbon::create($campaign->time_start);
+        $timeTurn = $this->calculateTurn($currentTurn, $campaignAt, $campaign->frecuency, $campaign->frecuency_time);
+        $campaigDonor = new CampaignDonor(['temporal_donor_id' => $donor->id, 'turn' =>  $currentTurn, 'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
         $campaign->campaigndonors()->save($campaigDonor);
         return array('status' => 200, 'message' => __('Donor has been added successfully'));
       }else{

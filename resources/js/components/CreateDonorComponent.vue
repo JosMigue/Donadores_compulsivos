@@ -27,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-4 pr-md-1">
-        <label>CURP</label>
+        <label>CURP <span class="text-danger text-sm">*</span></label>
         <input type="text" maxlength="18" v-model="curp" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp">
       </div>
       <div class="col-12 col-md-4 px-md-1">

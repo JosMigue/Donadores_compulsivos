@@ -3,12 +3,40 @@
     <label>
       Donadores suscritos {{this.campaigndonors.length}}
     </label>
-    <div class="d-flex justify-content-center">
+    <!-- <div class="d-flex justify-content-center">
       <button type="button" class="is-link-red" data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false">
         Buscar donador <i class="fa fa-plus mx-1" aria-hidden="true"></i>
       </button>
+    </div> -->
+    <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()" :genders = gendertypes :blood = bloodtypes></modal-donor-component> 
+    <div class="text-center">
+      <p class="text-danger">Buscar donador por...</p>
     </div>
-    <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()" :genders = gendertypes :blood = bloodtypes></modal-donor-component>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label>No. Donador</label>
+          <input class="form-control" type="text" v-model="typedId" v-on:keyup="searchDonor(1)">
+          <div class="autocomplete-items" v-if="selectedDonor">
+            <div class="autocomplete-item" v-on:click="addDonorInCampaign(selectedDonor.id)" > <i class="fa fa-user mx-1"></i> {{selectedDonor.name}} {{selectedDonor.parental_surname}} {{selectedDonor.maternal_surname}}</div>
+          </div>
+          <div class="autocomplete-items" v-if="isSearchIdNull">
+            <div class="p-2 text-center"> <p>Parece que no hay nada para mostrar :(</p><p>¿No encuentra lo que busca?</p><button data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-md" v-on:click="resetFilter()">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
+          </div>
+        </div>
+        <div class="form-group col-md-8">
+          <label>Nombre o apellidos</label>
+          <input class="form-control" type="text" v-model="search" v-on:keyup="searchDonor(2)">
+          <div class="autocomplete-items" v-if="donors.length > 0">
+            <div class="autocomplete-item" v-for="(donor, index) in donors" :key="index" v-on:click="addDonorInCampaign(donor.id)" > <i class="fa fa-user mx-1"></i> {{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}} <strong>/</strong> {{donor.city.name}}<strong>-</strong>{{donor.state.name}}</div>
+          </div>
+          <div class="autocomplete-items" v-if="isSearchNull">
+            <div class="p-2 text-center"> <p>Parece que no hay nada para mostrar :(</p><p>¿No encuentra lo que busca?</p><button data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-md" v-on:click="resetFilter()">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
+          </div>
+        </div>
+        <div class="form-group col-md-1 align-self-end">
+          <a href="/donors/create" class="btn btn-primary">Registrar</a>
+        </div>
+      </div>
     <h5>Donadores registrados</h5>
     <div class="table-responsive-sm">
       <table class="table table-hover table-striped table-sm text-center">
@@ -28,7 +56,7 @@
         </thead>
         <paginate name="campaigndonors" :list="campaigndonors" :per="15" tag="tbody">
           <tr v-for="(campaigndonor, index) in paginated('campaigndonors')" :key="index">
-            <th scope="row">{{index + 1}}</th>
+            <th scope="row">{{index+1}}</th>
             <td>{{campaigndonor.name}} {{campaigndonor.parental_surname}} {{campaigndonor.maternal_surname}}</td>
             <td>{{bloods[campaigndonor.bloodtype]}}</td>
             <td>{{genders[campaigndonor.gendertype]}}</td>
@@ -73,7 +101,34 @@
       </table>
     </div>
     <paginate-links v-if="campaigndonors.length > 0" class="d-flex justify-content-center" for="campaigndonors" :simple="{prev: 'Ante', next: 'Sig'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
-    
+    <div class="text-center">
+      <p class="text-danger">Buscar pre donador por...</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label>No. Donador</label>
+        <input class="form-control" type="text" v-model="typedId" v-on:keyup="searchTemporalDonor(1)">
+        <div class="autocomplete-items" v-if="selectedTemporalDonor">
+          <div class="autocomplete-item" v-on:click="addTemporalDonorInCampaign(selectedTemporalDonor.id)" > <i class="fa fa-user mx-1"></i> {{selectedTemporalDonor.name}} {{selectedTemporalDonor.parental_surname}} {{selectedTemporalDonor.maternal_surname}}</div>
+        </div>
+        <div class="autocomplete-items" v-if="isSearchTemporalIdNull">
+          <div class="p-2 text-center"> <p>Parece que no hay nada para mostrar :(</p><p>¿No encuentra lo que busca?</p><button data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-md" v-on:click="resetFilter()">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
+        </div>
+      </div>
+      <div class="form-group col-md-8">
+        <label>Nombre o apellidos</label>
+        <input class="form-control" type="text" v-model="search" v-on:keyup="searchTemporalDonor(2)">
+        <div class="autocomplete-items" v-if="temporalDonors.length > 0">
+          <div class="autocomplete-item" v-for="(donor, index) in temporalDonors" :key="index" v-on:click="addTemporalDonorInCampaign(donor.id)" > <i class="fa fa-user mx-1"></i> {{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}} <strong>/</strong> {{donor.city.name}}<strong>-</strong>{{donor.state.name}}</div>
+        </div>
+        <div class="autocomplete-items" v-if="isSearchTemporalNull">
+          <div class="p-2 text-center"> <p>Parece que no hay nada para mostrar :(</p><p>¿No encuentra lo que busca?</p><button data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false" class="btn btn-primary btn-md" v-on:click="resetFilter()">Registra uno nuevo <i class="fa fa-plus mx-1"></i></button></div>
+        </div>
+      </div>
+      <div class="form-group col-md-1 align-self-end">
+        <a href="/temporal_donors/create" class="btn btn-primary">Registrar</a>
+      </div>
+    </div>
     <h5>Donadores no registrados</h5>
     <div class="table-responsive-sm">
       <table class="table table-hover table-striped table-sm text-center">
@@ -126,7 +181,7 @@
                     <button class="dropdown-item" v-else  v-on:click="changeStatusDonation(campaigntemporaldonor, 1, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó"><i class="fa fa-check"></i>Marcar como donó</button>
                   </div>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
-                  <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
+                  <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver pre donador</a>
                 </div>
               </div>
             </td>
@@ -147,6 +202,10 @@
   props: ['campaignid', 'gendertypes', 'bloodtypes'],
   data(){
     return {
+      donors: [],
+      selectedDonor: '',
+      temporalDonors: [],
+      selectedTemporalDonor: '',
       campaigndonors: [],
       campaigntemporaldonors: [],
       bloods: [],
@@ -157,7 +216,14 @@
       isButtonActive: true,
       selectedTime: '',
       lastSelected: '',
-      lastTimeSelected: ''
+      lastTimeSelected: '',
+      search: '',
+      isSearchNull: false,
+      isSearchIdNull: false,
+      isSearchTemporalNull: false,
+      isSearchTemporalIdNull: false,
+      typedId: '',
+      autocompleteDonorToShow: 0
     }
   },
   mounted() {
@@ -247,7 +313,7 @@
     changeStatusDonation: async function(index, value, donorstatus){
       let notificationResponseUser = true;
       if(donorstatus == 0){
-        notificationResponseUser = await questionNotification('¿Esta seguro que desea marcar como donación relizada al pre donador?', 'Una vez marcado como donación realizada el pre donador pasará a hacer un donador registrado.', 'Sí estoy seguro')
+        notificationResponseUser = await questionNotification('¿Esta seguro que desea marcar como donación relizada al pre donador?', 'Una vez marcado como donación realizada el pre donador pasará a ser un donador registrado.', 'Sí estoy seguro')
       }
       if(notificationResponseUser){
         axios.patch(`/donor/campaign/${this.campaignid}/donation`,{ donor_id: index.id, status: value, attribute:2, donor_status: donorstatus})
@@ -264,7 +330,133 @@
           errorNotification(`Algo salió mal, intente más trade. Código de error ${err.response}`)
         })
       }
-    }
+    },
+    searchDonor: function(){
+      this.isSearchNull = false;
+      this.isSearchIdNull = false
+      if(this.search){
+        axios.get('/api/donors/search/',{
+          params:{
+            search: this.search
+          }
+        })
+        .then((response)=>{
+          this.isSearchNull = false;
+          this.autocompleteDonorToShow = 2;
+          this.donors = response.data;
+          if(this.donors.length == 0){
+            setTimeout(() => {
+              this.isSearchNull = true;
+            }, 500);
+          }
+        });
+      }else{
+        this.donors = [];
+      }
+
+      if(this.typedId){
+        axios.get('/api/donors/search/',{
+          params:{
+            donorid: this.typedId,
+          }
+        })
+        .then((response)=>{
+          this.isSearchIdNull = false;
+          this.autocompleteDonorToShow = 1;
+          this.selectedDonor = response.data;
+          if(this.selectedDonor.length == 0){
+            setTimeout(() => {
+              this.isSearchIdNull = true;
+            }, 500);
+          }
+        });
+      }else{
+        this.selectedDonor = '';
+      }
+    },
+    searchTemporalDonor: function(){
+      this.isSearchTemporalNull = false;
+      this.isSearchTemporalIdNull = false
+      if(this.search){
+        axios.get('/api/temporal_donors/search/',{
+          params:{
+            search: this.search
+          }
+        })
+        .then((response)=>{
+          this.isSearchTemporalNull = false;
+          this.autocompleteDonorToShow = 2;
+          this.temporalDonors = response.data;
+          if(this.temporalDonors.length == 0){
+            setTimeout(() => {
+              this.isSearchTemporalNull = true;
+            }, 500);
+          }
+        });
+      }else{
+        this.temporalDonors = [];
+      }
+
+      if(this.typedId){
+        axios.get('/api/temporal_donors/search/',{
+          params:{
+            donorid: this.typedId,
+          }
+        })
+        .then((response)=>{
+          this.isSearchTemporalIdNull = false;
+          this.autocompleteDonorToShow = 1;
+          this.selectedTemporalDonor = response.data;
+          if(this.selectedTemporalDonor.length == 0){
+            setTimeout(() => {
+              this.isSearchTemporalIdNull = true;
+            }, 500);
+          }
+        });
+      }else{
+        this.selectedTemporalDonor = '';
+      }
+    },
+    addDonorInCampaign: function(idDonor){
+      axios.post('/campaigns/donors/involve/manually', {
+        campaign: this.campaignid,
+        donor: idDonor
+      }).then((response)=>{
+        if(response.data['status'] == 200){
+          toastNotification('success', response.data['message']);
+          this.getDonorsInCampaign();
+          this.resetFilter();
+        }else{
+          toastNotification('info', response.data['message']);
+        }
+      });
+    },
+    addTemporalDonorInCampaign: function(idDonor){
+      axios.post('/campaigns/temporal_donors/involve/manually', {
+        campaign: this.campaignid,
+        donor: idDonor
+      }).then((response)=>{
+        if(response.data['status'] == 200){
+          toastNotification('success', response.data['message']);
+          this.getDonorsInCampaign();
+          this.resetFilter();
+        }else{
+          toastNotification('info', response.data['message']);
+        }
+      });
+    },
+    resetFilter: function(){
+      this.search = '';
+      this.typedId = '';
+      this.donors = [];
+      this.selectedDonor = '';
+      this.temporalDonors = [];
+      this.selectedTemporalDonor = '';
+      this.isSearchIdNull = false;
+      this.isSearchNull = false;
+      this.isSearchTemporalIdNull = false;
+      this.isSearchTemporalNull = false;
+    },
   }
 }
 </script>
