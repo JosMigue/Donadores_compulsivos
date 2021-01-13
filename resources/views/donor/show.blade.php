@@ -276,7 +276,7 @@
                       <h5 class="card-title">{{__($availableCampaign->name)}}</h5>
                       <p class="card-text text-dark">Frecha de inicio: <br> {{$availableCampaign->date_start->format('Y-m-d')}} {{$availableCampaign->time_start}} <br> Publicada: <br> {{$availableCampaign->created_at->diffForHumans()}}</p>
                       <div class="d-flex justify-content-center">
-                        <a href="{{route('campaigndonors.show', ['campaign' => $availableCampaign->id, 'donor'=> $donor->id])}}" class="btn btn-primary">Saber más</a>
+                        <a href="{{route('campaigndonors.show', ['campaign' => $availableCampaign->id, 'donor'=> $donor->id])}}" class="btn btn-primary">Participar</a>
                       </div>
                     </div>
                   </div>

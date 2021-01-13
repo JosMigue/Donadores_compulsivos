@@ -52,20 +52,6 @@
             </div>
         </div>
         @if (Auth::user()->is_admin)
-{{--           <div class="row mbl info-box">
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="panel bg-danger">
-                <div class="panel-body">
-                  <p class="icon">
-                    <i class="icon fa fa-users"></i>
-                  </p>
-                  <h4 class="value">
-                    <span>812</span></h4>
-                  <p class="description">{{__('Donors')}}</p>
-                </div>
-              </div>
-            </div>
-          </div> --}}
           <div class="row">
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
               <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('donors.index')}}">{{__('Donors')}}<i class="fa fa-users mx-1" aria-hidden="true"></i></a>
@@ -79,10 +65,13 @@
           </div>
           <div class="row">
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
+              <a class="is-menu-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('temporal_donors.index')}}">{{__('Pre donor')}}<i class="fa fa-user-times mx-1" aria-hidden="true"></i></a>
             </div>
             <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
-              <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('reports.index')}}">{{__('Log files')}}<i class="fa fa-file-excel-o mx-1" aria-hidden="true"></i></i></a>
+              <a class="is-menu-button is-btn-bg-red is-btn-sm-block text-center" href="{{route('campaigns.index')}}">{{__('Campaigns')}}<i class="fa fa-bullhorn mx-1" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-lg-4 col-sm-8 col-12 my-3 d-flex justify-content-center">
+              <a class="is-menu-button is-btn-bg-dark is-btn-sm-block text-center" href="{{route('reports.index')}}">{{__('Log files')}}<i class="fa fa-file-excel-o mx-1" aria-hidden="true"></i></i></a>
             </div>
           </div>
         @else

@@ -4,7 +4,8 @@
       <div class="modal-dialog" v-bind:class="{'modal-lg': donorIsRegistered, 'modal-lg': donorIsNotRegistered, 'modal-sm': isVisibleContent}" role="document" style="transition: .2s;">
         <div class="modal-content" >
           <div class="modal-header">
-            <h5 class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
+            <h5 v-if="donorIsNotRegistered" class="modal-title" id="modalDonorsTitle">Agregar un pre donador a la campaña</h5>
+            <h5 v-else class="modal-title" id="modalDonorsTitle">Agregar donador a la campaña</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetValues()">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -30,7 +31,7 @@
               </div>
             </div>
             <div v-if="donorIsNotRegistered" >
-              <p class="text-danger text-center">No Registrado</p>
+              <p class="text-danger text-center">Pre Donador</p>
               <p class="text-danger text-center">Ingrese los datos aquí mostrados</p>
               <create-donor-component :genders = genders :bloods = blood :campaign = campaign v-on:add-not-registered-donor-in-campaign-event="reloadDonors();"></create-donor-component>
             </div>

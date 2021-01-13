@@ -44,7 +44,7 @@
                   </a>
                   <div class="dropdown-menu">
                     <a class="dropdown-item text-dark text-center" href="{{route('donors.index')}}">{{__('Registered')}}</a>
-                    <a class="dropdown-item text-dark text-center disabled" href="{{route('temporal_donors.index')}}">{{__('Pre donor')}}</a>
+                    <a class="dropdown-item text-dark text-center" href="{{route('temporal_donors.index')}}">{{__('Pre donor')}}</a>
                   </div>
                 </li>
                 <li class="nav-item">

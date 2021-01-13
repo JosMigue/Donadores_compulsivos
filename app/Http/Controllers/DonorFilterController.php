@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Donor;
+use App\TemporalDonor;
 
 class DonorFilterController extends Controller
 {
   public function __construct(){
     $this->middleware('auth');
+    $this->middleware('admin');
   }
   
   public function index(Request $request){
@@ -18,6 +20,10 @@ class DonorFilterController extends Controller
       'inActiveDonors' => Donor::where('is_active',0)->get()->count(),
       'activeDonors' => Donor::where('is_active',1)->get()->count(),
     ));
+  }
+
+  public function temporalDonorsList(){
+    return TemporalDonor::with(['city', 'state'])->get();
   }
 
   public function filter(Request $request){
@@ -51,6 +57,30 @@ class DonorFilterController extends Controller
     }
 
     return $donors->with(['city', 'state'])->get();
+  }
+
+  public function temporalDonorsFilter(Request $request){
+    $temporalDonors = TemporalDonor::query();
+    if($request->input('bloodType')){
+      $temporalDonors->where('bloodtype', $request->input('bloodType'));
+    }
+    if($request->input('donorType')){
+      $temporalDonors->where('donortype', $request->input('donorType'));
+    }
+    if($request->input('city')){
+      $temporalDonors->where('city_id', $request->input('city'));
+    }
+    if($request->input('state')){
+      $temporalDonors->where('state_id', $request->input('state'));
+    }
+    if($request->input('id')){
+      $temporalDonors->where('id', $request->input('id'));
+    }
+    if($request->input('name')){
+      $temporalDonors->where('name', 'LIKE', '%'.$request->input('name').'%')->orWhere('parental_surname','LIKE','%'.$request->input('name').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('name').'%');
+    }
+
+    return $temporalDonors->with(['city', 'state'])->get();
   }
 
   public function filterByName(Request $request){

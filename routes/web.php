@@ -58,6 +58,8 @@ Route::get('api/donors/search', 'DonorFilterController@filterByName');
 Route::get('api/donors', 'DonorFilterController@index');
 Route::get('api/donors/id/{id}', 'DonorFilterController@filterById');
 Route::get('/filter/donors', 'DonorFilterController@filter');
+Route::get('/filter/temporal_donors', 'DonorFilterController@temporalDonorsFilter');
+Route::get('api/temporal_donors', 'DonorFilterController@temporalDonorsList');
 
 //individual donations
 Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationController@show');

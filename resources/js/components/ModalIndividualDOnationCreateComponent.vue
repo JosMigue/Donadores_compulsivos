@@ -45,7 +45,7 @@
                 <div class="col-12 col-lg-6">
                   <label for="">Tipo de donación</label>
                   <select class="form-control" name="" id="" v-model="type_donation">
-                    <option value="" selected disabled>Seleccione un tipo de doanción</option>
+                    <option value="" selected disabled>Seleccione un tipo de donación</option>
                     <option value="D1">Sangre</option>
                     <option value="D2">Aféresis</option>
                   </select>
