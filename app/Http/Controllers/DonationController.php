@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Campaign;
 use App\CampaignDonor;
 use App\Donor;
+use App\User;
 use App\TemporalDonor;
 use Carbon\Carbon;
 
@@ -57,7 +58,21 @@ class DonationController extends Controller
   }
 
   private function createDonor($dataDonor){
+    $user = $this->createUser($dataDonor);
+    if($user){
+      array_push($dataDonor,array('user_id' => $user->id));
+    }
     return $donor = Donor::create($dataDonor);
+  }
+
+  private function createUser($data){
+    if($data['email']){
+      $dataUser = ['name' => $data['name'], 'email' => $data['email'], 'password' => '$2y$10$LLck65rXlXmE4Ac.UmKqfuJv9zsSOh6YG2hB0bdwwrEMv4epi1/H6'];
+      return User::create($dataUser);
+    }else{
+      return false;
+    }
+
   }
 
 }

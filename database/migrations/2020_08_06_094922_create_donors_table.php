@@ -34,7 +34,7 @@ class CreateDonorsTable extends Migration
             $table->integer('age')->nullable(false);
             $table->string('email')->nullable(true);
             $table->string('mobile')->nullable(true);
-            $table->integer('user_id')->nullable(false);
+            $table->integer('user_id')->nullable(false)->default(0);
             $table->string('last_donate_date')->nullable(true);
             $table->string('observations')->nullable(true);
             $table->string('profile_picture')->nullable(true);

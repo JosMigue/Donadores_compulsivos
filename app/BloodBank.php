@@ -9,6 +9,7 @@ class BloodBank extends Model
     protected $fillable = [
         'name',
         'email',
+        'extension_number',
         'phone',
         'contact_person',
         'contact_person_mobile',
@@ -28,7 +29,7 @@ class BloodBank extends Model
     }
 
     public function state(){
-        return $this->belongsTo('App\State')->orderBy('name');
+        return $this->belongsTo('App\State');
     }
 
     public function user(){

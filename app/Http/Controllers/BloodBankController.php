@@ -23,7 +23,7 @@ class BloodBankController extends Controller
 
   public function index()
   {
-    $bloodBanks = BloodBank::with('city','state','user', 'campaigns')->paginate(5);
+    $bloodBanks = BloodBank::with('city','state')->orderBy('state_id', 'asc')->paginate(30);
     return view('bloodbank.index',compact('bloodBanks'));
   }
 
@@ -58,6 +58,7 @@ class BloodBankController extends Controller
     return [
       'name' => $request->validated()['name'],
       'email' => $request->validated()['email'],
+      'extension_number' => $request->validated()['extension_number'],
       'phone' => $request->validated()['phone'],
       'contact_person' => $request->validated()['contact_person'],
       'contact_person_mobile' => $request->validated()['contact_person_mobile'],

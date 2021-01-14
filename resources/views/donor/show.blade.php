@@ -267,22 +267,26 @@
             <individual-donation-component :loggeduseradmin={{Auth::user()->is_admin}} :donorid="{{$donor->id}}" ></individual-donation-component>
           </div>
           <div class="tab-pane fade show" id="coming-campaigns-tab" role="tabpanel" aria-labelledby="coming-campaigns-tab">
-            <div class="row">
-              @foreach ($availablesCampaigns as $availableCampaign)
-                <div class="col-lg-4 col-12 d-flex justify-content-center">
-                  <div class="card" style="width: 13rem;">
-                    <img class="card-img-top" src="{{asset($availableCampaign->campaign_image)}}" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">{{__($availableCampaign->name)}}</h5>
-                      <p class="card-text text-dark">Frecha de inicio: <br> {{$availableCampaign->date_start->format('Y-m-d')}} {{$availableCampaign->time_start}} <br> Publicada: <br> {{$availableCampaign->created_at->diffForHumans()}}</p>
-                      <div class="d-flex justify-content-center">
-                        <a href="{{route('campaigndonors.show', ['campaign' => $availableCampaign->id, 'donor'=> $donor->id])}}" class="btn btn-primary">Participar</a>
+            @if ($availablesCampaigns->count() > 0)
+              <div class="row">
+                @foreach ($availablesCampaigns as $availableCampaign)
+                  <div class="col-lg-4 col-12 d-flex justify-content-center">
+                    <div class="card" style="width: 13rem;">
+                      <img class="card-img-top" src="{{asset($availableCampaign->campaign_image)}}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">{{__($availableCampaign->name)}}</h5>
+                        <p class="card-text text-dark">Frecha de inicio: <br> {{$availableCampaign->date_start->format('Y-m-d')}} {{$availableCampaign->time_start}} <br> Publicada: <br> {{$availableCampaign->created_at->diffForHumans()}}</p>
+                        <div class="d-flex justify-content-center">
+                          <a href="{{route('campaigndonors.show', ['campaign' => $availableCampaign->id, 'donor'=> $donor->id])}}" class="btn btn-primary">Participar</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              @endforeach
-            </div>
+                @endforeach
+              </div>
+            @else
+              <p class="text-danger text-center">No hay campañas disponible por el momento :(</p>
+            @endif
           </div>
         </div>
       </div>
