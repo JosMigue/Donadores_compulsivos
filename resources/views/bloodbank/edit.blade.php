@@ -14,21 +14,25 @@
             @csrf
             @method('PATCH')
             <div class="row my-1">
-              <div class="col-md-4 pr-md-1">
+              <div class="col-md-6 pr-md-1">
                 <label>{{__('Name')}}</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="{{__('Name')}}" value="{{$bloodbank->name}}">
               </div>
-              <div class="col-md-4 px-md-1">
+              <div class="col-md-6 pl-md-1">
                 <label>{{__('E-Mail Address')}}</label>
                 <input type="text" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{$bloodbank->email}}">
               </div>
-              <div class="col-md-4 pl-md-1">
-                <label>{{__('Phone')}}</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="{{__('Phone')}}" value="{{$bloodbank->phone}}">
-              </div>
             </div>
             <div class="row">
-              <div class="col-md-8 pr-md-1">
+              <div class="col-12 col-md-1 pr-md-1">
+                <label>Ext.</label>
+                <input type="text" class="form-control" name="extension_number" id="extension_number" value="{{$bloodbank->extension_number}}">
+              </div>
+              <div class="col-12 col-md-3 px-md-1">
+                <label>{{__('Phone')}}</label>
+                <input type="text" id="phone" name="phone" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{$bloodbank->phone}}" required>
+              </div>
+              <div class="col-md-4 px-md-1">
                 <label>{{__('Contact person')}}</label>
                 <input type="text" id="contact_person" name="contact_person" class="form-control" value="{{$bloodbank->contact_person}}">
               </div>

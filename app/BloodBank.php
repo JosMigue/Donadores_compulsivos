@@ -9,6 +9,7 @@ class BloodBank extends Model
     protected $fillable = [
         'name',
         'email',
+        'extension_number',
         'phone',
         'contact_person',
         'contact_person_mobile',

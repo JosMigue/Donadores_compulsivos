@@ -12,6 +12,9 @@
   <div class="container">
     <div class="emp-profile">
       <h1 class="text-center">{{__('Blood bank information')}}</h1>
+      <div class="d-flex justify-content-end">
+        <a class="btn btn-primary" target="__blank" href="https://www.google.com.mx/maps/place/{{$bloodbank->state->name}}" >{{__('See on Google Maps')}} <i class="fa fa-google"></i></a>
+      </div>
       <div class="row text-center text-lg-left">
         <div class="col-12 col-lg-6">
           <label>{{__('Name')}}</label>
@@ -35,7 +38,7 @@
       <div class="row text-center text-lg-left">
         <div class="col-6 col-lg-3">
           <label>{{__('Phone')}}</label>
-          <p><a href="tel:{{$bloodbank->phone}}">{{$bloodbank->phone}}</a></p>
+          <p><a href="tel:{{$bloodbank->phone}}">{{$bloodbank->phone}}</a> @if ($bloodbank->extension_number) Ext.{{$bloodbank->extension_number}}  @endif </p>
         </div>
         <div class="col-6 col-lg-3">
           <label>{{__('E-Mail Address')}}</label>
