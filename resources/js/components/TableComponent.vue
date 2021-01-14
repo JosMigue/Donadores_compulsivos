@@ -106,7 +106,7 @@
     </div>
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label>No. Donador</label>
+        <label>No. pre Donador</label>
         <input class="form-control" type="text" v-model="typedId" v-on:keyup="searchTemporalDonor(1)">
         <div class="autocomplete-items" v-if="selectedTemporalDonor">
           <div class="autocomplete-item" v-on:click="addTemporalDonorInCampaign(selectedTemporalDonor.id)" > <i class="fa fa-user mx-1"></i> {{selectedTemporalDonor.name}} {{selectedTemporalDonor.parental_surname}} {{selectedTemporalDonor.maternal_surname}}</div>
@@ -129,7 +129,7 @@
         <a href="/temporal_donors/create" class="btn btn-primary">Registrar</a>
       </div>
     </div>
-    <h5>Donadores no registrados</h5>
+    <h5>Pre Donadores</h5>
     <div class="table-responsive-sm">
       <table class="table table-hover table-striped table-sm text-center">
         <thead class="thead-dark">

@@ -69,6 +69,7 @@ Route::resource('/individual-donations', 'IndividualDonationController')->only([
 
 //API routes
 Route::resource('/temporal_donors', 'TemporalDonorController');
+Route::post('/temporal_donors/single/create', 'TemporalDonorController@singleStore')->name('temporal_donors.single-store');
 
 
 //Time
