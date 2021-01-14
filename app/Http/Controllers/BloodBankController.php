@@ -23,7 +23,7 @@ class BloodBankController extends Controller
 
   public function index()
   {
-    $bloodBanks = BloodBank::with('city','state','user', 'campaigns')->latest()->paginate(5);
+    $bloodBanks = BloodBank::with('city','state','user', 'campaigns')->paginate(5);
     return view('bloodbank.index',compact('bloodBanks'));
   }
 

@@ -28,7 +28,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">{{__('Name')}}</th>
-            <th scope="col">{{__('E-Mail Address')}}</th>
+            <th scope="col">{{__('State')}}</th>
             <th scope="col">{{__('Phone')}}</th>
             <th scope="col">{{__('Contact person')}}</th>
             <th scope="col">{{__('Actions')}}</th>
@@ -40,7 +40,7 @@
               <tr>
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{$bloodBank->name}}</td>
-                <td><a href="mailto:{{$bloodBank->email}}">{{$bloodBank->email}}</a></td>
+                <td>{{$bloodBank->state->name}}</td>
                 <td>{{$bloodBank->phone}}</td>
                 <td>{{$bloodBank->contact_person}}</td>
                 <td>

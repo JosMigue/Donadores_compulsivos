@@ -28,7 +28,7 @@ class BloodBank extends Model
     }
 
     public function state(){
-        return $this->belongsTo('App\State');
+        return $this->belongsTo('App\State')->orderBy('name');
     }
 
     public function user(){
