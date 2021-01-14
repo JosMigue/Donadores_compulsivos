@@ -42,7 +42,7 @@
             @endif
           </h6>
           @if (Auth::user()->is_admin)
-            <h6>{{__('Identifier')}}: {{$temporalDonor->id}}</h6>
+            <h6>{{__('Pre identifier')}}: {{$temporalDonor->id}}</h6>
           @endif
         </div>
         @if (Auth::user()->is_admin)

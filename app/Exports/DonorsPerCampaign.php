@@ -14,7 +14,7 @@ class DonorsPerCampaign implements FromView, WithTitle
 
     public function view(): View
     {
-      $campaign = Campaign::where('id', $this->campaignid)->with('donors')->first();
+      $campaign = Campaign::where('id', $this->campaignid)->with('donors', 'temporaldonors')->first();
       return view('exports.donorspercampaign', [
         'campaign' => $campaign
       ]);

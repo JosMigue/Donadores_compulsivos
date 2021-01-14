@@ -29,10 +29,15 @@ class TemporalDonorController extends Controller
     $cities = City::orderBy('name', 'ASC')->get();
     return view('temporal_donor.index', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
-
+  
   public function create()
   {
-      //
+    $bloodTypes = TemporalDonor::getEnum('bloodtype');
+    $genderTypes = TemporalDonor::getEnum('gendertype');
+    $donorTypes = TemporalDonor::getEnum('donortype');
+    $states = State::all();
+    $cities = City::all();
+    return view('temporal_donor.create', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
 
   public function store(SaveTemporalDonorRequest $request)
@@ -42,6 +47,14 @@ class TemporalDonorController extends Controller
       return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
     }else{
       return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
+    }
+  }
+
+  public function singleStore(SaveTemporalDonorRequest $request){
+    if(TemporalDonor::create($request->validated())){
+      return redirect()->route('temporal_donors.index')->with('successMessage', __('Donor has been added successfully'));
+    }else{
+      return redirect()->route('temporal_donors.index')->with('errorMessage', __('Something went wrong, try again later'));
     }
   }
 

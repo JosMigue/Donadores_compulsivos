@@ -1,8 +1,8 @@
 .autocomplete-items{
-    position: relative;
-    top: 0;
+    position: absolute;
+    top: auto;
     left: 0;
-    z-index: 1510 !important;
+    z-index: 1040;
     float: left;
     display: block;
     width: 100%;

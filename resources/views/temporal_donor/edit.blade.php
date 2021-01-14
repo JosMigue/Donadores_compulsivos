@@ -33,7 +33,7 @@
             <div class="row">
               <div class="col-12 col-md-4 pr-md-1">
                 <div class="form-group">
-                  <label>{{__('CURP')}}</label>
+                  <label>CURP <span class="text-danger text-sm">*</span></label>
                   <input class="form-control" maxlength="18" type="text" id="curp" name="curp" value="{{$temporalDonor->curp}}" placeholder="Ingrese su curp">
                 </div>
               </div>

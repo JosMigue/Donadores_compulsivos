@@ -84,6 +84,18 @@ class DonorFilterController extends Controller
   }
 
   public function filterByName(Request $request){
-    return Donor::where('is_active',1)->where('name', 'LIKE', '%'.$request->input('search').'%')->orWhere('parental_surname','LIKE','%'.$request->input('search').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('search').'%')->take(10)->with('city', 'state')->get();
+    if($request->has('donorid')){
+      return Donor::where('id', $request->input('donorid'))->with('city', 'state')->first();
+    }else if($request->has('search')){
+      return Donor::where('is_active',1)->where('name', 'LIKE', '%'.$request->input('search').'%')->orWhere('parental_surname','LIKE','%'.$request->input('search').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('search').'%')->take(10)->with('city', 'state')->get();
+    }
+  }
+
+  public function temporalDonorfilterByName(Request $request){
+    if($request->has('donorid')){
+      return TemporalDonor::where('id', $request->input('donorid'))->with('city', 'state')->first();
+    }else if($request->has('search')){
+      return TemporalDonor::where('name', 'LIKE', '%'.$request->input('search').'%')->orWhere('parental_surname','LIKE','%'.$request->input('search').'%')->orWhere('maternal_surname','LIKE','%'.$request->input('search').'%')->take(10)->with('city', 'state')->get();
+    }
   }
 }
