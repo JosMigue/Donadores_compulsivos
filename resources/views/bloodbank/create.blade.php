@@ -39,13 +39,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-1 pr-md-1">
-                <label>Ext.</label>
-                <input type="text" class="form-control" name="extension_number" id="extension_number">
-              </div>
-              <div class="col-12 col-md-3 px-md-1">
+              <div class="col-8 col-md-3 pr-md-1">
                 <label>{{__('Phone')}}</label>
                 <input type="text" id="phone" name="phone" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{old('phone')}}" required>
+              </div>
+              <div class="col-4 col-md-1 px-md-1">
+                <label>Ext.</label>
+                <input type="text" class="form-control" name="extension_number" id="extension_number" placeholder="Ext." value="{{old('extension_number')}}">
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Contact person')}}</label>
@@ -84,14 +84,18 @@
               </div>
             </div>
             <div class="row my-1">
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <label for="hyperlink">{{__('Hyperlink')}}</label>
                 <div class="input-group flex-nowrap">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="addon-wrapping">http://</i></span>
                   </div>
-                  <input type="text" name="hyperlink" id="hyperlink" class="form-control" placeholder="{{__('Hyperlink')}}" aria-label="Username" aria-describedby="addon-wrapping">
+                  <input type="text" name="hyperlink" id="hyperlink" class="form-control" value="{{old('hyperlink')}}" placeholder="{{__('Hyperlink')}}" aria-label="Username" aria-describedby="addon-wrapping">
                 </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="google_link">{{__('Google maps localization')}} <i class="fa fa-google"></i></label>
+                <input type="text" name="google_link" id="google_link" class="form-control" value="{{old('google_link')}}" placeholder="Eje: https://goo.gl/maps/3UvBf1aJq2TRrKws7" aria-label="Username" aria-describedby="addon-wrapping">
               </div>
             </div>
           <dayofweek-component></dayofweek-component>

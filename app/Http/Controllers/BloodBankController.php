@@ -69,6 +69,7 @@ class BloodBankController extends Controller
       'user_id' => Auth::user()->id,
       'days' => $array,
       'hyperlink' => $this->purifyHiperlink($request->validated()['hyperlink']),
+      'google_link' => $request->validated()['google_link']
     ];
   }
 

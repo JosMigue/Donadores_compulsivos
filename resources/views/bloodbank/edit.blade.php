@@ -24,13 +24,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-1 pr-md-1">
-                <label>Ext.</label>
-                <input type="text" class="form-control" name="extension_number" id="extension_number" value="{{$bloodbank->extension_number}}">
-              </div>
-              <div class="col-12 col-md-3 px-md-1">
+              <div class="col-8 col-md-3 pr-md-1">
                 <label>{{__('Phone')}}</label>
                 <input type="text" id="phone" name="phone" class="form-control" min="10" max="10" placeholder="{{__('Phone')}}" value="{{$bloodbank->phone}}" required>
+              </div>
+              <div class="col-4 col-md-1 px-md-1">
+                <label>Ext.</label>
+                <input type="text" class="form-control" name="extension_number" id="extension_number" value="{{$bloodbank->extension_number}}">
               </div>
               <div class="col-md-4 px-md-1">
                 <label>{{__('Contact person')}}</label>
@@ -70,9 +70,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12">
+              <div class="col-12 col-md-6">
                 <label for="hyperlink">{{__('Hyperlink')}}</label>
                 <input class="form-control" type="text" name="hyperlink" id="hyperlink" value="{{ old('hyperlink') ? old('hyperlink'):$bloodbank->hyperlink}}">
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="google_link">{{__('Google maps localization')}}</label>
+                <input class="form-control" type="text" name="google_link" id="google_link" value="{{ old('google_link') ? old('google_link'):$bloodbank->google_link}}">
               </div>
             </div>
             <div class="row">
