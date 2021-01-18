@@ -101,6 +101,9 @@
       </table>
     </div>
     <paginate-links v-if="campaigndonors.length > 0" class="d-flex justify-content-center" for="campaigndonors" :simple="{prev: 'Ante', next: 'Sig'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+    <label>
+      Pre Donadores suscritos {{this.campaigntemporaldonors.length}}
+    </label>
     <div class="text-center">
       <p class="text-danger">Buscar pre donador por...</p>
     </div>
@@ -424,8 +427,14 @@
       }).then((response)=>{
         if(response.data['status'] == 200){
           toastNotification('success', response.data['message']);
-          this.getDonorsInCampaign();
-          this.resetFilter();
+          if(this.campaigndonors.length == 0){
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }else{
+            this.getDonorsInCampaign();
+          }
+            this.resetFilter();
         }else{
           toastNotification('info', response.data['message']);
         }
@@ -438,7 +447,13 @@
       }).then((response)=>{
         if(response.data['status'] == 200){
           toastNotification('success', response.data['message']);
-          this.getDonorsInCampaign();
+          if(this.campaigntemporaldonors.length == 0){
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }else{
+            this.getDonorsInCampaign();
+          }
           this.resetFilter();
         }else{
           toastNotification('info', response.data['message']);

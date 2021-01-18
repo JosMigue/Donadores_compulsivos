@@ -36,6 +36,7 @@ class UpdateBloodBankRequest extends FormRequest
             'state_id'    => 'required',
             'days' => 'required|array',
             'hyperlink'   => 'nullable|string',
+            'google_link'   => 'nullable|string',
         ];
     }
 }

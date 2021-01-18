@@ -20,6 +20,7 @@ class BloodBank extends Model
         'user_id',
         'days',
         'hyperlink',
+        'google_link',
     ];
 
     protected $table = 'blood_banks';

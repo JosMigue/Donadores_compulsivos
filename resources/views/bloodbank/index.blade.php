@@ -41,7 +41,7 @@
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{$bloodBank->name}}</td>
                 <td>{{$bloodBank->state->name}}</td>
-                <td>{{$bloodBank->phone}}</td>
+                <td>{{$bloodBank->phone}} @if ($bloodBank->extension_number)  Ext. {{$bloodBank->extension_number}}   @endif</td>
                 <td>{{$bloodBank->contact_person}}</td>
                 <td>
                   <div class="btn-group dropleft">
