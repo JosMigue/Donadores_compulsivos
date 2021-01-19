@@ -90,6 +90,10 @@
                   </div>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigndonor)"><i class="fa fa-trash"></i> Borrar</button>
                   <a :href="'/donors/'+campaigndonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
+                  <button v-if="campaigndonor.letter == 1" class="dropdown-item" v-on:click="changeLetterStatus(campaigndonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Carta</button>
+                  <button v-else class="dropdown-item" v-on:click="changeLetterStatus(campaigndonor.id, 1)"><i class="fa fa-check"></i> Marcar Carta</button>
+                  <button v-if="campaigndonor.be_the_match == 1" class="dropdown-item" v-on:click="changeBeTheMatchStatus(campaigndonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Be The Match</button>
+                  <button v-else class="dropdown-item" v-on:click="changeBeTheMatchStatus(campaigndonor.id, 1)"><i class="fa fa-check"></i> Marcar Be The Match</button>
                 </div>
               </div>
             </td>
@@ -185,6 +189,10 @@
                   </div>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
                   <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver pre donador</a>
+                  <button v-if="campaigntemporaldonor.letter == 1" class="dropdown-item" v-on:click="changeLetterStatusTemporalDonor(campaigntemporaldonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Carta</button>
+                  <button v-else class="dropdown-item" v-on:click="changeLetterStatusTemporalDonor(campaigntemporaldonor.id, 1)"><i class="fa fa-check"></i> Marcar Carta</button>
+                  <button v-if="campaigntemporaldonor.be_the_match == 1" class="dropdown-item" v-on:click="changeBeTheMatchStatusTemporalDonor(campaigntemporaldonor.id, 0)"><i class="fa fa-times"></i>Demarcar Be The Match</button>
+                  <button v-else class="dropdown-item" v-on:click="changeBeTheMatchStatusTemporalDonor(campaigntemporaldonor.id, 1)"><i class="fa fa-check"></i> Marcar Be The Match</button>
                 </div>
               </div>
             </td>
@@ -471,6 +479,62 @@
       this.isSearchNull = false;
       this.isSearchTemporalIdNull = false;
       this.isSearchTemporalNull = false;
+    },
+    changeLetterStatus:function(donorId, statusToChange){
+      axios.post(`/api/donor/change/letter/donor/${donorId}/status/${statusToChange}`)
+      .then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success', response.data.message);
+          this.getDonorsInCampaign();
+        }else{
+          toastNotification('error', response.data.message);
+        }
+      })
+      .catch((err)=>{
+        errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+      });
+    }, 
+    changeBeTheMatchStatus:function(donorId, statusToChange){
+      axios.post(`/api/donor/change/be-the-match/donor/${donorId}/status/${statusToChange}`)
+      .then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success', response.data.message);
+          this.getDonorsInCampaign();
+        }else{
+          toastNotification('error', response.data.message);
+        }
+      })
+      .catch((err)=>{
+        errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+      });
+    },
+    changeLetterStatusTemporalDonor:function(donorId, statusToChange){
+      axios.post(`/api/temporal_donor/change/letter/temporal_donor/${donorId}/status/${statusToChange}`)
+      .then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success', response.data.message);
+          this.getDonorsInCampaign();
+        }else{
+          toastNotification('error', response.data.message);
+        }
+      })
+      .catch((err)=>{
+        errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+      });
+    }, 
+    changeBeTheMatchStatusTemporalDonor:function(donorId, statusToChange){
+      axios.post(`/api/temporal_donor/change/be-the-match/temporal_donor/${donorId}/status/${statusToChange}`)
+      .then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success', response.data.message);
+          this.getDonorsInCampaign();
+        }else{
+          toastNotification('error', response.data.message);
+        }
+      })
+      .catch((err)=>{
+        errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+      });
     },
   }
 }

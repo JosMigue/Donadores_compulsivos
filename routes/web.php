@@ -30,6 +30,7 @@ Route::get('/admins/{user}/edit', 'AdminController@edit')->name('admins.edit');
 Route::patch('/admins/{user}', 'AdminController@update')->name('admins.update');
 Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy');
 
+//donors
 Route::resource('/donors', 'DonorController');
 Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
 /* Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload'); */
@@ -37,8 +38,9 @@ Route::get('/donor/register','DonorController@showregistreview')->name('donor.re
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::get('/api/bloodbanks', 'BloodBankController@getBloodBanksData');
 Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');
-
 Route::post('/donor/status/change', 'DonorController@changeStatus');
+Route::post('/api/donor/change/letter/donor/{donor}/status/{status}', 'DonorController@changeLetterStatus')->name('donors.update.letter');
+Route::post('/api/donor/change/be-the-match/donor/{donor}/status/{status}', 'DonorController@changeBeTheMatchStatus')->name('donors.update.be_the_match');
 
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');
@@ -70,9 +72,12 @@ Route::resource('/individual-donations', 'IndividualDonationController')->only([
 //API routes
 Route::resource('/temporal_donors', 'TemporalDonorController');
 Route::post('/temporal_donors/single/create', 'TemporalDonorController@singleStore')->name('temporal_donors.single-store');
+Route::post('/api/temporal_donor/change/letter/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeLetterStatus')->name('temporal_donors.update.letter');
+Route::post('/api/temporal_donor/change/be-the-match/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeBeTheMatchStatus')->name('temporal_donors.update.be_the_match');
 
 
 //Time
 Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker');
 Route::post('/hours/update/campaign/{campaigndonor}','CampaignDonorController@update');
 Route::delete('/campaign/donor/delete/{campaigndonor}','CampaignDonorController@destroy');
+
