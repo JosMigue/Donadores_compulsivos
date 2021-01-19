@@ -9,8 +9,6 @@ class IndividualDonation extends Model
 {
     protected $table='individual_donations';
 
-    protected $dateFormat = 'd-m-Y';
-
     protected $fillable = [
         'bloodbank_id',
         'donor_id',
@@ -20,7 +18,6 @@ class IndividualDonation extends Model
     
     
     protected $dates = [
-        'date_donation',
         'created_at',
         'updated_at'
     ];

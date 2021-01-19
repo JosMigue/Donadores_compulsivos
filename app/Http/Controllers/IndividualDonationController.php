@@ -18,7 +18,7 @@ class IndividualDonationController extends Controller
 
   public function show($donorId){
     $donor = Donor::where('id', $donorId)->first();
-    $individualDonations = $donor->individualDonations()->with('bloodbank', 'bloodbank.city', 'bloodbank.state')->get();
+    $individualDonations = $donor->individualDonations()->with('bloodbank', 'bloodbank.city', 'bloodbank.state')->orderBy('date_donation', 'desc')->get();
     return json_encode(array('individualDonations' => $individualDonations));
   }
 
