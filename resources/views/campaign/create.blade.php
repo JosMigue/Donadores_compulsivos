@@ -77,7 +77,7 @@
             <div class="row my-1">
               <div class="col-md-3 pr-md-1">
                 <label>{{__('Date start')}}</label>
-                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{old('date_start')}}" required>
+                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{old('date_start')}}" min="{{date("Y")}}-01-01" max="{{date("Y")}}-12-31" required>
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Time start')}}</label>
@@ -85,7 +85,7 @@
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Date finish')}}</label>
-                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{old('date_finish')}}" required>
+                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{old('date_finish')}}" min="{{date("Y")}}-01-01" max="{{date("Y")}}-12-31" required>
               </div>
               <div class="col-md-3 pl-md-1">
                 <label>{{__('Time finish')}}</label>
@@ -106,22 +106,22 @@
             </div>
             <div id="frecuency-section my-1">
               <div class="row d-flex flex-column align-content-center">                
-                <p class="text-center">{{__('Frecuencia de atención')}}</p>
-                <p class="text-dark text-center">En caso de dejar en blanco los siguinetes campos, por defecto se usa 1 persona cada 10 minutos.</p>
+                <p class="text-center">{{__('Checkin frecuency')}}</p>
+                <p class="text-dark text-center">{{__('If you don\'t type something in the next fields by default frequency will be one persons each 10 minutes')}}</p>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-12">
-                  <label for="frecuency">Turnos por persona</label>
+                  <label for="frecuency">{{__('Frecuency by donors')}}</label>
                   <input type="number" name="frecuency" id="frecuency" step="1" class="form-control">
                 </div>
                 <div class="col-lg-6 col-12">
-                  <label for="frecuency_time">Intervalos de tiempo</label>
+                  <label for="frecuency_time">{{__('Frecuency time')}}</label>
                   <input type="number" name="frecuency_time" id="frecuency_time" step="1" class="form-control">
                 </div>
               </div>
             </div>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-link" type="button" onclick="toggleFilters()">¿Desea agregar filtros? <i class="fa fa-filter mx-1" aria-hidden="true"></i></button>
+              <button class="btn btn-link" type="button" onclick="toggleFilters()">{{__('Would you like to add filter?')}} <i class="fa fa-filter mx-1" aria-hidden="true"></i></button>
             </div>
             <div id="filter-section" class="toggleable-content">
               <div class="row" >

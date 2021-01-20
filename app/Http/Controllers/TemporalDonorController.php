@@ -123,4 +123,22 @@ class TemporalDonorController extends Controller
       return array('message' => __('Something went wrong, try again later'), 'code' => 500);
     }
   }
+
+  public function changeLetterStatus(TemporalDonor $temporalDonor, $status){
+    $temporalDonor->letter = $status;
+    if($temporalDonor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Letter status changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
+  
+  public function changeBeTheMatchStatus(TemporalDonor $temporalDonor, $status){
+    $temporalDonor->be_the_match = $status;
+    if($temporalDonor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Be The Match status changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
 }

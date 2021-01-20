@@ -20,6 +20,7 @@
     "All rights reserved.": "Todos los derechos reservados.",
     "An error occurred because you logged in from a different account": "Ha ocurrido un error debido a que ha iniciado sesión desde un cuenta diferente",
     "Attended":"Asistió",
+    "Be The Match status changed": "Estado Be The Match cambiado",
     "Before proceeding, please check your email for a verification link.": "Antes de continuar, por favor, confirme su correo electrónico con el enlace de verificación que le fue enviado.",
     "Before proceeding, please Login.": "Antes continuar, por favor, inicie sesión.",
     "Blood bank": "Banco de sangre",
@@ -50,6 +51,7 @@
     "Campaign updated successfully": "Campaña actualizada correctamente",
     "Cancel": "Cancelar",
     "Change Photo": "Cambiar foto",
+    "Checkin frecuency": "Frecuencia de atención",
     "Choose file": "Elegir archivo",
     "City": "Municipio",
     "click here to request another": "haga clic aquí para solicitar otro",
@@ -93,7 +95,7 @@
     "Forgot Your Password?": "¿Olvidó su contraseña?",
     "For more information contact us": "Para más información contactenos",
     "Frecuency time": "Intervalo de tiempo entre citas",
-    "Frecuency by donors": "Turnos por persona",
+    "Frecuency by donors": "Personas por turno",
     "Full name": "Nombre completo",
     "Gender": "Género",
     "Get back": "Volver",
@@ -113,6 +115,7 @@
     "If you did not create an account, no further action is required.": "Si no ha creado una cuenta, no se requiere ninguna acción adicional.",
     "If you did not receive the email": "Si no ha recibido el correo electrónico",
     "If you did not request a password reset, no further action is required.": "Si no ha solicitado el restablecimiento de contraseña, omita este correo electrónico.",
+    "If you don't type something in the next fields by default frequency will be one persons each 10 minutes": "En caso de dejar en blanco los siguientes campos, por defecto se agendará 1 persona cada 10 minutos.",
     "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:": "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL \nen su navegador web:",
     "If you want give some ❤️ then, give click on button below \"Yes, I want to donate\"": " Si quieres dar algo de ❤️ entonces, haz clic en el botón debajo \"Sí, quiero donar\"",
     "If you want to know more information about what to do before you donate please click on button below": "Si desea obtener más información sobre qué hacer antes de donar, haga clic en el botón a continuación",
@@ -127,6 +130,7 @@
     "Last Name": "Apellido",
     "Last time donating": "Última vez que se donó",
     "Letter": "Carta",
+    "Letter status changed": "Estado de la carta cambiado",
     "Log files": "Reportes",
     "Login": "Ingresar",
     "Logout": "Salir",
@@ -238,5 +242,6 @@
     "We have detected that you have tried to register in a campaign": "Hemos detectado que ha intentado registrarse en una campaña",
     "We have rejected the request because you need to login with the email that has been sent the notification mail for new campaign": "Hemos rechazado la solicitud porque necesita iniciar sesión con el correo electrónico al que se le ha enviado el correo de notificación para la nueva campaña.",
     "Weight": "Peso",
-    "Whoops!": "¡Vaya!"
+    "Whoops!": "¡Vaya!",
+    "Would you like to add filter?": "¿Desea agregar filtros?"
   }

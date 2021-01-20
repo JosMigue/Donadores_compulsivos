@@ -73,7 +73,7 @@
             <div class="row my-1">
               <div class="col-md-3 pr-md-1">
                 <label>{{__('Date start')}}</label>
-                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{$campaign->date_start}}">
+                <input type="date" id="date_start" name="date_start" class="form-control" placeholder="{{__('Date start')}}" value="{{$campaign->date_start->format('Y-m-d')}}">
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Time start')}}</label>
@@ -81,7 +81,7 @@
               </div>
               <div class="col-md-3 px-md-1">
                 <label>{{__('Date finish')}}</label>
-                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{$campaign->date_finish}}">
+                <input type="date" id="date_finish" name="date_finish" class="form-control" placeholder="{{__('Date finish')}}" value="{{$campaign->date_finish->format('Y-m-d')}}">
               </div>
               <div class="col-md-3 pl-md-1">
                 <label>{{__('Time finish')}}</label>

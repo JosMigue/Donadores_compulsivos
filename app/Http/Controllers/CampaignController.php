@@ -30,7 +30,7 @@ class CampaignController extends Controller
 
   public function index()
   {
-    $campaigns = Campaign::with('user', 'state', 'city', 'bloodbank')->latest()->paginate(5);
+    $campaigns = Campaign::with('user', 'state', 'city', 'bloodbank')->latest()->paginate(10);
     return view('campaign.index', compact('campaigns'));
 	}
 	

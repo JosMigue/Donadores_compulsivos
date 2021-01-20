@@ -37,7 +37,7 @@ class UpdateDonorRequest extends FormRequest
             'first_time_donating' => 'boolean',
             'be_the_match' => 'boolean',
             'letter' => 'boolean',
-            'email'         => 'nullable|email|unique:users|unique:donors,email,'.$this->donor->id.'|unique:temporal_donors',
+            'email'         => 'nullable|email|unique:users,email,'.$this->donor->user_id.'|unique:donors,email,'.$this->donor->id.'|unique:temporal_donors',
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
             'observations'  => 'max:255'

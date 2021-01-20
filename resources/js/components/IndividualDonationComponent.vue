@@ -22,7 +22,7 @@
               <td>{{individualDonation.bloodbank.name}}</td>
               <td>{{individualDonation.bloodbank.state.name}}</td>
               <td>{{individualDonation.bloodbank.city.name}}</td>
-              <td>{{individualDonation.date_donation}}</td>
+              <td>{{moment(individualDonation.date_donation).format('DD-MM-Y')}}</td>
               <td>{{individualDonation.time_donation}}</td>
               <td v-if="individualDonation.donationtype == 'D1'">Sangre</td>
               <td v-else>Aféresis</td>
@@ -40,6 +40,8 @@
 
 <script>
   import individualDonationComponent from './ModalIndividualDOnationCreateComponent.vue';
+  import moment from 'moment';
+  moment.locale('es-mx');
   export default {
     props: ['loggeduseradmin', 'donorid'],
     data() {
@@ -61,7 +63,18 @@
       },
       redirectToEdit:function(id){
         window.location.href=`/individual-donations/${id}/edit`;
+      },
+      moment: function (date) {
+        return moment(date);
+      },
+      date: function (date) {
+        return moment(date).format('MMMM Do YYYY, h:mm:ss a');
       }
     },
+    filters: {
+    moment: function (date) {
+      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    }
+  }
   }
 </script>
