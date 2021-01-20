@@ -245,4 +245,22 @@ class DonorController extends Controller
       }
     }
   }
+
+  public function changeLetterStatus(Donor $donor, $status){
+    $donor->letter = $status;
+    if($donor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Letter status changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
+  
+  public function changeBeTheMatchStatus(Donor $donor, $status){
+    $donor->be_the_match = $status;
+    if($donor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Be The Match status changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
 }
