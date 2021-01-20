@@ -10,6 +10,7 @@ class CampaignDonor extends Model
         'campaign_id',
         'donor_id',
         'temporal_donor_id',
+        'is_confirmed',
         'donor_attended',
         'turn',
         'time_turn',

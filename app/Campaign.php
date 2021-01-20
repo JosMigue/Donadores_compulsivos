@@ -54,10 +54,10 @@ class Campaign extends Model
     }
 
     public function donors(){
-        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['id','created_at', 'time_turn', 'donor_donated', 'donor_attended', 'reason_not_donation']);
+        return $this->belongsToMany('App\Donor', 'campaign_donors')->withPivot(['id','created_at', 'time_turn', 'is_confirmed', 'donor_donated', 'donor_attended', 'reason_not_donation']);
     }
     public function temporaldonors(){
-        return $this->belongsToMany('App\TemporalDonor', 'campaign_donors')->withPivot(['id','created_at', 'time_turn', 'donor_donated', 'donor_attended', 'reason_not_donation']);
+        return $this->belongsToMany('App\TemporalDonor', 'campaign_donors')->withPivot(['id','created_at', 'time_turn', 'is_confirmed', 'donor_donated', 'donor_attended', 'reason_not_donation']);
     }
 
     public function campaigndonors(){
