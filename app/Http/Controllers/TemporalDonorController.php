@@ -11,13 +11,14 @@ use App\Http\Requests\saveTemporalDonorRequest;
 use App\Http\Requests\UpdateTemporalDonorRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TemporalDonorController extends Controller
 {
 
   public function __construct(){
-    $this->middleware('auth');
-    $this->middleware('admin');
+    $this->middleware('auth')->except(['showregistreview', 'singleStore', 'create', 'store']);
+    $this->middleware('admin')->except(['showregistreview', 'singleStore', 'create', 'store']);
   }
 
   public function index()
@@ -52,9 +53,17 @@ class TemporalDonorController extends Controller
 
   public function singleStore(SaveTemporalDonorRequest $request){
     if(TemporalDonor::create($request->validated())){
-      return redirect()->route('temporal_donors.index')->with('successMessage', __('Donor has been added successfully'));
+      if(Auth::check()){
+        return redirect()->route('temporal_donors.index')->with('successMessage', __('Donor has been added successfully'));
+      }else{
+        return redirect()->route('welcome')->with('successMessage', __('Donor has been added successfully'))->with('information', __('Thanks for register, soon we will contact you. Thanks for beign an amazing person'));
+      }
     }else{
-      return redirect()->route('temporal_donors.index')->with('errorMessage', __('Something went wrong, try again later'));
+      if(Auth::check()){
+        return redirect()->route('temporal_donors.index')->with('errorMessage', __('Something went wrong, try again later'));
+      }else{
+        return redirect()->route('welcome')->with('errorMessage', __('Something went wrong, try again later'));
+      }
     }
   }
 
@@ -94,6 +103,20 @@ class TemporalDonorController extends Controller
   public function show(TemporalDonor $temporalDonor)
   {
     return view('temporal_donor.show', compact('temporalDonor'));
+  }
+
+  public function showregistreview($campaignId = null){
+    if($campaignId){
+      $campaign = Campaign::findOrFail($campaignId);
+      $bloodTypes = TemporalDonor::getEnum('bloodtype');
+      $genderTypes = TemporalDonor::getEnum('gendertype');
+      $donorTypes = TemporalDonor::getEnum('donortype');
+      $states = State::all();
+      $cities = City::all();
+      return view('temporal_donor.register', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities', 'campaignId', $campaign->id));
+    }else{
+      return redirect()->route('campaigns.listing');
+    }
   }
 
   public function edit(TemporalDonor $temporalDonor)

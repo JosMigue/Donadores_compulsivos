@@ -3172,7 +3172,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['campaign'],
   data: function data() {
     return {
       counter: 0,
@@ -3474,6 +3481,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ['campaignid', 'gendertypes', 'bloodtypes'],
   data: function data() {
     return {
+      count: 2,
       donors: [],
       selectedDonor: '',
       temporalDonors: [],
@@ -3895,6 +3903,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (err) {
         errorNotification("Algo sali\xF3 mal intente m\xE1s tarde ".concat(err.data.response));
       });
+    }
+  },
+  computed: {
+    counterDonor: function counterDonor() {
+      var value = this.count + 1;
+      this.count = value;
+      return value;
     }
   }
 });
@@ -68801,145 +68816,122 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "d-flex align-items-center justify-content-center" },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "shadow-lg p-5 mb-5 mt-5 bg-white rounded",
-            staticStyle: { width: "700px", height: "565px" }
-          },
-          [
-            !_vm.isAbleToDonate
-              ? _c(
-                  "div",
-                  { staticClass: "row d-flex justify-content-center mt-5" },
-                  [
-                    _c("h1", { staticClass: "text-center font-weight-bold" }, [
-                      _vm._v("QUIERO SER DONADOR")
-                    ])
-                  ]
+    _c("div", { staticClass: "row no-gutters justify-content-center" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "col-12 col-lg-6 shadow-lg p-5 my-2 bg-white rounded d-flex flex-column justify-content-center",
+          staticStyle: { height: "600px" }
+        },
+        [
+          !_vm.isAbleToDonate
+            ? _c("div", [
+                _c("h1", { staticClass: "text-center font-weight-bold" }, [
+                  _vm._v("QUIERO SER DONADOR")
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isAbleToDonate
+            ? _c("div", [
+                _c("p", { staticClass: "text-justify" }, [
+                  _vm._v(
+                    "Antes que nada, debes tener 100% la voluntad de donar sin esperar recibir nada cambio, sólo la satisfacción de ayudar a quien lo necesite. Para saber si cumples con los requisitos básicos para donar, contesta este sencillo cuestionario:"
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isAbleToDonate
+            ? _c("div", [
+                _c("h1", { staticClass: "text-center font-weight-bold" }, [
+                  _vm._v("¡FELICIDADES!")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-center" }, [
+                  _vm._v(
+                    "Calificas como donante, ahora solo tenemos que conocerte, por favor, registrate para saber más de ti"
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-red d-block",
+                    attrs: { href: "/temporal_donor/register/" + this.campaign }
+                  },
+                  [_vm._v("Registrarse")]
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.isAbleToDonate
-              ? _c(
-                  "div",
-                  { staticClass: "row d-flex justify-content-center p-4" },
-                  [
-                    _c("p", { staticClass: "text-justify" }, [
-                      _vm._v(
-                        "Antes que nada, debes tener 100% la voluntad de donar sin esperar recibir nada cambio, sólo la satisfacción de ayudar a quien lo necesite. Para saber si cumples con los requisitos básicos para donar, contesta este sencillo cuestionario:"
-                      )
-                    ])
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isAbleToDonate
-              ? _c(
-                  "div",
-                  { staticClass: "d-flex flex-column justify-content-center" },
-                  [
-                    _c("h1", { staticClass: "text-center font-weight-bold" }, [
-                      _vm._v("¡FELICIDADES!")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "text-center" }, [
-                      _vm._v(
-                        "Calificas como donante. Ahora sólo queda acercarte a tu centro de donación más cercano."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-red",
-                        attrs: { href: "/donor/register" }
-                      },
-                      [_vm._v("Registrase")]
-                    )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.isWrongAnswer && !_vm.isAbleToDonate
-              ? _c(
-                  "div",
-                  { staticClass: "border border-gray rounded my-5 py-1" },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "row d-flex justify-content-center" },
-                      [
-                        _c("p", { staticClass: "text-center" }, [
-                          _vm._v(_vm._s(_vm.questions[_vm.counter].question))
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isWrongAnswer && !_vm.isAbleToDonate
+            ? _c("div", { staticClass: "border border-gray rounded " }, [
+                _c("div", [
+                  _c("p", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(_vm.questions[_vm.counter].question))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-6 d-flex justify-content-center" },
+                    [
                       _c(
-                        "div",
-                        { staticClass: "col-6 d-flex justify-content-center" },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-red px-4 font-weight-bold",
-                              on: {
-                                click: function($event) {
-                                  return _vm.checkResponse(true)
-                                }
-                              }
-                            },
-                            [_vm._v("Sí")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-6 d-flex justify-content-center" },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-red px-4 font-weight-bold",
-                              on: {
-                                click: function($event) {
-                                  return _vm.checkResponse(false)
-                                }
-                              }
-                            },
-                            [_vm._v("No")]
-                          )
-                        ]
+                        "button",
+                        {
+                          staticClass: "btn btn-red px-4 font-weight-bold",
+                          on: {
+                            click: function($event) {
+                              return _vm.checkResponse(true)
+                            }
+                          }
+                        },
+                        [_vm._v("Sí")]
                       )
-                    ])
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isWrongAnswer
-              ? _c(
-                  "div",
-                  { staticClass: "border border-gray rounded my-5 py-2" },
-                  [
-                    _c("p", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(_vm.questions[_vm.counter].badResponse))
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ]
-                )
-              : _vm._e()
-          ]
-        )
-      ]
-    )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-6 d-flex justify-content-center" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-red px-4 font-weight-bold",
+                          on: {
+                            click: function($event) {
+                              return _vm.checkResponse(false)
+                            }
+                          }
+                        },
+                        [_vm._v("No")]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isWrongAnswer
+            ? _c("div", { staticClass: "border border-gray rounded" }, [
+                _c("p", { staticClass: "text-center" }, [
+                  _vm._v(_vm._s(_vm.questions[_vm.counter].badResponse))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-center" }, [
+                  _vm._v("Donar de otra manera")
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            : _vm._e()
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -68947,10 +68939,42 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("a", { staticClass: "btn btn-red px-4 d-block font-weight-bold" }, [
-        _vm._v("Donar de otra manera")
-      ])
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-12 col-lg-6 d-flex justify-content-center my-2" },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "py-2 px-5 btn btn-danger font-weight-bold",
+              attrs: {
+                href: "https://donadorescompulsivos.org/voluntario-compulsivo/",
+                target: "__blank"
+              }
+            },
+            [_vm._v("Volutario compulsivo")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-12 col-lg-6 d-flex justify-content-center my-2" },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "py-2 px-5 btn btn-danger font-weight-bold",
+              attrs: {
+                href: "https://donadorescompulsivos.org/solidario-compulsivo/",
+                target: "__blank"
+              }
+            },
+            [_vm._v("Solidario compulsivo")]
+          )
+        ]
+      )
     ])
   }
 ]

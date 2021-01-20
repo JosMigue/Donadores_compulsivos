@@ -213,6 +213,7 @@
   props: ['campaignid', 'gendertypes', 'bloodtypes'],
   data(){
     return {
+      count: 2,
       donors: [],
       selectedDonor: '',
       temporalDonors: [],
@@ -535,7 +536,14 @@
       .catch((err)=>{
         errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
       });
-    },
+    }
+  },
+  computed: {
+    counterDonor:function(){
+      let value = this.count + 1;
+      this.count = value;
+      return value;
+    }
   }
 }
 </script>

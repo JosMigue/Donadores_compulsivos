@@ -21,7 +21,7 @@
           <div class="row m-1">
             <p>{{__('Required fields')}} <span class="text-danger">*</span></p>
           </div>
-          <form action="{{route('donors.store')}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('temporal_donors.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
@@ -88,24 +88,16 @@
                 <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>{{__('Password')}} <span class="text-danger text-sm">*</span></label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="{{__('Password')}}" required>
-              </div>
-              <div class="col-12 col-md-4 pl-md-1">
-                <label for="password-confirm">{{ __('Confirm Password') }} <span class="text-danger text-sm">*</span></label>
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{__('Confirm Password')}}" required>
-              </div>
-            </div>
-            <div class="row my-1">
-              <div class="col-12 col-md-4 pr-md-1">
                 <label>{{__('Mobile')}} <span class="text-danger text-sm">*</span></label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Mobile')}}" value="{{old('mobile')}}">
               </div>
-              <div class="col-6 col-md-4 px-md-1">
+              <div class="col-6 col-md-4 pl-md-1">
                 <label>{{__('Age')}} <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="age" name="age" class="form-control" readonly placeholder="{{__('Age')}}" value="{{old('age')}}" required >
               </div>
-              <div class="col-6 col-md-4 pl-md-1">
+            </div>
+            <div class="row my-1">
+              <div class="col-6 col-md-4 pr-md-1">
                 <label>{{__('Gender')}} <span class="text-danger text-sm">*</span></label>
                 <select id="gendertype" name="gendertype" class="form-control">
                   <option value="" disabled selected> {{__('Select...')}}</option>
@@ -115,14 +107,8 @@
                 </select>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <label for="profile_picture">{{__('Profile picture')}}</label>
-                <input type="file" class="form-control" name="profile_picture" id="profile_picture">
-              </div>
-            </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="0" name="first_time_donating" id="first_time_donating">
+              <input class="form-check-input" type="checkbox" value="0" name="first_time_donating" id="first_time_donating" checked disabled>
               <label class="form-check-label" for="first_time_donating">
                 {{__('I have already donated before')}}
               </label>
@@ -131,6 +117,7 @@
               <a class="btn btn-danger btn-fill" href="/">{{__('Cancel')}}</a>                
               <button type="submit" class="btn btn-success btn-fill">{{__('Register')}}</button>
             </div>
+            <input type="hidden" name="campaign" value="{{$campaignId}}">
           </form>
           @if ($errors->any())
           <div class="container">
