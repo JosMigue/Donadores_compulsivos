@@ -72,7 +72,7 @@
                 </select>
               </div>
               <div class="col-md-4 pl-md-1">
-                <label>Municipio <span class="text-danger text-sm">*</span></label>
+                <label>{{__('City')}}<span class="text-danger text-sm">*</span></label>
                 <select id="city_id" name="city_id" class="form-control"  required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
@@ -80,21 +80,21 @@
             </div>
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>Fecha de nacimiento <span class="text-danger text-sm">*</span></label>
+                <label>{{__('Born date')}}<span class="text-danger text-sm">*</span></label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}" required>
               </div>
               <div class="col-6 col-md-4 px-md-1">
-                <label>Teléfono celular </label>
+                <label>{{__('Mobile')}}</label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Type your mobile')}}" value="{{old('mobile')}}" >
               </div>
               <div class="col-6 col-md-4 pl-md-1">
-                <label>Edad <span class="text-danger text-sm">*</span></label>
+                <label>{{__('Age')}}<span class="text-danger text-sm">*</span></label>
                 <input type="text" id="age" name="age" class="form-control" value="{{old('age')}}" readonly>
               </div>
             </div>
             <div class="row my-1">
               <div class="col-6 col-md-4 pr-md-1">
-                <label>Género</label>
+                <label>{{__('Gender')}}</label>
                 <select id="gendertype" name="gendertype" class="form-control" required>
                   <option value="" disabled selected> {{__('Select...')}}</option>
                   @foreach ($genderTypes as $key => $genderType)

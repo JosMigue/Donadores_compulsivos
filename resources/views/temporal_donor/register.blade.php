@@ -15,7 +15,7 @@
     <div class="row d-flex justify-content-center">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">{{__('Sign Up')}}</h4>
+          <h4 class="card-title">{{__('Register as pre donor')}}</h4>  
         </div>
         <div class="card-body">
           <div class="row m-1">
@@ -107,7 +107,7 @@
                 </select>
               </div>
             </div>
-            <label for="time_turn">Por favor elija un horario <i class="fa fa-clock-o"></i>: <span class="text-danger text-sm">*</span>(Horas disponibles en la campaña)</label>
+            <label for="time_turn">Por favor elija un horario <i class="fa fa-clock-o"></i>: <span class="text-danger text-sm">*</span>({{__('Available hours in campaign')}})</label>
             <div class="row d-flex align-content-center my-2">
               @foreach ($availableHours as $hour)
                 @if ($hour['times'] < $campaignFrecuency)
