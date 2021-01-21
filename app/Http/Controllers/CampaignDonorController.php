@@ -57,9 +57,15 @@ class CampaignDonorController extends Controller
 
   private function checkAvailableHours($campaign){
     $timeList = $this->createTimeArrayCampaign($campaign->id);
-    $donorsCampaign =$campaign->donors()->get();
+    $donorsCampaign = $campaign->donors()->get();
+    $temporalDonorsCampaign = $campaign->temporaldonors()->get();
     foreach ($timeList as $keyh => $hour) {
       foreach ($donorsCampaign as $keyd => $donor) {
+        if(Carbon::create($hour['time'])->format('H:i') == Carbon::create($donor->pivot->time_turn)->format('H:i')){
+          $timeList[$keyh]['times'] = $timeList[$keyh]['times'] + 1;
+        }
+      }
+      foreach ($temporalDonorsCampaign as $keyd => $donor) {
         if(Carbon::create($hour['time'])->format('H:i') == Carbon::create($donor->pivot->time_turn)->format('H:i')){
           $timeList[$keyh]['times'] = $timeList[$keyh]['times'] + 1;
         }

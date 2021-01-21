@@ -31,7 +31,7 @@ class saveTemporalDonorRequest extends FormRequest
             'city_id'       => 'required',
             'state_id'      => 'required',
             'bloodtype'     => 'required',
-            'gendertype'    => 'nullable',
+            'gendertype'    => 'required',
             'donortype'    => 'required',
             'born_date'     => 'required',
             'first_time_donating' => 'boolean',

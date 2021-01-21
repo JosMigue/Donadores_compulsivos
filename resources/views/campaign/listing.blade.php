@@ -45,6 +45,11 @@
               </div>
             @endif
           </div>
+            @if ($campaign->date_start > \Carbon\Carbon::now())
+              <a href="{{route('quiz', $campaign->id)}}" class="btn btn-danger">Quiero participar</a>  
+            @else
+              <a href="#" class="btn btn-danger disabled" type="submit">No disponible</a>  
+            @endif
         </div>
       </div>
     @endforeach  

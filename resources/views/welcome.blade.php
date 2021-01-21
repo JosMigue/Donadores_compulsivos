@@ -10,7 +10,7 @@
         <title>{{env('APP_NAME')}}</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link  href="{{asset('css/elements/body.css')}}" rel="stylesheet">
+        <link href="{{asset('css/elements/body.css')}}" rel="stylesheet">
         <link href="{{ asset('css/elements/button.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -51,7 +51,7 @@
               @endauth
             </div>
             <div class="col-12 col-lg-4 mb-50 d-flex justify-content-center align-items-start">
-              <a class="is-btn-lg is-btn-bg-red txt-uppercase" href="{{ route('donor.register') }}">{{__('Sign Up')}}</a>
+              <a class="is-btn-lg is-btn-bg-red txt-uppercase" href="{{ route('temporal_donors.create') }}">{{__('Sign Up')}}</a>
             </div>
           </div>
         </div>

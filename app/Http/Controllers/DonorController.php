@@ -29,8 +29,8 @@ class DonorController extends Controller
   use RegistersUsers;
 
   public function __construct(){
-    $this->middleware('auth')->except('store','showregistreview');
-    $this->middleware('admin')->except('store', 'showregistreview', 'edit', 'show', 'update', 'updateProfilePicture');
+    $this->middleware('auth');
+    $this->middleware('admin')->except('store', 'edit', 'show', 'update', 'updateProfilePicture');
     $this->middleware('iscurrentdonor')->only('show');
     $this->middleware('verified')->only('index');
   }
@@ -123,15 +123,6 @@ class DonorController extends Controller
     }else{
       return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
     }
-  }
-
-  public function showregistreview(){
-    $bloodTypes = Donor::getEnum('bloodtype');
-    $genderTypes = Donor::getEnum('gendertype');
-    $donorTypes = Donor::getEnum('donortype');
-    $states = State::all();
-    $cities = City::all();
-    return view('donor.register', compact('bloodTypes', 'genderTypes', 'donorTypes', 'states', 'cities'));
   }
 
   private function saveUploadedPicture($donor, $request){

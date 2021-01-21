@@ -3,5 +3,5 @@
 @section('title', __('Take quiz'))
 
 @section('content')
-    <quiz-component></quiz-component>
+    <quiz-component :campaign="{{$campaignId}}"></quiz-component>
 @endsection

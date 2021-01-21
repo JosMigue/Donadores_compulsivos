@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="d-flex align-items-center justify-content-center" >
-      <div class="shadow-lg p-5 mb-5 mt-5 bg-white rounded" style="width:700px; height:565px;">
-        <div class="row d-flex justify-content-center mt-5" v-if="!isAbleToDonate">
+    <div class="row no-gutters justify-content-center" >
+      <div class="col-12 col-lg-6 shadow-lg p-5 my-2 bg-white rounded d-flex flex-column justify-content-center" style="height:600px">
+        <div v-if="!isAbleToDonate">
           <h1 class="text-center font-weight-bold">QUIERO SER DONADOR</h1>
         </div>
-        <div class="row d-flex justify-content-center p-4" v-if="!isAbleToDonate">
+        <div v-if="!isAbleToDonate">
           <p class="text-justify">Antes que nada, debes tener 100% la voluntad de donar sin esperar recibir nada cambio, sólo la satisfacción de ayudar a quien lo necesite. Para saber si cumples con los requisitos básicos para donar, contesta este sencillo cuestionario:</p>        
         </div>
-        <div class="d-flex flex-column justify-content-center" v-if="isAbleToDonate">
+        <div v-if="isAbleToDonate">
           <h1 class="text-center font-weight-bold">¡FELICIDADES!</h1>
-          <p class="text-center">Calificas como donante. Ahora sólo queda acercarte a tu centro de donación más cercano.</p>
-          <a class="btn btn-red" href="/donor/register">Registrase</a>
+          <p class="text-center">Calificas como donante, ahora solo tenemos que conocerte, por favor, registrate para saber más de ti</p>
+          <a class="btn btn-red d-block" :href="`/temporal_donor/register/${this.campaign}`">Registrarse</a>
         </div>
-        <div class="border border-gray rounded my-5 py-1" v-if="!isWrongAnswer && !isAbleToDonate">
-          <div class="row d-flex justify-content-center">
+        <div class="border border-gray rounded " v-if="!isWrongAnswer && !isAbleToDonate">
+          <div>
             <p class="text-center">{{questions[counter].question}}</p>
           </div>
           <div class="row">
@@ -26,10 +26,16 @@
             </div>
           </div>
         </div>
-        <div class="border border-gray rounded my-5 py-2" v-if="isWrongAnswer">
+        <div class="border border-gray rounded" v-if="isWrongAnswer">
           <p class="text-center">{{questions[counter].badResponse}}</p>
-          <div class="row justify-content-center">
-            <a class="btn btn-red px-4 d-block font-weight-bold" >Donar de otra manera</a>
+          <p class="text-center">Donar de otra manera</p>
+          <div class="row">
+            <div class="col-12 col-lg-6 d-flex justify-content-center my-2">
+              <a class="py-2 px-5 btn btn-danger font-weight-bold" href="https://donadorescompulsivos.org/voluntario-compulsivo/" target="__blank" >Volutario compulsivo</a>
+            </div>
+            <div class="col-12 col-lg-6 d-flex justify-content-center my-2">
+              <a class="py-2 px-5 btn btn-danger font-weight-bold"  href="https://donadorescompulsivos.org/solidario-compulsivo/"  target="__blank" >Solidario compulsivo</a>
+            </div>
           </div>
         </div>
       </div>
@@ -39,6 +45,7 @@
 
 <script>
   export default {
+  props: ['campaign'],
   data() {
     return {
         counter: 0,
