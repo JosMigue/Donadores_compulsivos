@@ -81,3 +81,5 @@ Route::get('/get/hours/campaign/{campaign}','CampaignController@createTimePicker
 Route::post('/hours/update/campaign/{campaigndonor}','CampaignDonorController@update');
 Route::delete('/campaign/donor/delete/{campaigndonor}','CampaignDonorController@destroy');
 
+Route::post('/change/confirmed/status/campaign', 'CampaignDonorController@changeConfirmedStatus');
+

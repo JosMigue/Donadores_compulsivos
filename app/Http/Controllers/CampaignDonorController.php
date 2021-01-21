@@ -213,5 +213,15 @@ class CampaignDonorController extends Controller
       return json_encode(array('code'=>500, 'message' => __('Something went wrong, try again later')));
     }
   }
+
+  public function changeConfirmedStatus(Request $request){
+    $campaignDonor = CampaignDonor::findOrFail($request->input('campaigndonor'));
+    $campaignDonor->is_confirmed = $request->input('status');
+    if($campaignDonor->save()){
+      return json_encode(array('code' => 200, 'message' => __('Status changed')));
+    }else{
+      return json_encode(array('code' => 500, 'message' => __('Somethign went wrong, try again later')));
+    }
+  }
 }
 

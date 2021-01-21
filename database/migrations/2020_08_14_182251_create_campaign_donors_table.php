@@ -18,6 +18,7 @@ class CreateCampaignDonorsTable extends Migration
             $table->integer('campaign_id')->nullable(false);
             $table->integer('donor_id')->nullable(true);
             $table->integer('temporal_donor_id')->nullable(true);
+            $table->boolean('is_confirmed')->nullable(false)->default(0);
             $table->boolean('donor_donated')->nullable(false)->default(0);
             $table->string('donation_date')->nullable(false)->default('0000-00-00 00:00:00');
             $table->integer('turn')->nullable(false);

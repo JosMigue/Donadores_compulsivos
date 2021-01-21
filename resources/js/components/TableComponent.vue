@@ -49,6 +49,7 @@
             <th scope="col">Teléfono</th>
             <th scope="col">Correo electrónico</th>
             <th scope="col">HT</th>
+            <th scope="col">Confirmó</th>
             <th scope="col">Asistió</th>
             <th scope="col">Donó</th>
             <th scope="col">Acciones</th>
@@ -69,6 +70,10 @@
               </select>
             </td>
             <td>
+              <i v-if="campaigndonor.pivot.is_confirmed" class="fa fa-check text-success" aria-hidden="true"></i>
+              <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
+            </td>
+            <td>
               <i v-if="campaigndonor.pivot.donor_attended" class="fa fa-check text-success" aria-hidden="true"></i>
               <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
             </td>
@@ -82,6 +87,8 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
+                  <button class="dropdown-item" v-if="campaigndonor.pivot.is_confirmed" v-on:click="changeConfirmStatus(campaigndonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i>Desmarcar confirmado</button>
+                  <button class="dropdown-item" v-else v-on:click="changeConfirmStatus(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i>Marcar confirmado</button> 
                   <button class="dropdown-item" v-if="campaigndonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigndonor, 0, 1)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
                   <button class="dropdown-item" v-else v-on:click="changeStatusDonationAttended(campaigndonor, 1, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i> Marcar como asistió</button> 
                   <div v-if="campaigndonor.pivot.donor_attended">
@@ -148,6 +155,7 @@
             <th scope="col">Teléfono</th>
             <th scope="col">Correo electrónico</th>
             <th scope="col">HT</th>
+            <th scope="col">Confirmó</th>
             <th scope="col">Asistió</th>
             <th scope="col">Donó</th>
             <th scope="col">Acciones</th>
@@ -168,6 +176,10 @@
               </select>
             </td>
             <td>
+              <i v-if="campaigntemporaldonor.pivot.is_confirmed" class="fa fa-check text-success" aria-hidden="true"></i>
+              <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
+            </td>
+            <td>
               <i v-if="campaigntemporaldonor.pivot.donor_attended" class="fa fa-check text-success" aria-hidden="true"></i>
               <i v-else class="fa fa-times text-danger" aria-hidden="true"></i>
             </td>
@@ -181,6 +193,8 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
+                  <button class="dropdown-item" v-if="campaigntemporaldonor.pivot.is_confirmed" v-on:click="changeConfirmStatus(campaigntemporaldonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i>Desmarcar confirmado</button>
+                  <button class="dropdown-item" v-else v-on:click="changeConfirmStatus(campaigntemporaldonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i>Marcar confirmado</button> 
                   <button class="dropdown-item" v-if="campaigntemporaldonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigntemporaldonor, 0, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
                   <button class="dropdown-item" v-else v-on:click="changeStatusDonationAttended(campaigntemporaldonor, 1, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i> Marcar como asistió</button> 
                   <div v-if="campaigntemporaldonor.pivot.donor_attended">
@@ -536,6 +550,23 @@
         errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
       });
     },
+    changeConfirmStatus:function(campaigndonor, status){
+      axios.post('/change/confirmed/status/campaign',{
+        'campaigndonor': campaigndonor.pivot.id,
+        'status': status
+      })
+      .then((response)=>{
+        if(response.data.code == 200){
+          toastNotification('success', response.data.message);
+          this.getDonorsInCampaign();
+        }else{
+          toastNotification('error', response.data.message);
+        }
+      })
+      .catch((err)=>{
+        errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+      });
+    }
   }
 }
 </script>
