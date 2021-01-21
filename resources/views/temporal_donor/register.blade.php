@@ -84,8 +84,8 @@
             </div>
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('E-Mail Address')}} <span class="text-danger text-sm">*</span></label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" required>
+                <label>{{__('E-Mail Address')}}</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="{{__('E-Mail Address')}}" value="{{old('email')}}" >
               </div>
               <div class="col-12 col-md-4 px-md-1">
                 <label>{{__('Mobile')}} <span class="text-danger text-sm">*</span></label>
@@ -107,11 +107,29 @@
                 </select>
               </div>
             </div>
+            <label for="time_turn">Por favor elija un horario <i class="fa fa-clock-o"></i>: <span class="text-danger text-sm">*</span>(Horas disponibles en la campaña)</label>
+            <div class="row d-flex align-content-center my-2">
+              @foreach ($availableHours as $hour)
+                @if ($hour['times'] < $campaignFrecuency)
+                  <div class="col-lg-1 col-4">
+                    <label class="btn btn-danger btn-sm">
+                      <input type="radio" name="time_turn" value="{{$hour['time']}}" id="time_turn" autocomplete="off" required>
+                      {{$hour['time']}}
+                    </label>
+                  </div>
+                @endif
+              @endforeach
+            </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="0" name="first_time_donating" id="first_time_donating" checked disabled>
+              <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating" checked disabled>
               <label class="form-check-label" for="first_time_donating">
                 {{__('I have already donated before')}}
               </label>
+            </div>
+            <p class="text-danger">NOTA: </p>
+            <P class="text-danger">El campo correo no es obligatorio, sin embargo es recomendable ingresarlo para que usted pueda recibir mensajes por correo electrónico. Saludos :)</P>
+            <div class="text-center">
+              {{__('You have already donated before?, please')}}<a href="{{route('login')}}" class="btn btn-link">{{__('login into your account')}}</a> {{'or'}}<a href="https://donadorescompulsivos.org/contacto/" class="btn btn-link">{{__('contact us')}}</a> {{__('for more information.')}}
             </div>
             <div class="text-right my-2">
               <a class="btn btn-danger btn-fill" href="/">{{__('Cancel')}}</a>                

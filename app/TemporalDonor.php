@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Enums;
+use Illuminate\Notifications\Notifiable;
 
 class TemporalDonor extends Model
 {
+    use Notifiable; 
+    
     protected $fillable = [
         'name',
         'parental_surname',

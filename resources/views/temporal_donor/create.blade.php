@@ -135,6 +135,9 @@
             @else
               <p class="text-danger">NOTA: </p>
               <P class="text-danger">El campo correo no es obligatorio, sin embargo es recomendable ingresarlo para que usted pueda recibir mensajes por correo electrónico. Saludos :)</P>
+              <div class="text-center">
+                {{__('You have already donated before?, please')}}<a href="{{route('login')}}" class="btn btn-link">{{__('login into your account')}}</a> {{'or'}}<a href="https://donadorescompulsivos.org/contacto/" class="btn btn-link">{{__('contact us')}}</a> {{__('for more information.')}}
+              </div>
             @endif
             <div class="row my-1">
               <div class="col-lg-12 d-flex justify-content-end">
