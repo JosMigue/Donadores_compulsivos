@@ -278,7 +278,8 @@
           toastNotification('success', 'Falta del donador marcada correctamente');
           index.pivot.donor_donated = value;
         }
-      }).catch(error =>{
+      }).catch(err =>{
+        errorNotification(`Algo salió mal, intente más tarde, código de status: ${err.response.status}`)
       })
     },
     createHoursDropdown:function(){

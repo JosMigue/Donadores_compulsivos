@@ -111,7 +111,7 @@ class CampaignController extends Controller
   }
 
   public function showComingCampaigns(){
-    $campaigns = Campaign::with('city', 'state')->orderBy('created_at', 'ASC')->limit(3)->get();
+    $campaigns = Campaign::with('city', 'state')->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->limit(6)->get();
     return view('campaign.listing', compact('campaigns'));
   }
 
