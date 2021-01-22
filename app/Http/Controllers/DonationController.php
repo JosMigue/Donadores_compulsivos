@@ -24,11 +24,11 @@ class DonationController extends Controller
       $campaignDonor;
       $donor;
       if($request->donor_status == 1){
-        $campaignDonor = $campaign->campaigndonors->where('donor_id', $request->donor_id)->first();
         $donor = Donor::findOrFail($request->donor_id );
+        $campaignDonor = $campaign->campaigndonors->where('donor_id', $request->donor_id)->first();
       }else{
-        $campaignDonor = $campaign->campaigndonors->where('temporal_donor_id', $request->donor_id)->first();
         $donor = TemporalDonor::findOrFail($request->donor_id );
+        $campaignDonor = $campaign->campaigndonors->where('temporal_donor_id', $request->donor_id)->first();
       }
       if($request->attribute == 1){
         if($request->status){
