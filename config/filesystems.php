@@ -61,6 +61,12 @@ return [
             'url' => env('APP_URL').'/storage/uploads/profile',
             'visibility' => 'public',
         ],
+        'admin_picture' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/admins'),
+            'url' => env('APP_URL').'/storage/uploads/admins',
+            'visibility' => 'public',
+        ],
         'campaign_images' => [
             'driver' => 'local',
             'root' => storage_path('app/public/campaigns'),

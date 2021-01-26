@@ -32,6 +32,7 @@
         "sweetalert2": "^9.17.2",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.6",
-        "vue-paginate": "^3.6.0"
+        "vue-paginate": "^3.6.0",
+        "vue-web-cam": "^1.9.0"
     }
 }

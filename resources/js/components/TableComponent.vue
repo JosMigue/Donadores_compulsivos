@@ -223,6 +223,7 @@
 
 <script>
   import Alert from './ModalDonorsComponent.vue';
+  import Camera from './CameraComponent.vue';
   export default {
   props: ['campaignid', 'gendertypes', 'bloodtypes'],
   data(){

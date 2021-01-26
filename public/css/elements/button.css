@@ -40,6 +40,11 @@ button:hover, a:hover{
   border-color: #ed1a3b;
 }
 
+.is-btn-bg-blue{
+  background-color: #1048c0;
+  border-color: #1048c0;
+}
+
 .is-btn-bg-dark{
   background-color: #050000;
   border-color: #050000;
