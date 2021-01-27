@@ -47,24 +47,22 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
-        'profile_pictures' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/profile'),
-            'url' => env('APP_URL').'/storage/uploads/profile',
-            'visibility' => 'public',
-        ],
         'admin_picture' => [
             'driver' => 'local',
             'root' => storage_path('app/public/admins'),
             'url' => env('APP_URL').'/storage/uploads/admins',
+            'visibility' => 'public',
+        ],
+        'profile_pictures' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/profile'),
+            'url' => env('APP_URL').'/storage/uploads/profile',
             'visibility' => 'public',
         ],
         'campaign_images' => [
@@ -82,7 +80,6 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
-
         'uploaded-images-bank' => [
             'driver' => 'local',
             'root' => storage_path('app/public/bankimages'),

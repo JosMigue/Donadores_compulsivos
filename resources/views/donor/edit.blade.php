@@ -121,6 +121,11 @@
                 </div>
               </div>
             @endif
+            <div class="row my-4">
+              <div class="col-12">
+                <camera-driver-component></camera-driver-component>
+              </div>
+            </div>
             <div class="row">
               <div class="col-lg-4 col-12">
                 <div class="form-check">
@@ -151,7 +156,7 @@
               </div>
             </div>
             <div class="text-right my-2">
-              <a class="btn btn-danger btn-fill" href="{{route('donors.index')}}">{{__('Cancel')}}</a>
+              <a class="btn btn-danger btn-fill" href="{{ url()->previous() }}">{{__('Cancel')}}</a>
               <button type="submit" class="btn btn-success btn-fill">{{__('Update')}}</button>
             </div>
           </form>
@@ -179,4 +184,5 @@
 @section('scripts')
   <script src="{{asset('js/donor.js')}}"></script>
   <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

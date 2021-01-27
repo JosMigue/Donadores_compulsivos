@@ -22,7 +22,7 @@ class IsCurrentDonor
            if(Auth::user()->load('donor')->donor->id == $request->route('donor')->id){
                return $next($request);
            }else{
-               return redirect('/home');
+               return abort(401);
            }
        }
     }

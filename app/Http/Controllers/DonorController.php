@@ -65,9 +65,10 @@ class DonorController extends Controller
       $identifier = $this->asignIdentifier();
       $donor->identifier = $identifier;
       $credentials = $request->only('email', 'password');
-      $donor = $this->saveUploadedPicture($donor, $request);
       if($donor->save()){
         if (Auth::check()) {
+          $donor = $this->saveUploadedPicture($donor, $request);
+          $donor->save();
           return redirect()->route('donors.create')->with('successMessage', __('Donor has been added successfully'));
         }else{
           if (Auth::attempt($credentials)) {
@@ -109,6 +110,7 @@ class DonorController extends Controller
     $donor->user_id = 0;
     $identifier = $this->asignIdentifier();
     $donor->identifier = $identifier;
+    $donor->save();
     $donor = $this->saveUploadedPicture($donor, $request);
     $donor->save();
     return $donor;
@@ -128,6 +130,11 @@ class DonorController extends Controller
   private function saveUploadedPicture($donor, $request){
     if($request->has('profile_picture')){
       $request->validated()['profile_picture']->storeAs('avatars', $donor->id.'pf.jpg','profile_pictures');
+      $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
+    }else if($request->has('captured_image')){
+      $data = explode(',',$request->validated()['captured_image']);
+      $profile_picture = base64_decode($data[1]);
+      Storage::disk('profile_pictures')->put('avatars/'.$donor->id.'pf.jpg', $profile_picture);
       $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
     }else{
       if($donor->gendertype=='M'){
@@ -172,7 +179,7 @@ class DonorController extends Controller
 
   public function show(Donor $donor)
   {
-    $availablesCampaigns = Campaign::where('date_start','>', Carbon::now())->orderBy('date_start', 'ASC')->take(3)->get();
+    $availablesCampaigns = Campaign::with('city', 'state')->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->limit(6)->get();
     $campaigns = $donor->campaigns()->latest()->paginate(3);
     $numberOfIndividualDonations = $donor->individualdonations()->count();
     $numberOfDonations = $donor->campaigndonors()->where('donor_donated', 1)->count();
@@ -198,9 +205,11 @@ class DonorController extends Controller
   public function update(UpdateDonorRequest $request, Donor $donor)
   {
     if($donor->update($request->validated())){
+      $donor = $this->saveUploadedPicture($donor, $request);
+      $donor->save();
       if($donor->user_id != 0){
         $donor->user()->update(['email' => $request->validated()['email'], 'name' => $request->validated()['name']]);
-      }else if($request->has('email')){
+      }else if($request->has('email') && $donor->email != null){
         $dataUser = ['name' => $donor->name, 'email' => $donor->email, 'password' => '$2y$10$LLck65rXlXmE4Ac.UmKqfuJv9zsSOh6YG2hB0bdwwrEMv4epi1/H6'];
         $user = User::create($dataUser);
         $donor->user_id = $user->id;

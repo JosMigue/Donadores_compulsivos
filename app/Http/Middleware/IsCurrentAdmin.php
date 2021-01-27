@@ -14,13 +14,13 @@ class IsCurrentAdmin
             if($request->route('user')->is_admin){
                 return $next($request);
             }else{
-                return redirect('/home');
+                return abort(401);
             }
         }else{
             if(Auth::user()->is_admin && Auth::user()->id == $request->route('user')->id && $request->route('user')->is_admin){
                 return $next($request);
             }else{
-                return redirect('/home');
+                return abort(401);
             }
         }
     }
