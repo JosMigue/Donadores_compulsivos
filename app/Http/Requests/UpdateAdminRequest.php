@@ -25,7 +25,9 @@ class UpdateAdminRequest extends FormRequest
     {
         return [
             'name'      =>   'required|string|max:255',
-            'email'     =>   'required|string|max:255','unique:users, email,'.$this->user->id
+            'email'     =>   'required|string|max:255|unique:users,email,'.$this->user->id.'|unique:donors|unique:temporal_donors',
+            'profile_picture'     =>  'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'captured_image'    => 'nullable|string',
         ];
     }
 }

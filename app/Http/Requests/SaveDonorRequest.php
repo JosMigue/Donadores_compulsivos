@@ -41,7 +41,8 @@ class SaveDonorRequest extends FormRequest
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
             'observations'  => 'max:255',
-            'profile_picture'  => 'image|mimes:jpeg,png,jpg|max:2048',
+            'profile_picture'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'captured_image'  => 'nullable|string',
             'is_active' => 'boolean|nullable',
         ];
     }

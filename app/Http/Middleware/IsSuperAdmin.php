@@ -20,6 +20,6 @@ class IsSuperAdmin
             return $next($request);
         }
 
-        return redirect('/home');
+        return abort(401);
     }
 }

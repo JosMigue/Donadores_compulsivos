@@ -25,8 +25,10 @@ class SaveAdminRequest extends FormRequest
     {
         return [
             'name'      =>   'required|string|max:255',
-            'email'     =>   'required|string|max:255|unique:users',
-            'password'  =>   'required|string|min:8|confirmed'
+            'email'     =>   'required|string|max:255|unique:users|unique:donors|unique:temporal_donors',
+            'password'  =>   'required|string|min:8|confirmed',
+            'profile_picture'     =>   'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'captured_image'    => 'nullable|string'
         ];
     }
 }

@@ -40,6 +40,8 @@ class UpdateDonorRequest extends FormRequest
             'email'         => 'nullable|email|unique:users,email,'.$this->donor->user_id.'|unique:donors,email,'.$this->donor->id.'|unique:temporal_donors',
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
+            'profile_picture'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'captured_image'  => 'nullable|string',
             'observations'  => 'max:255'
         ];
     }

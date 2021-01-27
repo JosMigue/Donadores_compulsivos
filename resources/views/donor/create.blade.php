@@ -129,12 +129,17 @@
                 <textarea class="form-control" name="observations" id="observations" cols="30" rows="5"></textarea>
               </div>
             </div>
-            <div class="row">
+            <div class="row my-4">
+              <div class="col-12">
+                <camera-driver-component></camera-driver-component>
+              </div>
+            </div>
+{{--             <div class="row">
               <div class="col-12">
                 <label for="profile_picture">{{__('Profile picture')}}</label>
                 <input type="file" class="form-control" name="profile_picture" id="profile_picture">
               </div>
-            </div>
+            </div> --}}
             <div class="row">
               <div class="col-lg-4 col-12">
                 <div class="form-check">
@@ -201,4 +206,5 @@
 @section('scripts')
   <script src="{{asset('js/donor.js')}}"></script>
   <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

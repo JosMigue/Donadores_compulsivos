@@ -44,7 +44,7 @@
             @foreach ($admins as $index => $admin)
               <tr>
                 <th>{{$index+1}}</th>
-                <th>{{$admin->name}}</th>
+                <th><div class="d-flex align-items-center"><img class="rounded-circle" src="{{asset($admin->image)}}" width="40"><span class="ml-2">{{$admin->name}}</span></div></th>
                 <th>{{$admin->email}}</th>
                 <th>{{$admin->created_at}}</th>
                 <td>

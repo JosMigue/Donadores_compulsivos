@@ -20,6 +20,7 @@ class TemporalDonorController extends Controller
   public function __construct(){
     $this->middleware('auth')->except(['showregistreview', 'singleStore', 'create', 'store']);
     $this->middleware('admin')->except(['showregistreview', 'singleStore', 'create', 'store']);
+    $this->middleware('guest')->only(['showregistreview', 'singleStore', 'create', 'store']);
   }
 
   public function index()
