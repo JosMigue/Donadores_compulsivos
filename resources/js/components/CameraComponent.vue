@@ -65,7 +65,7 @@ export default {
             camera: null,
             deviceId: null,
             devices: [],
-            resolutionToSet: {height:250, width:250},
+            resolutionToSet: {height:300, width:250},
             isCameraActive: true
         };
     },

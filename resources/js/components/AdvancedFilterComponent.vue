@@ -125,7 +125,7 @@
           <tr v-for="(donor, index) in donors" :key="index">
             <!-- My god I had no option, this a terrible idea but it will work temporally. Don't kill me please :( -->
             <th v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.id}}</th>
-            <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</td>
+            <td v-bind:class="donor.is_active==isActive ? 'd-none':''"><div class="d-flex align-items-center"><img class="rounded-circle img-fluid" :src="'/'+donor.profile_picture" width="40"><span class="ml-2">{{donor.name}} {{donor.parental_surname}} {{donor.maternal_surname}}</span></div></td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.city.name}}</td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{donor.state.name}}</td>
             <td v-bind:class="donor.is_active==isActive ? 'd-none':''">{{bloodtypes[donor.bloodtype]}}</td>
