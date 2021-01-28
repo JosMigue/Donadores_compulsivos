@@ -131,12 +131,12 @@ class DonorController extends Controller
     if($request->has('profile_picture')){
       $request->validated()['profile_picture']->storeAs('avatars', $donor->id.'pf.jpg','profile_pictures');
       $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
-    }else if($request->has('captured_image')){
+    }else if($request->has('captured_image') && $request->captured_image != null){
       $data = explode(',',$request->validated()['captured_image']);
       $profile_picture = base64_decode($data[1]);
       Storage::disk('profile_pictures')->put('avatars/'.$donor->id.'pf.jpg', $profile_picture);
       $donor->profile_picture = 'storage/profile/avatars/'.$donor->id.'pf.jpg';
-    }else{
+    }else if($donor->profile_picture == ''){
       if($donor->gendertype=='M'){
         $donor->profile_picture = 'img/default_avatar_man.jpg';
       }else if($donor->gendertype=='F'){

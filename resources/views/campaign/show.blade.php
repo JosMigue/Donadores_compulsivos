@@ -17,7 +17,7 @@
       <h1 class="text-center">{{__('Campaign information')}}</h1>
       <div class="row">
         <div class="col-12 col-lg-4">
-          <div class="profile-img" id="profile-img">
+          <div class="campaign-img" id="campaign-img">
             <img src="{{asset($campaign->campaign_image)}}" alt="Campaign image">
             <div class="file btn btn-lg btn-primary">
               {{__('Change Photo')}}

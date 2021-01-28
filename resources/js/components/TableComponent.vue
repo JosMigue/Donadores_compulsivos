@@ -58,7 +58,7 @@
         <paginate name="campaigndonors" :list="campaigndonors" :per="15" tag="tbody">
           <tr v-for="(campaigndonor, index) in paginated('campaigndonors')" :key="index">
             <th scope="row">{{index+1}}</th>
-            <td>{{campaigndonor.name}} {{campaigndonor.parental_surname}} {{campaigndonor.maternal_surname}}</td>
+            <td><div class="d-flex align-items-center"><img class="rounded-circle img-fluid" :src="'/'+campaigndonor.profile_picture" width="40"><span class="ml-2">{{campaigndonor.name}} {{campaigndonor.parental_surname}} {{campaigndonor.maternal_surname}}</span></div></td>
             <td>{{bloods[campaigndonor.bloodtype]}}</td>
             <td>{{genders[campaigndonor.gendertype]}}</td>
             <td>{{campaigndonor.mobile}}</td>
