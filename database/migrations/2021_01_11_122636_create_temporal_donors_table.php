@@ -25,12 +25,14 @@ class CreateTemporalDonorsTable extends Migration
             $table->string('donortype')->nullable(false);
             $table->string('gendertype')->nullable(true)->default(null);
             $table->date('born_date')->nullable(false);
-            $table->boolean('first_time_donating')->default(false)->nullable(false);
+            $table->boolean('first_time_donating')->default(true)->nullable(false);
             $table->boolean('be_the_match')->default(false)->nullable(false);
             $table->boolean('letter')->default(false)->nullable(false);
             $table->integer('age')->nullable(false);
             $table->string('email')->nullable(true);
             $table->string('mobile')->nullable(true);
+            $table->string('profile_picture')->nullable(true);
+            $table->string('image')->nullable(true);
             $table->timestamps();
         });
     }

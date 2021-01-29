@@ -9,8 +9,8 @@
   text-align: center;
 }
 .profile-img img{
-  width: 70%;
-  height: 200px;
+  width: 90%;
+  height: 250px;
 }
 .profile-img .file {
   background: #212529b8;
@@ -20,9 +20,32 @@
   margin-top: -20%;
   position: relative;
   overflow: hidden;
-  width: 70%;
+  width: 90%;
 }
 .profile-img .file input {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  top: 0;
+}
+.campaign-img{
+  text-align: center;
+}
+.campaign-img img{
+  width: 70%;
+  height: 250px;
+}
+.campaign-img .file {
+  background: #212529b8;
+  border: none;
+  border-radius: 0;
+  font-size: 15px;
+  margin-top: -20%;
+  position: relative;
+  overflow: hidden;
+  width: 70%;
+}
+.campaign-img .file input {
   position: absolute;
   right: 0;
   opacity: 0;

@@ -21,7 +21,7 @@
           <div class="row m-1">
             <p>{{__('Required fields')}} <span class="text-danger">*</span></p>
           </div>
-          <form action="{{route('donors.update', $donor->id)}}" method="POST">
+          <form action="{{route('donors.update', $donor->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="row my-1">

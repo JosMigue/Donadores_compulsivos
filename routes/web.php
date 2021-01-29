@@ -68,10 +68,12 @@ Route::get('api/temporal_donors', 'DonorFilterController@temporalDonorsList');
 Route::get('/get/individual-donations/donor/{donor}', 'IndividualDonationController@show');
 Route::resource('/individual-donations', 'IndividualDonationController')->only(['store', 'edit', 'update']);
 
-//API routes
+//Temporal donor routes
 Route::resource('/temporal_donors', 'TemporalDonorController');
+Route::post('/api/temporal_donors/store', 'TemporalDonorController@apiStore')->name('temporal_donors.apistore');
 Route::post('/temporal_donors/single/create', 'TemporalDonorController@singleStore')->name('temporal_donors.single-store');
 Route::get('/temporal_donor/register/{campaignId?}','TemporalDonorController@showregistreview')->name('donor.register');
+Route::patch('/temporal_donor/update/picture/{temporalDonor}', 'TemporalDonorController@updateProfilePicture')->name('temporal_donors.upload');
 Route::post('/api/temporal_donor/change/letter/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeLetterStatus')->name('temporal_donors.update.letter');
 Route::post('/api/temporal_donor/change/be-the-match/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeBeTheMatchStatus')->name('temporal_donors.update.be_the_match');
 

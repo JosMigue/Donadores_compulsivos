@@ -60,7 +60,7 @@ class DonationController extends Controller
   private function createDonor($dataDonor){
     $user = $this->createUser($dataDonor);
     if($user){
-      array_push($dataDonor,array('user_id' => $user->id));
+      $dataDonor['user_id'] = $user->id;
     }
     return $donor = Donor::create($dataDonor);
   }

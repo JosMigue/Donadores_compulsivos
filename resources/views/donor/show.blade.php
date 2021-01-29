@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="profile-img" id="profile-img">
-          <img class="rounded" src="{{asset($donor->profile_picture)}}" alt="Profile picture for donor"/>
+          <img class="rounded img-fluid" src="{{asset($donor->profile_picture)}}" alt="Profile picture for donor"/>
           <div class="file btn btn-lg btn-primary">
             {{__('Change Photo')}}
             <form method="POST" action="{{route('donors.upload', $donor->id)}}" enctype="multipart/form-data">

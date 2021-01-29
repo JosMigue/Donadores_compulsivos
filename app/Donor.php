@@ -34,7 +34,8 @@ class Donor extends Authenticatable implements MustVerifyEmail
         'observations',
         'profile_picture',
         'is_active',
-        'is_temporal'
+        'is_temporal',
+        'user_id'
     ];
 
     protected $hidden = [

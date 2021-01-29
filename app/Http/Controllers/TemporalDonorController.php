@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendTurnDonation;
+use Illuminate\Support\Facades\Storage;
 
 class TemporalDonorController extends Controller
 {
@@ -20,7 +21,7 @@ class TemporalDonorController extends Controller
   public function __construct(){
     $this->middleware('auth')->except(['showregistreview', 'singleStore', 'create', 'store']);
     $this->middleware('admin')->except(['showregistreview', 'singleStore', 'create', 'store']);
-    $this->middleware('guest')->only(['showregistreview', 'singleStore', 'create', 'store']);
+    $this->middleware('guest')->only(['showregistreview', 'store']);
   }
 
   public function index()
@@ -45,7 +46,8 @@ class TemporalDonorController extends Controller
 
   public function store(SaveTemporalDonorRequest $request)
   {
-    $temporalDonor = TemporalDonor::create($request->validated());
+    $temporalDonorArray = $this->saveUploadedPicture($request->validated(), $request);
+    $temporalDonor = TemporalDonor::create($temporalDonorArray);
     if($request->has('time_turn')){
       if($this->addNewTemporalDonorInCampaig($temporalDonor->id, $request->input('campaign'), $request, $request->input('time_turn'))){
         if($temporalDonor->email != null){
@@ -55,19 +57,26 @@ class TemporalDonorController extends Controller
       }else{
         return redirect()->route('welcome')->with('errorMessage', __('Something went wrong, try again later'));
       }
-    }else if(Auth::check() && Auth::user()->is_admin == 1){
+    }
+  }
+
+  public function apiStore(SaveTemporalDonorRequest $request){
+    $temporalDonorArray = $this->saveUploadedPicture($request->validated(), $request);
+    $temporalDonor = TemporalDonor::create($temporalDonorArray);
+    if(Auth::check() && Auth::user()->is_admin == 1){
       if($this->addNewDonorInCampaign($temporalDonor->id, $request->input('campaign'), $request)){
         return array('code'=> 200, 'message'=> __('Donor has been added successfully'));
       }else{
         return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
       }
     }else{
-      return response()->view('errors.500', [], 500);
+      return array('code'=> 500, 'message'=> __('Something went wrong, try again later'));
     }
   }
 
   public function singleStore(SaveTemporalDonorRequest $request){
-    if(TemporalDonor::create($request->validated())){
+    $temporalDataArray = $this->saveUploadedPicture($request->validated(), $request);
+    if(TemporalDonor::create($temporalDataArray)){
       if(Auth::check()){
         return redirect()->route('temporal_donors.index')->with('successMessage', __('Donor has been added successfully'));
       }else{
@@ -80,6 +89,44 @@ class TemporalDonorController extends Controller
         return redirect()->route('welcome')->with('errorMessage', __('Something went wrong, try again later'));
       }
     }
+  }
+
+  public function updateProfilePicture(TemporalDonor $temporalDonor, Request $request){
+    $currentTime = time();
+    if($request->has('profile_picture')){
+      Storage::disk('predonor_profile_pictures')->delete('avatars/'.$temporalDonor->image);
+      $request->file('profile_picture')->storeAs('avatars', $currentTime.'pf.jpg','predonor_profile_pictures');
+      $temporalDonor->profile_picture = 'storage/predonor/avatars/'.$currentTime.'pf.jpg';
+      $temporalDonor->image = $currentTime.'pf.jpg';
+      $temporalDonor->save();
+      return redirect()->route('temporal_donors.show', $temporalDonor->id)->with('successMessage', __('Profile picture updated successfully'));
+    }else{
+      return redirect()->route('home')->with('errorMessage', __('Something went wrong, try again later'));
+    }
+  }
+
+  private function saveUploadedPicture($temporalDonor, $request){
+    $currentTime = time();
+    if($request->has('profile_picture')){
+      $request->validated()['profile_picture']->storeAs('avatars', $currentTime.'pf.jpg','predonor_profile_pictures');
+      $temporalDonor['profile_picture'] = 'storage/predonor/avatars/'.$currentTime.'pf.jpg';
+      $temporalDonor['image'] = $currentTime.'pf.jpg';
+    }else if($request->has('captured_image') && $request->captured_image != null){
+      $data = explode(',',$request->validated()['captured_image']);
+      $profile_picture = base64_decode($data[1]);
+      Storage::disk('predonor_profile_pictures')->put('avatars/'.$currentTime.'pf.jpg', $profile_picture);
+      $temporalDonor['profile_picture'] = 'storage/predonor/avatars/'.$currentTime.'pf.jpg';
+      $temporalDonor['image'] = $currentTime.'pf.jpg';
+    }else if(!array_key_exists('profile_picture', $temporalDonor)){
+      if($temporalDonor['gendertype']=='M'){
+        $temporalDonor['profile_picture'] = 'img/default_avatar_man.jpg';
+      }else if($temporalDonor['gendertype']=='F'){
+        $temporalDonor['profile_picture'] = 'img/default_avatar_woman.jpg';
+      }else{
+        $temporalDonor['profile_picture'] = 'img/default_avatar.jpg';
+      }
+    }
+    return $temporalDonor;
   }
 
   private function addNewTemporalDonorInCampaig($temporal_donorId, $campaignId, $request, $timeTurn){
@@ -102,22 +149,6 @@ class TemporalDonorController extends Controller
     $campaigDonor = new CampaignDonor(['temporal_donor_id' => $donorId, 'turn' =>  $currentTurn,  'time_turn' => $timeTurn, 'ip_address' => $request->ip()]);
     $campaign->campaigndonors()->save($campaigDonor);
     return true;
-  }
-
-  private function saveUploadedPicture($temporalDonor, $request){
-    if($request->has('profile_picture')){
-      $request->validated()['profile_picture']->storeAs('avatars', $temporalDonor->id.'pf.jpg','profile_pictures');
-      $temporalDonor->profile_picture = 'storage/profile/avatars/'.$temporalDonor->id.'pf.jpg';
-    }else{
-      if($temporalDonor->gendertype=='M'){
-        $temporalDonor->profile_picture = 'img/default_avatar_man.jpg';
-      }else if($temporalDonor->gendertype=='F'){
-        $temporalDonor->profile_picture = 'img/default_avatar_woman.jpg';
-      }else{
-        $temporalDonor->profile_picture = 'img/default_avatar.jpg';
-      }
-    }
-    return $temporalDonor;
   }
 
   private function calculateTurn($currentTurn, $campaignStartAt, $campaignFrecuencyDonors, $campaignFrecuencyTime){
@@ -207,7 +238,9 @@ class TemporalDonorController extends Controller
 
   public function destroy(TemporalDonor $temporalDonor)
   {
+    $image = $temporalDonor->image;
     if($temporalDonor->delete()){
+      Storage::disk('predonor_profile_pictures')->delete('avatars/'.$image);
       return array('message' => __('Donor has been deleted successfully'), 'code' => 200);
     }else{
       return array('message' => __('Something went wrong, try again later'), 'code' => 500);

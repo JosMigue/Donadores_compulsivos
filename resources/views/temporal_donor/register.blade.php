@@ -120,8 +120,13 @@
                 @endif
               @endforeach
             </div>
+            <div class="row my-4">
+              <div class="col-12">
+                <camera-driver-component></camera-driver-component>
+              </div>
+            </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating" checked disabled>
+              <input class="form-check-input" type="checkbox" value="1" name="first_time_donating" id="first_time_donating" checked readonly>
               <label class="form-check-label" for="first_time_donating">
                 {{__('I have already donated before')}}
               </label>

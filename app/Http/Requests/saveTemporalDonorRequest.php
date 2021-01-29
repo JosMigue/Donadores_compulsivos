@@ -40,6 +40,8 @@ class saveTemporalDonorRequest extends FormRequest
             'email'         => 'nullable|email|unique:donors|unique:temporal_donors|unique:users',
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
+            'profile_picture'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'captured_image'  => 'nullable|string',
         ];
     }
 }
