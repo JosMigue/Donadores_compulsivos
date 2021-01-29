@@ -17,29 +17,29 @@
           <div class="row m-1">
             <p class="text-dark">Campos obligatorios<span class="text-danger">*</span></p>
           </div>
-          <form action="{{route('temporal_donors.single-store')}}" method="POST">
+          <form action="{{route('temporal_donors.single-store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>Nombre <span class="text-danger text-sm">*</span> </label>
+                <label for="name">Nombre<span class="text-danger text-sm">*</span> </label>
                 <input type="text" id="name" name="name" autofocus="true" class="form-control" value="{{old('name')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>Apellido paterno <span class="text-danger text-sm">*</span></label>
+                <label for="parental_surname">Apellido paterno <span class="text-danger text-sm">*</span></label>
                 <input type="text" id="parental_surname" name="parental_surname" class="form-control" value="{{old('parental_surname')}}" required>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label>Apellido materno</label>
+                <label for="maternal_surname" >Apellido materno</label>
                 <input type="text" id="maternal_surname" name="maternal_surname" class="form-control" value="{{old('maternal_surname')}}">
               </div>
             </div>
             <div class="row">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>CURP <span class="text-danger text-sm">*</span></label>
+                <label for="curp">CURP <span class="text-danger text-sm">*</span></label>
                 <input type="text" maxlength="18" class="form-control" id="curp" name="curp" placeholder="Ingrese su curp" value="{{old('curp')}}" required>
               </div>
               <div class="col-12 col-md-4 px-md-1">
-                <label>Tipo de sangre <span class="text-danger text-sm">*</span></label>
+                <label for="bloodtype">Tipo de sangre <span class="text-danger text-sm">*</span></label>
                 <select class="form-control" name="bloodtype" id="bloodtype"  required>
                   <option value="" selected disabled>Seleccione tipo de sangre...</option>
                   @foreach ($bloodTypes as $key => $bloodtype)
@@ -48,7 +48,7 @@
                 </select>
               </div>
               <div class="col-12 col-md-4 pl-md-1">
-                <label>Tipo de donador <span class="text-danger text-sm">*</span></label>
+                <label for="donortype">Tipo de donador <span class="text-danger text-sm">*</span></label>
                 <select class="form-control" name="donortype" id="donortype" required>
                   <option value="" selected disabled>{{__('Select...')}}</option>
                   @foreach ($donorTypes as $key => $donortype)
@@ -59,11 +59,11 @@
             </div>
             <div class="row">
               <div class="col-md-4 pr-md-1">
-                <label>Correo electrónico</label>
+                <label for="email">Correo electrónico</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
               </div>
               <div class="col-md-4 px-md-1">
-                <label>Estado <span class="text-danger text-sm">*</span></label>
+                <label for="state_id">Estado <span class="text-danger text-sm">*</span></label>
                 <select id="state_id" name="state_id" class="form-control" onchange="getAllCitiesState(this)" required>
                   <option value="" selected disabled >{{__('Select...')}}</option>
                   @foreach ($states as $state)
@@ -72,7 +72,7 @@
                 </select>
               </div>
               <div class="col-md-4 pl-md-1">
-                <label>{{__('City')}}<span class="text-danger text-sm">*</span></label>
+                <label for="city_id">{{__('City')}}<span class="text-danger text-sm">*</span></label>
                 <select id="city_id" name="city_id" class="form-control"  required>
                   <option value="">{{__('Select state first')}}</option>
                 </select>
@@ -80,27 +80,32 @@
             </div>
             <div class="row my-1">
               <div class="col-12 col-md-4 pr-md-1">
-                <label>{{__('Born date')}}<span class="text-danger text-sm">*</span></label>
+                <label for="born_date">{{__('Born date')}}<span class="text-danger text-sm">*</span></label>
                 <input type="date" onchange="calculateAge(this)" id="born_date" name="born_date" class="form-control" value="{{old('born_date')}}" required>
               </div>
               <div class="col-6 col-md-4 px-md-1">
-                <label>{{__('Mobile')}}</label>
+                <label for="mobile">{{__('Mobile')}}</label>
                 <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="{{__('Type your mobile')}}" value="{{old('mobile')}}" >
               </div>
               <div class="col-6 col-md-4 pl-md-1">
-                <label>{{__('Age')}}<span class="text-danger text-sm">*</span></label>
+                <label for="age">{{__('Age')}}<span class="text-danger text-sm">*</span></label>
                 <input type="text" id="age" name="age" class="form-control" value="{{old('age')}}" readonly>
               </div>
             </div>
             <div class="row my-1">
               <div class="col-6 col-md-4 pr-md-1">
-                <label>{{__('Gender')}}</label>
+                <label for="gendertype">{{__('Gender')}}</label>
                 <select id="gendertype" name="gendertype" class="form-control" required>
                   <option value="" disabled selected> {{__('Select...')}}</option>
                   @foreach ($genderTypes as $key => $genderType)
                     <option @if (old('gendertype')==$key) selected @endif value="{{$key}}">{{$genderType}}</option>
                   @endforeach
                 </select>
+              </div>
+            </div>
+            <div class="row my-4">
+              <div class="col-12">
+                <camera-driver-component></camera-driver-component>
               </div>
             </div>
             @if (Auth::check())
@@ -166,4 +171,5 @@
 @section('scripts')
   <script src="{{asset('js/donor.js')}}"></script>
   <script src="{{asset('js/getDataOptions.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

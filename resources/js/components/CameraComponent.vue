@@ -17,7 +17,8 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <select v-model="camera" class="form-control">
+            <label for="camera">Cámara</label>
+            <select id="camera" v-model="camera" class="form-control">
               <option>-- Seleccione un dispositivo --</option>
               <option v-for="device in devices" :key="device.deviceId" :value="device.deviceId">{{ device.label }}</option>
             </select>
@@ -33,10 +34,10 @@
       <div class="col-md-6">
         <h5>Imagen capturada</h5>
         <figure class="figure d-flex justify-content-center">
-          <img :src="img" class="img-responsive" />
+          <img :src="img" class="img-responsive" alt="Camera picture"/>
         </figure>
       </div>
-      <input name="captured_image"  type="hidden" :value="img" >
+      <input name="captured_image"  type="hidden" :value="img" alt="Captured picture">
     </div>
     <div class="form-group row d-flex justify-content-center" v-else>
       <label for="profile_picture">Foto de perfil</label>

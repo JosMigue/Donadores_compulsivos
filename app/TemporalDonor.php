@@ -26,7 +26,9 @@ class TemporalDonor extends Model
         'letter',
         'age',
         'email',
-        'mobile'
+        'mobile',
+        'profile_picture',
+        'image'
     ];
 
     protected $table = 'temporal_donors';

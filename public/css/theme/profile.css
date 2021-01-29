@@ -9,8 +9,8 @@
   text-align: center;
 }
 .profile-img img{
-  width: 70%;
-  height: 300px;
+  width: 90%;
+  height: 250px;
 }
 .profile-img .file {
   background: #212529b8;
@@ -20,7 +20,7 @@
   margin-top: -20%;
   position: relative;
   overflow: hidden;
-  width: 70%;
+  width: 90%;
 }
 .profile-img .file input {
   position: absolute;

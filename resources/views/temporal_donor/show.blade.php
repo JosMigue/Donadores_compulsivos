@@ -10,13 +10,29 @@
 
 @section('content')
 <div class="container emp-profile">
+  @if (session('successMessage'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{session('successMessage')}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif   
+  @if (session('errorMessage'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>{{session('errorMessage')}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif  
   <div class="row">
     <div class="col-12 col-md-4">
       <div class="profile-img" id="profile-img">
         <img class="rounded" src="{{asset($temporalDonor->profile_picture)}}" alt="Profile picture for donor"/>
         <div class="file btn btn-lg btn-primary">
           {{__('Change Photo')}}
-          <form method="POST" action="{{route('donors.upload', $temporalDonor->id)}}" enctype="multipart/form-data">
+          <form method="POST" action="{{route('temporal_donors.upload', $temporalDonor->id)}}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <input type="file" name="profile_picture" onchange="updateProfilePicture()">
@@ -80,9 +96,9 @@
       <div class="row">
         <div class="col-12 col-md-4 mb-2">
           <p class="text-center">{{__('Get in touch')}}</p>
-          <div class="profile-work d-flex justify-content-around">
-            <a href="tel:{{$temporalDonor->mobile}}"><i class="fa fa-phone" aria-hidden="true"></i>{{$temporalDonor->mobile}}</a><br/>
-            <a href="mailto:{{$temporalDonor->email}}"><i class="fa fa-envelope" aria-hidden="true"></i>{{$temporalDonor->email}}</a><br/>
+          <div class="profile-work d-flex flex-column justify-content-around">
+            <a href="tel:{{$temporalDonor->mobile}}"><i class="fa fa-phone mx-1" aria-hidden="true"></i>{{$temporalDonor->mobile}}</a><br/>
+            <a href="mailto:{{$temporalDonor->email}}"><i class="fa fa-envelope mx-1" aria-hidden="true"></i>{{$temporalDonor->email}}</a><br/>
           </div>
         </div>
         <div class="col-12 col-md-8">
@@ -91,12 +107,12 @@
               <label>{{__('Full name')}}</label>
               <p>{{$temporalDonor->name}} {{$temporalDonor->parental_surname}} {{$temporalDonor->maternal_surname}}</p>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-4">
               <label>{{__('E-Mail Address')}}</label>
               <p>{{$temporalDonor->email}}</p>
             </div>
-            <div class="col-12 col-md-3">
-              <label>{{__('Mobile')}}</label>
+            <div class="col-12 col-md-2">
+              <label>{{__('Phone')}}</label>
               <p>{{$temporalDonor->mobile}}</p>
             </div>
             <div class="col-12 col-md-3">
@@ -147,4 +163,8 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script src="{{asset('js/donor.js')}}"></script>
 @endsection

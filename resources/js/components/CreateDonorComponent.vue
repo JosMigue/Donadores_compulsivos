@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import Camera from './CameraComponent.vue';
 export default {
   props: ['genders', 'bloods', 'campaign'],
   data() {
@@ -189,7 +190,7 @@ export default {
       this.curp = '';
     },
     addDonor:function(){
-      axios.post('/temporal_donors',{
+      axios.post('/api/temporal_donors/store',{
         'name': this.name,
         'parental_surname': this.parental_surname,
         'maternal_surname': this.maternal_surname,
@@ -211,10 +212,10 @@ export default {
         if(response.data['code']==200){
           this.$emit('add-not-registered-donor-in-campaign-event');
           successNotification(response.data['message']);
+          this.resetForm();
         }else{
-          errorNotification(response.data['message']);
+          errorNotification('kha');
         }
-        this.resetForm();
       }).catch((err =>{
         this.errors = err.response.data.errors;
       }))

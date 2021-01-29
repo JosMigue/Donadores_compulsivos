@@ -65,6 +65,12 @@ return [
             'url' => env('APP_URL').'/storage/uploads/profile',
             'visibility' => 'public',
         ],
+        'predonor_profile_pictures' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/predonor'),
+            'url' => env('APP_URL').'/storage/uploads/predonor',
+            'visibility' => 'public',
+        ],
         'campaign_images' => [
             'driver' => 'local',
             'root' => storage_path('app/public/campaigns'),
