@@ -3,13 +3,9 @@
     <label>
       Donadores suscritos {{this.campaigndonors.length}}
     </label>
-    <!-- <div class="d-flex justify-content-center">
-      <button type="button" class="is-link-red" data-toggle="modal" data-target="#modalDonors" data-backdrop="static" data-keyboard="false">
-        Buscar donador <i class="fa fa-plus mx-1" aria-hidden="true"></i>
-      </button>
-    </div> -->
     <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()" :genders = gendertypes :blood = bloodtypes></modal-donor-component> 
     <modal-predonor-asign-component :campaign = campaignid :predonor = selectedPreDonor></modal-predonor-asign-component> 
+    <modal-donor-asign-component :campaign = campaignid :donor = selectedDonorModal></modal-donor-asign-component> 
     <div class="text-center">
       <p class="text-danger">Buscar donador por...</p>
     </div>
@@ -88,6 +84,7 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
+                  <button class="dropdown-item" v-on:click="selectedDonorModal = campaigndonor" data-toggle="modal" data-target="#modalDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange"></i>Reasignar</button>
                   <button class="dropdown-item" v-if="campaigndonor.pivot.is_confirmed" v-on:click="changeConfirmStatus(campaigndonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i>Desmarcar confirmado</button>
                   <button class="dropdown-item" v-else v-on:click="changeConfirmStatus(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i>Marcar confirmado</button> 
                   <button class="dropdown-item" v-if="campaigndonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigndonor, 0, 1)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
@@ -235,6 +232,7 @@
       donors: [],
       selectedDonor: '',
       selectedPreDonor: '',
+      selectedDonorModal: '',
       temporalDonors: [],
       selectedTemporalDonor: '',
       campaigndonors: [],
