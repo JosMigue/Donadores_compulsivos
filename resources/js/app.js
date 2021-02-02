@@ -15,6 +15,8 @@ Vue.component('create-donor-component', require('./components/CreateDonorCompone
 Vue.component('individual-donation-component', require('./components/IndividualDonationComponent.vue').default);
 Vue.component('individual-donation-create-component', require('./components/ModalIndividualDOnationCreateComponent.vue').default);
 Vue.component('camera-driver-component', require('./components/CameraComponent.vue').default);
+Vue.component('modal-predonor-asign-component', require('./components/ModalAsignPreDonorCampaign.vue').default);
+Vue.component('modal-donor-asign-component', require('./components/ModalAsignDonorCampaign.vue').default);
 Vue.use(VuePaginate)
 Vue.config.productionTip = false;
 
