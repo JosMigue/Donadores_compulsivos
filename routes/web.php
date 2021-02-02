@@ -8,6 +8,7 @@ Auth::routes(['verify' => true, 'register'=> false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Campaigns routes
 Route::resource('/campaigns', 'CampaignController');
 Route::get('/listing/campaigns', 'CampaignController@showComingCampaigns')->name('campaigns.listing');
 Route::get('/campaigns/involve/{campaign}/donor/{donor}', 'CampaignDonorController@show')->name('campaigndonors.show');
@@ -16,6 +17,8 @@ Route::post('/campaigns/donors/involve/manually', 'CampaignDonorController@addDo
 Route::post('/campaigns/temporal_donors/involve/manually', 'CampaignDonorController@addTemporalDonorCampaign');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 Route::post('/campaign/donors/list', 'CampaignDonorController@getDonorsInCampaign');
+Route::get('/api/available_campaigns/retreive/{currentCampaign}', 'CampaignController@availableCampaigns');
+Route::post('/api/asign_campaign/predonor', 'CampaignDonorController@asignPredonorCampaign');
 
 //cities and states routes
 Route::get('/cities', 'CityController@index')->name('cities');
@@ -33,7 +36,6 @@ Route::delete('/admins/{user}', 'AdminController@destroy')->name('admins.destroy
 //donors
 Route::resource('/donors', 'DonorController');
 Route::patch('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload');
-/* Route::put('/donors/update/picture/{donor}', 'DonorController@updateProfilePicture')->name('donors.upload'); */
 Route::resource('/bloodbanks', 'BloodBankController');
 Route::get('/api/bloodbanks', 'BloodBankController@getBloodBanksData');
 Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')->name('donation.update');

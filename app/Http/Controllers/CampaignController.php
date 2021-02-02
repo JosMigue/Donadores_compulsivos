@@ -181,4 +181,8 @@ class CampaignController extends Controller
     }
     return $timeList;
   }
+
+  public function availableCampaigns($currentCampaign){
+    return Campaign::with('city', 'state')->where('id','!=', $currentCampaign)->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->get();
+  }
 }
