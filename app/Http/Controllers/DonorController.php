@@ -263,4 +263,13 @@ class DonorController extends Controller
       return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
     }
   }
+
+  public function changeTypeDonor(Donor $donor){
+    $donor->donortype = 'D2';
+    if($donor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Type donor changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
 }

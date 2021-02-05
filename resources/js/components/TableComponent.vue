@@ -42,6 +42,7 @@
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">T.S.</th>
+            <th scope="col">T.D.</th>
             <th scope="col">Género</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo electrónico</th>
@@ -57,6 +58,7 @@
             <th scope="row">{{index+1}}</th>
             <td><div class="d-flex align-items-center"><img class="rounded-circle img-fluid" :src="'/'+campaigndonor.profile_picture" width="40" height="40"><span class="ml-2">{{campaigndonor.name}} {{campaigndonor.parental_surname}} {{campaigndonor.maternal_surname}}</span></div></td>
             <td>{{bloods[campaigndonor.bloodtype]}}</td>
+            <td>{{donortype[campaigndonor.donortype]}}</td>
             <td>{{genders[campaigndonor.gendertype]}}</td>
             <td>{{campaigndonor.mobile}}</td>
             <td>{{campaigndonor.email}}</td>
@@ -84,7 +86,12 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
-                  <button class="dropdown-item" v-on:click="selectedDonorModal = campaigndonor" data-toggle="modal" data-target="#modalDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange"></i>Reasignar</button>
+                  <button class="dropdown-item" v-on:click="selectedDonorModal = campaigndonor" data-toggle="modal" data-target="#modalDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange mx-1"></i>Reasignar</button>
+                  <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigndonor)"><i class="fa fa-trash mx-1"></i> Borrar</button>
+                  <a :href="'/donors/'+campaigndonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye mx-1"></i> Ver donador</a>
+                  <button v-if="campaigndonor.donortype == 'D1'" class="dropdown-item" v-on:click="changeTypeDonor(campaigndonor.id)"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
+                  <button v-else class="dropdown-item disabled"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
+                  <div class="dropdown-divider"></div>
                   <button class="dropdown-item" v-if="campaigndonor.pivot.is_confirmed" v-on:click="changeConfirmStatus(campaigndonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i>Desmarcar confirmado</button>
                   <button class="dropdown-item" v-else v-on:click="changeConfirmStatus(campaigndonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i>Marcar confirmado</button> 
                   <button class="dropdown-item" v-if="campaigndonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigndonor, 0, 1)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
@@ -93,8 +100,6 @@
                     <button class="dropdown-item" v-if="campaigndonor.pivot.donor_donated"  v-on:click="changeStatusDonation(campaigndonor, 0, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como donó"><i class="fa fa-times"></i>Marcar como no donó</button>
                     <button class="dropdown-item" v-else  v-on:click="changeStatusDonation(campaigndonor, 1, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó"><i class="fa fa-check"></i>Marcar como donó</button>
                   </div>
-                  <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigndonor)"><i class="fa fa-trash"></i> Borrar</button>
-                  <a :href="'/donors/'+campaigndonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver donador</a>
                   <button v-if="campaigndonor.letter == 1" class="dropdown-item" v-on:click="changeLetterStatus(campaigndonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Carta</button>
                   <button v-else class="dropdown-item" v-on:click="changeLetterStatus(campaigndonor.id, 1)"><i class="fa fa-check"></i> Marcar Carta</button>
                   <button v-if="campaigndonor.be_the_match == 1" class="dropdown-item" v-on:click="changeBeTheMatchStatus(campaigndonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Be The Match</button>
@@ -149,6 +154,7 @@
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">T.S.</th>
+            <th scope="col">T.D.</th>
             <th scope="col">Género</th>
             <th scope="col">Teléfono</th>
             <th scope="col">Correo electrónico</th>
@@ -164,6 +170,7 @@
             <th scope="row">{{index + 1}}</th>
             <td><div class="d-flex align-items-center"><img class="rounded-circle img-fluid" :src="'/'+campaigntemporaldonor.profile_picture" width="40" height="50"><span class="ml-2">{{campaigntemporaldonor.name}} {{campaigntemporaldonor.parental_surname}} {{campaigntemporaldonor.maternal_surname}}</span></div></td>
             <td>{{bloods[campaigntemporaldonor.bloodtype]}}</td>
+            <td>{{donortype[campaigntemporaldonor.donortype]}}</td>
             <td>{{genders[campaigntemporaldonor.gendertype]}}</td>
             <td>{{campaigntemporaldonor.mobile}}</td>
             <td>{{campaigntemporaldonor.email}}</td>
@@ -192,6 +199,11 @@
                 </button>
                 <div class="dropdown-menu">
                   <button class="dropdown-item" v-on:click="selectedPreDonor = campaigntemporaldonor" data-toggle="modal" data-target="#modalPreDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange"></i>Reasignar</button>
+                  <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
+                  <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver pre donador</a>
+                  <button v-if="campaigntemporaldonor.donortype == 'D1'" class="dropdown-item" v-on:click="changeTypeTemporalDonor(campaigntemporaldonor.id)"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
+                  <button v-else class="dropdown-item disabled"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
+                  <div class="dropdown-divider"></div>
                   <button class="dropdown-item" v-if="campaigntemporaldonor.pivot.is_confirmed" v-on:click="changeConfirmStatus(campaigntemporaldonor, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i>Desmarcar confirmado</button>
                   <button class="dropdown-item" v-else v-on:click="changeConfirmStatus(campaigntemporaldonor, 1)" data-toggle="tooltip" data-placement="right" title="Marcar como asistió"><i class="fa fa-check"></i>Marcar confirmado</button> 
                   <button class="dropdown-item" v-if="campaigntemporaldonor.pivot.donor_attended" v-on:click="changeStatusDonationAttended(campaigntemporaldonor, 0, 0)"  data-toggle="tooltip" data-placement="right" title="Marcar como no asistió"> <i class="fa fa-times"></i> Marcar como no asistió</button>
@@ -200,8 +212,6 @@
                     <button class="dropdown-item" v-if="campaigntemporaldonor.pivot.donor_donated"  v-on:click="changeStatusDonation(campaigntemporaldonor, 0, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como donó"><i class="fa fa-times"></i>Marcar como no donó</button>
                     <button class="dropdown-item" v-else  v-on:click="changeStatusDonation(campaigntemporaldonor, 1, 0)" data-toggle="tooltip" data-placement="right" title="Marcar como no donó"><i class="fa fa-check"></i>Marcar como donó</button>
                   </div>
-                  <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
-                  <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver pre donador</a>
                   <button v-if="campaigntemporaldonor.letter == 1" class="dropdown-item" v-on:click="changeLetterStatusTemporalDonor(campaigntemporaldonor.id, 0)"><i class="fa fa-times"></i>Desmarcar Carta</button>
                   <button v-else class="dropdown-item" v-on:click="changeLetterStatusTemporalDonor(campaigntemporaldonor.id, 1)"><i class="fa fa-check"></i> Marcar Carta</button>
                   <button v-if="campaigntemporaldonor.be_the_match == 1" class="dropdown-item" v-on:click="changeBeTheMatchStatusTemporalDonor(campaigntemporaldonor.id, 0)"><i class="fa fa-times"></i>Demarcar Be The Match</button>
@@ -225,7 +235,7 @@
   import Alert from './ModalDonorsComponent.vue';
   import Camera from './CameraComponent.vue';
   export default {
-  props: ['campaignid', 'gendertypes', 'bloodtypes'],
+  props: ['campaignid', 'gendertypes', 'bloodtypes', 'donortypes'],
   data(){
     return {
       count: 2,
@@ -239,6 +249,7 @@
       campaigntemporaldonors: [],
       bloods: [],
       genders: [],
+      donortype:[],
       statusAttend: 0,
       paginate: ['campaigndonors', 'campaigntemporaldonors'],
       listTime :[],
@@ -258,6 +269,7 @@
   mounted() {
     this.bloods = this.bloodtypes;
     this.genders = this.gendertypes;
+    this.donortype = this.donortypes;
     this.getDonorsInCampaign();
     this.createHoursDropdown();
   },
@@ -571,6 +583,40 @@
       .catch((err)=>{
         errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
       });
+    },
+    changeTypeDonor: async function(campaigndonor){
+      const userResponse = await questionNotification('¿Está seguro que quiere cambiar el tipo de donador a Aféresis?', `Se procederá al donador cambiar a tipo Aféresis, una vez hecho esto la acción para cambiar a sangre de nuevo será manual, es decir, editando al donador`, 'Sí, estoy seguro');
+      if(userResponse){
+        axios.post(`/api/donor/change/typedonor/donor/${campaigndonor}/type`)
+        .then((response)=>{
+          if(response.data.code == 200){
+            toastNotification('success', response.data.message);
+            this.getDonorsInCampaign();
+          }else{
+            toastNotification('error', response.data.message);
+          }
+        })
+        .catch((err)=>{
+          errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+        });
+      }
+    },
+    changeTypeTemporalDonor: async function(campaigndonor){
+      const userResponse = await questionNotification('¿Está seguro que quiere cambiar el tipo de predonador a Aféresis?', `Se procederá al predonador cambiar a tipo Aféresis, una vez hecho esto la acción para cambiar a sangre de nuevo será manual, es decir, editando al donador`, 'Sí, estoy seguro');
+      if(userResponse){
+        axios.post(`/api/temporal_donor/change/typedonor/temporal_donor/${campaigndonor}/type`)
+        .then((response)=>{
+          if(response.data.code == 200){
+            toastNotification('success', response.data.message);
+            this.getDonorsInCampaign();
+          }else{
+            toastNotification('error', response.data.message);
+          }
+        })
+        .catch((err)=>{
+          errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
+        });
+      }
     }
   },
   computed: {

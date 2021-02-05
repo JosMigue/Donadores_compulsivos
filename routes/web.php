@@ -42,6 +42,7 @@ Route::patch('/donor/campaign/{campaign}/donation', 'DonationController@update')
 Route::post('/donor/status/change', 'DonorController@changeStatus');
 Route::post('/api/donor/change/letter/donor/{donor}/status/{status}', 'DonorController@changeLetterStatus')->name('donors.update.letter');
 Route::post('/api/donor/change/be-the-match/donor/{donor}/status/{status}', 'DonorController@changeBeTheMatchStatus')->name('donors.update.be_the_match');
+Route::post('/api/donor/change/typedonor/donor/{donor}/type', 'DonorController@changeTypeDonor')->name('donors.update.typedonor');
 
 //Search routes
 Route::get('/search/donor/{search}', 'SearchController@donors');
@@ -78,6 +79,7 @@ Route::get('/temporal_donor/register/{campaignId?}','TemporalDonorController@sho
 Route::patch('/temporal_donor/update/picture/{temporalDonor}', 'TemporalDonorController@updateProfilePicture')->name('temporal_donors.upload');
 Route::post('/api/temporal_donor/change/letter/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeLetterStatus')->name('temporal_donors.update.letter');
 Route::post('/api/temporal_donor/change/be-the-match/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeBeTheMatchStatus')->name('temporal_donors.update.be_the_match');
+Route::post('/api/temporal_donor/change/typedonor/temporal_donor/{temporalDonor}/type', 'TemporalDonorController@changeTypeTemporalDonor')->name('temporal_donors.update.typedonor');
 
 
 //Time

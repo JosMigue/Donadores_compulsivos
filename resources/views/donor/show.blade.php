@@ -138,11 +138,11 @@
                 <label>{{__('Full name')}}</label>
                 <p>{{$donor->name}} {{$donor->parental_surname}} {{$donor->maternal_surname}}</p>
               </div>
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
                 <label>{{__('E-Mail Address')}}</label>
                 <p>{{$donor->email}}</p>
               </div>
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-2">
                 <label>{{__('Mobile')}}</label>
                 <p>{{$donor->mobile}}</p>
               </div>
@@ -152,15 +152,19 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
+                <label>{{__('Donor type')}}</label>
+                <p>{{$donor->getEnum('donortype')[$donor->donortype]}}</p>
+              </div>
+              <div class="col-12 col-md-3">
                 <label>{{__('City')}}</label>
                 <p>{{$donor->city->name}}</p>
               </div>
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
                 <label>{{__('State')}}</label>
                 <p>{{$donor->state->name}}</p>
               </div>
-              <div class="col-12 col-md-4">
+              <div class="col-12 col-md-3">
                 <label>{{__('Born date')}}</label>
                 <p>{{$donor->born_date}}</p>
               </div>

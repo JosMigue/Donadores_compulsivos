@@ -107,7 +107,8 @@ class CampaignController extends Controller
   /*   $donors = $campaign->donors()->paginate(5); */
     $bloodTypes = Donor::getEnum('bloodtype');
     $genderTypes = Donor::getEnum('gendertype');
-    return view('campaign.show', compact('campaign', 'bloodTypes', 'genderTypes'));
+    $donorTypes = Donor::getEnum('donortype');
+    return view('campaign.show', compact('campaign', 'bloodTypes', 'genderTypes', 'donorTypes'));
   }
 
   public function showComingCampaigns(){

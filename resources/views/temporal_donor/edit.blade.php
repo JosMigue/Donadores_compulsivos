@@ -13,7 +13,7 @@
           <div class="row m-1">
             <p>{{__('Required fields')}} <span class="text-danger">*</span></p>
           </div>
-          <form action="{{route('temporal_donors.update', $temporalDonor->id)}}" method="POST">
+          <form action="{{route('temporal_donors.update', $temporalDonor->id)}}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="row my-1">
@@ -105,6 +105,11 @@
                 </select>
               </div>
             </div>
+            <div class="row my-4">
+              <div class="col-12">
+                <camera-driver-component></camera-driver-component>
+              </div>
+            </div>
             <div class="row">
               <div class="col-lg-4 col-12">
                 <div class="form-check">
@@ -155,4 +160,9 @@
       </div>
     </div>
   </div> 
+@endsection
+
+@section('scripts')
+  <script src="{{asset('js/donor.js')}}"></script>
+  <script src="{{asset('js/utils/sweetAlert.js')}}"></script>
 @endsection

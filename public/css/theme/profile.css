@@ -9,8 +9,8 @@
   text-align: center;
 }
 .profile-img img{
-  width: 90%;
   height: 250px;
+  width: 90%;
 }
 .profile-img .file {
   background: #212529b8;
@@ -23,17 +23,17 @@
   width: 90%;
 }
 .profile-img .file input {
+  opacity: 0;
   position: absolute;
   right: 0;
-  opacity: 0;
   top: 0;
 }
 .campaign-img{
   text-align: center;
 }
 .campaign-img img{
-  width: 70%;
   height: 250px;
+  width: 70%;
 }
 .campaign-img .file {
   background: #212529b8;
@@ -46,9 +46,9 @@
   width: 70%;
 }
 .campaign-img .file input {
+  opacity: 0;
   position: absolute;
   right: 0;
-  opacity: 0;
   top: 0;
 }
 .profile-head h5{
@@ -58,8 +58,8 @@
   color: #EC1C3C;
 }
 .proile-rating{
-  font-size: 12px;
   color: #818182;
+  font-size: 12px;
   margin-top: 5%;
 }
 .proile-rating span{
@@ -86,8 +86,8 @@
 }
 .profile-work a{
   color: #495057;
-  font-weight: 600;
   font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
 }
 .profile-work ul{
@@ -97,8 +97,8 @@
   font-weight: 600;
 }
 .profile-tab p{
-  font-weight: 600;
   color: #EC1C3C;
+  font-weight: 600;
 }
 a.is-red{
   color: #EC1C3C;

@@ -229,7 +229,8 @@ class TemporalDonorController extends Controller
 
   public function update(UpdateTemporalDonorRequest $request, TemporalDonor $temporalDonor)
   {
-    if($temporalDonor->update($request->validated())){
+    $updateTemporalDonorArray = $this->saveUploadedPicture($request->validated(), $request);
+    if($temporalDonor->update($updateTemporalDonorArray)){
       return redirect()->route('temporal_donors.index')->with('successMessage',__('Donor has been updated successfully'));
     }else{
       return redirect()->route('temporal_donors.index')->with('errorMessage',__('Something went wrong, try againg later'));
@@ -260,6 +261,15 @@ class TemporalDonorController extends Controller
     $temporalDonor->be_the_match = $status;
     if($temporalDonor->save()){
       return json_encode(array('code' => '200', 'message' => __('Be The Match status changed')));
+    }else{
+      return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
+
+  public function changeTypeTemporalDonor(TemporalDonor $temporalDonor){
+    $temporalDonor->donortype = 'D2';
+    if($temporalDonor->save()){
+      return json_encode(array('code' => '200', 'message' => __('Type predonor changed')));
     }else{
       return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
     }

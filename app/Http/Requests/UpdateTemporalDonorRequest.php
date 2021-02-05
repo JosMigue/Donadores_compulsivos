@@ -40,6 +40,8 @@ class UpdateTemporalDonorRequest extends FormRequest
             'email'         => 'nullable|email|unique:users|unique:donors|unique:temporal_donors,email,'.$this->temporal_donor->id,
             'mobile'        => 'nullable|digits:10|max:10|min:10',
             'age'           => 'required|numeric',
+            'profile_picture'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'captured_image'  => 'nullable|string',
         ];
     }
 }

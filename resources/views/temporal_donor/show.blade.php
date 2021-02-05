@@ -121,15 +121,19 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
+              <label>{{__('Predonor type')}}</label>
+              <p>{{$temporalDonor->getEnum('donortype')[$temporalDonor->donortype]}}</p>
+            </div>
+            <div class="col-12 col-md-3">
               <label>{{__('City')}}</label>
               <p>{{$temporalDonor->city->name}}</p>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
               <label>{{__('State')}}</label>
               <p>{{$temporalDonor->state->name}}</p>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
               <label>{{__('Born date')}}</label>
               <p>{{$temporalDonor->born_date}}</p>
             </div>
