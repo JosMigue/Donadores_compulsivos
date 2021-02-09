@@ -4,8 +4,8 @@
       Donadores suscritos {{this.campaigndonors.length}}
     </label>
     <modal-donor-component :campaign = campaignid v-on:added-donor-campaign-event="getDonorsInCampaign()" :genders = gendertypes :blood = bloodtypes></modal-donor-component> 
-    <modal-predonor-asign-component :campaign = campaignid :predonor = selectedPreDonor></modal-predonor-asign-component> 
-    <modal-donor-asign-component :campaign = campaignid :donor = selectedDonorModal></modal-donor-asign-component> 
+    <modal-predonor-asign-component :campaign = campaignid :predonor = selectedPreDonor :availablecampaigns = availablesCampaigns></modal-predonor-asign-component> 
+    <modal-donor-asign-component :campaign = campaignid :donor = selectedDonorModal :availablecampaigns = availablesCampaigns></modal-donor-asign-component> 
     <div class="text-center">
       <p class="text-danger">Buscar donador por...</p>
     </div>
@@ -86,7 +86,7 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
-                  <button class="dropdown-item" v-on:click="selectedDonorModal = campaigndonor" data-toggle="modal" data-target="#modalDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange mx-1"></i>Reasignar</button>
+                  <button class="dropdown-item" v-on:click="getAvailableCampaigns(campaigndonor)" data-toggle="modal" data-target="#modalDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange mx-1"></i>Reasignar</button>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigndonor)"><i class="fa fa-trash mx-1"></i> Borrar</button>
                   <a :href="'/donors/'+campaigndonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye mx-1"></i> Ver donador</a>
                   <button v-if="campaigndonor.donortype == 'D1'" class="dropdown-item" v-on:click="changeTypeDonor(campaigndonor.id)"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
@@ -198,7 +198,7 @@
                   Acción
                 </button>
                 <div class="dropdown-menu">
-                  <button class="dropdown-item" v-on:click="selectedPreDonor = campaigntemporaldonor" data-toggle="modal" data-target="#modalPreDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange"></i>Reasignar</button>
+                  <button class="dropdown-item" v-on:click="getAvailableCampaignsPreDonor(campaigntemporaldonor)" data-toggle="modal" data-target="#modalPreDonorsAsign" data-backdrop="static" data-keyboard="false" ><i class="fa fa-exchange"></i>Reasignar</button>
                   <button class="dropdown-item" v-on:click="deleteDonorFromCampaign(campaigntemporaldonor)"><i class="fa fa-trash"></i> Borrar</button>
                   <a :href="'/temporal_donors/'+campaigntemporaldonor.id" class="dropdown-item" target="__blank"><i class="fa fa-eye"></i> Ver pre donador</a>
                   <button v-if="campaigntemporaldonor.donortype == 'D1'" class="dropdown-item" v-on:click="changeTypeTemporalDonor(campaigntemporaldonor.id)"><i class="fa fa-heart mx-1"></i>Cambiar a Aféresis</button>
@@ -263,7 +263,8 @@
       isSearchTemporalNull: false,
       isSearchTemporalIdNull: false,
       typedId: '',
-      autocompleteDonorToShow: 0
+      autocompleteDonorToShow: 0,
+      availablesCampaigns: []
     }
   },
   mounted() {
@@ -617,7 +618,27 @@
           errorNotification(`Algo salió mal intente más tarde ${err.data.response}`)
         });
       }
-    }
+    },
+    getAvailableCampaigns:function(campaignDonor){
+      this.selectedDonorModal = campaignDonor
+      axios.get(`/api/available_campaigns/retreive/${this.selectedDonorModal.id}`)
+      .then((response)=>{
+        this.availablesCampaigns = response.data;
+      })
+      .catch((err)=>{
+        errorNotification(`Ha ocurrido un error al taer las campañas, intente más tarde. ${err}`);
+      });
+    },
+    getAvailableCampaignsPreDonor:function(campaignPreDonor){
+      this.selectedPreDonor = campaignPreDonor
+      axios.get(`/api/available_campaigns/predonor/retreive/${this.selectedPreDonor.id}`)
+      .then((response)=>{
+        this.availablesCampaigns = response.data;
+      })
+      .catch((err)=>{
+        errorNotification(`Ha ocurrido un error al taer las campañas, intente más tarde. ${err}`);
+      });
+    },
   },
   computed: {
     counterDonor:function(){

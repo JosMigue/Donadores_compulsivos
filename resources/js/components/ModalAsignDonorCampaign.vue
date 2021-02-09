@@ -24,9 +24,9 @@
               <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
                 <label for="available_campaigns">Campañas disponibles</label>
                 <select class="form-control" name="available_campaigns" id="available_campaigns" v-model="selectedCampaign">
-                  <option v-if="availablesCampaigns.length == 0" value="" selected disabled>No se encontraron campañas disponibles :( </option>
+                  <option v-if="availablecampaigns.length == 0" value="" selected disabled>No se encontraron campañas disponibles :( </option>
                   <option v-else value="" selected disabled >Seleccione una campaña...</option>
-                  <option :value="availableCampaign.id" v-for="(availableCampaign, index) in availablesCampaigns" :key="index">{{getTranslatedName(availableCampaign.name)}} | Fecha: {{moment(availableCampaign.date_start).format('DD-MM-Y')}}</option>
+                  <option :value="availableCampaign.id" v-for="(availableCampaign, index) in availablecampaigns" :key="index">{{getTranslatedName(availableCampaign.name)}} | Fecha: {{moment(availableCampaign.date_start).format('DD-MM-Y')}}</option>
                 </select> 
               </div>
             </div>
@@ -45,15 +45,11 @@
 import moment from 'moment';
 moment.locale('es-mx');
 export default {
-  props: ['donor', 'campaign'],
+  props: ['donor', 'campaign', 'availablecampaigns'],
   data() {
     return {
-       availablesCampaigns: [],
-       selectedCampaign: ''
+      selectedCampaign: ''
     }
-  },
-  mounted() {
-    this.getAvailableCampaigns();
   },
   methods: {
     moment: function (date) {
@@ -61,15 +57,6 @@ export default {
     },
     date: function (date) {
       return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-    },
-    getAvailableCampaigns:function(){
-      axios.get(`/api/available_campaigns/retreive/${this.campaign}`)
-      .then((response)=>{
-        this.availablesCampaigns = response.data;
-      })
-      .catch((err)=>{
-        errorNotification(`Ha ocurrido un error al taer las campañas, intente más tarde. ${err}`);
-      });
     },
     getTranslatedName:function(campaignName){
       switch (campaignName) {

@@ -17,7 +17,8 @@ Route::post('/campaigns/donors/involve/manually', 'CampaignDonorController@addDo
 Route::post('/campaigns/temporal_donors/involve/manually', 'CampaignDonorController@addTemporalDonorCampaign');
 Route::patch('/camapigns/update/image/{campaign}', 'CampaignController@updateCampaignImage')->name('campaigns.upload');
 Route::post('/campaign/donors/list', 'CampaignDonorController@getDonorsInCampaign');
-Route::get('/api/available_campaigns/retreive/{currentCampaign}', 'CampaignController@availableCampaigns');
+Route::get('/api/available_campaigns/retreive/{donor}', 'CampaignController@availableCampaigns');
+Route::get('/api/available_campaigns/predonor/retreive/{predonor}', 'CampaignController@availableCampaignsPreDonor');
 Route::post('/api/asign_campaign/predonor', 'CampaignDonorController@asignPredonorCampaign');
 
 //cities and states routes

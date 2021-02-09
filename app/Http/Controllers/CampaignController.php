@@ -6,6 +6,7 @@ use App\Campaign;
 use App\City;
 use App\State;
 use App\Donor;
+use App\TemporalDonor;
 use App\BloodBank;
 use Excel;
 use Carbon\Carbon;
@@ -183,7 +184,15 @@ class CampaignController extends Controller
     return $timeList;
   }
 
-  public function availableCampaigns($currentCampaign){
-    return Campaign::with('city', 'state')->where('id','!=', $currentCampaign)->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->get();
+  public function availableCampaigns($donor_id){
+    $donor = Donor::findOrFail($donor_id);
+    $campaigns = $donor->campaigndonors()->get()->pluck('campaign_id')->toArray();
+    return Campaign::with('city', 'state')->whereNotIn('id', $campaigns)->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->get();
+  }
+
+  public function availableCampaignsPreDonor($temporalDonor_id){
+    $temporalDonor = TemporalDonor::findOrFail($temporalDonor_id);
+    $campaigns = $temporalDonor->campaigntemporaldonors()->get()->pluck('campaign_id')->toArray();
+    return Campaign::with('city', 'state')->whereNotIn('id', $campaigns)->where('date_start','>',Carbon::now())->orderBy('date_start', 'ASC')->get();
   }
 }
