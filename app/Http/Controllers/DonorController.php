@@ -230,7 +230,7 @@ class DonorController extends Controller
   public function destroy(Donor $donor)
   {
     $imageFile = $donor->id.'pf.jpg';
-    if($donor->user){
+    if($donor->user_id != 0){
       if($donor->delete() &  $donor->user()->delete()){
         Storage::disk('profile_pictures')->delete('avatars/'.$imageFile);
         return array('message' => __('Donor has been deleted successfully'), 'code' => 200);

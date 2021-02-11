@@ -102,6 +102,8 @@
                   <a class="dropdown-item" :href="'temporal_donors/'+temporaldonor.id"><i class="fa fa-eye mx-1" aria-hidden="true"></i>Mostrar</a>
                   <a class="dropdown-item" :href="'temporal_donors/'+temporaldonor.id+'/edit'"><i class="fa fa-pencil mx-1" aria-hidden="true"></i>Editar</a>
                   <button class="dropdown-item" v-on:click="deleteTemporalDonor(temporaldonor.id, index)" v-bind:value="temporaldonor.id"><i class="fa fa-trash mx-1" aria-hidden="true"></i>Eliminar</button>
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item" v-on:click="becomeIntoDonor(temporaldonor.id)" ><i class="fa fa-tint mx-1"></i>Convertir a donador</button>
                 </div>
               </div>
             </td>
@@ -220,6 +222,25 @@ export default {
       this.iddonor = '';
       this.updatePaginator()
     },
+    becomeIntoDonor:async function(temporalDonorId){
+      const userResponse = await questionNotification('¿Está seguro que quiere convertir en donador al predonador?','Esta acción no se puede corregir', 'Sí, lo estoy');
+      if(userResponse){
+        axios.post('/api/temporal_donor/morph_to_donor',{
+          'predonorId': temporalDonorId
+        })
+        .then((response)=>{
+          if(response.data['code']==200){
+            this.getTemporalDonors();
+            successNotification(response.data['message']);
+          }else{
+            errorNotification(response.data['message']);
+          }
+        })
+        .catch((err)=>{
+          errorNotification(`Algo salió mal, intente más tarde ${error}`);
+        });
+      }
+    }
   },
 }
 </script>
