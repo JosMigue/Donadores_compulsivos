@@ -57,8 +57,8 @@
                 @endif
                 <td>{{$campaign->city->name}}</td>
                 <td>{{$campaign->state->name}}</td>
-                <td>{{$campaign->date_start->format('Y-m-d')}} {{$campaign->time_start}}</td>
-                <td>{{$campaign->date_finish->format('Y-m-d')}} {{$campaign->time_finish}}</td>
+                <td>{{$campaign->date_start->format('d-m-Y')}} {{$campaign->time_start}}</td>
+                <td>{{$campaign->date_finish->format('d-m-Y')}} {{$campaign->time_finish}}</td>
                 <td>{{$campaign->user->name}}</td>
                 <td>
                   <div class="btn-group dropleft">

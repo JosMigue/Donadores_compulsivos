@@ -28,7 +28,7 @@ class CreateBloodBanksTable extends Migration
             $table->integer('user_id')->nullable(false);
             $table->string('days',2000)->nullable(false);
             $table->string('hyperlink')->nullable(true)->default(null);
-            $table->string('google_link')->nullable(true)->default(null);
+            $table->string('google_link', 500)->nullable(true)->default(null);
             $table->timestamps();
         });
     }

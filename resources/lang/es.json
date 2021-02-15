@@ -224,6 +224,7 @@
     "This donor now has access to the system, remind default password is 1234567890. JL Marketing recommend that you make to know to the donor must to change his password as soon as possible. email must to be confirmed.":"Ahora el donador ya tiene acceso al sistema. Recuerde que la contraseña por defecto es 1234567890. JLMarketing recomienda que le haga saber al donador que cambie la contraseña lo más antes posible. El correo deberá ser confirmado. El donador debe ingresar al sistema con su cuenta y solicitar un código de verificación que llegará a su correo.",
     "This password reset link will expire in :count minutes.": "Este enlace de restablecimiento de contraseña caducará en :count minutos.",
     "This user has not donated yet": "Este usuario no ha donado aún",
+    "Type your mobile": "Ingresa tu número",
     "to": "al",
     "Toggle navigation": "Activar navegación",
     "Too Many Attempts.": "Demasiados intentos",
