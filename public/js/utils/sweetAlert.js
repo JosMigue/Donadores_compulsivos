@@ -6,7 +6,8 @@ function questionNotification(title, body, action){
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: action
+    confirmButtonText: action,
+    allowOutsideClick: false
   }).then((result) => {
       return result.value;
   });

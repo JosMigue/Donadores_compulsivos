@@ -2,6 +2,10 @@
 
 @section('title', __('Campaign listing'))
 
+@section('stylesheets')
+    <link rel="stylesheet" href="{{asset('css/elements/button.css')}}">
+@endsection
+
 @section('content')
   <div class="row no-gutters">
     @foreach ($campaigns as $campaign)
@@ -46,7 +50,9 @@
             @endif
           </div>
             @if ($campaign->date_start > \Carbon\Carbon::now())
-              <a href="{{route('quiz', $campaign->id)}}" target="__blank" class="btn btn-danger">Quiero participar</a>  
+              <div class="my-3">
+                <a href="{{route('quiz', $campaign->id)}}" target="__blank" class="is-panel-button is-btn-bg-red text-center d-block">Quiero participar</a>  
+              </div>
             @else
               <a href="#" class="btn btn-danger disabled" type="submit">No disponible</a>  
             @endif

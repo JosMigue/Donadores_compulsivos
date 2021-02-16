@@ -114,7 +114,7 @@
         </paginate>
       </table>
     </div>
-    <paginate-links v-if="campaigndonors.length > 0" class="d-flex justify-content-center" for="campaigndonors" :simple="{prev: 'Ante', next: 'Sig'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+    <paginate-links v-if="campaigndonors.length > 0" class="d-flex justify-content-center" for="campaigndonors"  :simple="{ next: 'Siguiente »',prev: '« Anterior'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
     <label>
       Pre Donadores suscritos {{this.campaigntemporaldonors.length}}
     </label>
@@ -226,7 +226,7 @@
         </paginate>
       </table>
     </div> 
-    <paginate-links v-if="campaigntemporaldonors.length > 0" class="d-flex justify-content-center" for="campaigntemporaldonors" :simple="{prev: 'Ante', next: 'Sig'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+    <paginate-links v-if="campaigntemporaldonors.length > 0" class="d-flex justify-content-center" for="campaigntemporaldonors" :simple="{ next: 'Siguiente »',prev: '« Anterior'}" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
   </div>
 </template>
 

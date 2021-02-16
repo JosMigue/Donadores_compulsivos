@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\TemporalDonor;
+use App\Donor;
+use App\User;
 use App\Campaign;
 use App\CampaignDonor;
 use App\State;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SendTurnDonation;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\NotifyDonorAccountNotification;
 
 class TemporalDonorController extends Controller
 {
@@ -272,6 +275,23 @@ class TemporalDonorController extends Controller
       return json_encode(array('code' => '200', 'message' => __('Type predonor changed')));
     }else{
       return json_encode(array('code' => '500', 'message' => __('Something went wrong, try again later')));
+    }
+  }
+
+  public function morphIntoDonor(Request $request){
+    $temporalDonor = TemporalDonor::findOrFail($request->input('predonorId'));
+    $temporalDonorDataArray = $temporalDonor->toArray();
+    if($temporalDonor->email){
+      $user = User::create(['name' => $temporalDonor->name, 'email'=> $temporalDonor->email, 'password'=>'$2y$10$LLck65rXlXmE4Ac.UmKqfuJv9zsSOh6YG2hB0bdwwrEMv4epi1/H6']);
+      if($user->donor()->create($temporalDonorDataArray)){
+        $temporalDonor->delete();
+        $user->notify(new NotifyDonorAccountNotification());
+        return json_encode(array('code'=> 200, 'message' => __('Donor has been added successfully')));
+      }
+    }else{
+      Donor::create($temporalDonorDataArray);
+      $temporalDonor->delete();
+      return json_encode(array('code'=> 200, 'message' => __('Donor has been added successfully, but donor has not access to system beacuse donor has not an email')));
     }
   }
 }

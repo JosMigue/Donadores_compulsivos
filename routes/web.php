@@ -81,6 +81,7 @@ Route::patch('/temporal_donor/update/picture/{temporalDonor}', 'TemporalDonorCon
 Route::post('/api/temporal_donor/change/letter/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeLetterStatus')->name('temporal_donors.update.letter');
 Route::post('/api/temporal_donor/change/be-the-match/temporal_donor/{temporalDonor}/status/{status}', 'TemporalDonorController@changeBeTheMatchStatus')->name('temporal_donors.update.be_the_match');
 Route::post('/api/temporal_donor/change/typedonor/temporal_donor/{temporalDonor}/type', 'TemporalDonorController@changeTypeTemporalDonor')->name('temporal_donors.update.typedonor');
+Route::post('/api/temporal_donor/morph_to_donor', 'TemporalDonorController@morphIntoDonor')->name('temporal_donors.morph');
 
 
 //Time
